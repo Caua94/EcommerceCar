@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- NAVBAR -->
     <nav
       :class="[
         'fixed top-0 w-full z-50 transition-all duration-300 h-30',
@@ -13,7 +12,6 @@
         <ul class="hidden md:flex gap-15 font-bold text-2xl items-center">
           <router-link class="hover:text-amber-300 transition-colors" to="/">Home</router-link>
 
-          <!-- Products abre o painel lateral -->
           <li>
             <button
               @click="openProducts"
@@ -25,7 +23,7 @@
               
             </button>
           </li>
-
+          
           <li><a href="#brand" class="hover:text-amber-300 transition-colors">Brands</a></li>
           <router-link class="hover:text-amber-300 transition-colors" to="/about">About</router-link>
           <li><a href="#contato" class="hover:text-amber-300 transition-colors">Contact</a></li>
@@ -33,7 +31,6 @@
       </div>
     </nav>
 
-    <!-- PAINEL LATERAL DE PRODUCTS (off-canvas esquerda) -->
     <aside
       :id="'products-drawer'"
       :class="[
@@ -45,7 +42,6 @@
       ref="productsPanelRef"
       aria-label="Menu de produtos"
     >
-      <!-- Cabeçalho -->
       <div class="p-6 flex items-center justify-between border-b border-stone-700">
         <h3 class="text-5xl font-semibold">Products</h3>
         <button @click="closeProducts" class="p-2 rounded hover:bg-stone-800" aria-label="Fechar Products">
@@ -55,12 +51,10 @@
         </button>
       </div>
 
-      <!-- Conteúdo com dropdown lateral -->
-      <nav class="p-6 space-y-4">
+      <nav class="p-6 space-y-4 relative">
         <div class="text-4xl uppercase tracking-wide text-stone-400">Categorias</div>
-        <ul class="space-y-2 text-3xl relative">
+        <ul class="space-y-2 text-3xl">
           
-          <!-- Brands -->
           <li class="relative group">
             <div class="flex justify-between items-center px-3 py-2 rounded hover:bg-stone-800 cursor-pointer">
               Brands
@@ -68,10 +62,11 @@
                 <path fill-rule="evenodd" d="M6 6l6 4-6 4V6z" clip-rule="evenodd" />
               </svg>
             </div>
-            <!-- Submenu lateral -->
             <ul
-              class="absolute top-0 left-full bg-stone-800 shadow-lg rounded p-4 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+              class="fixed left-full w-[30rem] h-screen bg-stone-900 shadow-lg p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+              style="top: -0px"
             >
+              <div class="p-4 flex font-semibold items-center justify-between text-4xl uppercase tracking-wide text-stone-400 mb-4 border-b border-stone-700">Brands</div>
               <li><a href="#bmw" class="block py-1 hover:text-amber-300">BMW</a></li>
               <li><a href="#audi" class="block py-1 hover:text-amber-300">Audi</a></li>
               <li><a href="#toyota" class="block py-1 hover:text-amber-300">Toyota</a></li>
@@ -84,17 +79,17 @@
                 <path fill-rule="evenodd" d="M6 6l6 4-6 4V6z" clip-rule="evenodd" />
               </svg>
             </div>
-            <!-- Submenu lateral -->
             <ul
-              class="absolute top-0 left-full bg-stone-800 shadow-lg rounded p-4 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+              class="fixed left-full w-[30rem] h-screen bg-stone-900 shadow-lg p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+              style="top: -0px"
             >
-              <li><a href="#bmw" class="block py-1 hover:text-amber-300">BMW</a></li>
-              <li><a href="#audi" class="block py-1 hover:text-amber-300">Audi</a></li>
-              <li><a href="#toyota" class="block py-1 hover:text-amber-300">Toyota</a></li>
+              <div class="p-4 flex font-semibold items-center justify-between text-4xl uppercase tracking-wide text-stone-400 mb-4 border-b border-stone-700">Modelos</div>
+              <li><a href="#bmw" class="block py-1 hover:text-amber-300">Eltric</a></li>
+              <li><a href="#audi" class="block py-1 hover:text-amber-300">Sport</a></li>
+              <li><a href="#toyota" class="block py-1 hover:text-amber-300">casual</a></li>
             </ul>
-          </li>
+            </li>
           <div class="text-4xl uppercase tracking-wide text-stone-400">Destaques</div>
-          <!-- News -->
           <li class="relative group">
             <div class="flex justify-between items-center px-3 py-2 rounded hover:bg-stone-800 cursor-pointer">
               News
@@ -102,19 +97,20 @@
                 <path fill-rule="evenodd" d="M6 6l6 4-6 4V6z" clip-rule="evenodd" />
               </svg>
             </div>
-            <!-- Submenu lateral -->
             <ul
-              class="absolute top-0 left-full bg-stone-800 shadow-lg rounded p-4 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+              class="fixed left-full w-[30rem] h-screen bg-stone-900 shadow-lg p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all"
+              style="top: -0px"
             >
-              <li><a href="#launches" class="block py-1 hover:text-amber-300">Últimos lançamentos</a></li>
-              <li><a href="#reviews" class="block py-1 hover:text-amber-300">Reviews</a></li>
+              <div class="p-4 flex font-semibold items-center justify-between text-4xl uppercase tracking-wide text-stone-400 mb-4 border-b border-stone-700">News</div>
+              <li><a href="#bmw" class="block py-1 hover:text-amber-300">New cars</a></li>
+              <li><a href="#audi" class="block py-1 hover:text-amber-300">New</a></li>
+              <li><a href="#toyota" class="block py-1 hover:text-amber-300">Promos</a></li>
             </ul>
-          </li>
+            </li>
         </ul>
       </nav>
     </aside>
 
-    <!-- OVERLAY -->
     <div
       v-if="overlayOpen"
       class="fixed inset-0 bg-black/50 z-40"
@@ -175,3 +171,6 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleKeydown);
 });
 </script>
+
+---
+
