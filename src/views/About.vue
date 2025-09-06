@@ -1,131 +1,145 @@
 <template>
   <main class="relative w-full h-full overflow-x-hidden">
-    <!-- HERO / BANNER (pinned) -->
     <section
       ref="heroRef"
       class="relative h-screen w-full flex items-center justify-center overflow-hidden"
     >
       <img
-        src="https://picsum.photos/id/1011/1920/1080"
-        alt="Banner"
+        src="../assets/imgs/womansInCar.jpg"
+        alt="A woman in a luxury car, symbolizing freedom and elegance."
         class="absolute top-0 left-0 w-full h-full object-cover"
       />
       <h1 class="relative text-white text-6xl font-bold z-10 drop-shadow-lg">
-        About the project
+        About the Project
       </h1>
     </section>
 
-    <!-- STORYTELLING SECTIONS -->
     <section
-      v-for="(block, i) in blocks"
-      :key="i"
-      class="relative h-screen flex items-center justify-center px-8 bg-gray-200 z-10 overflow-hidden"
+      class="storytelling-block relative h-screen flex items-center justify-center px-8 bg-stone-900 z-10 overflow-hidden"
     >
-      <!-- Imagens atrás do texto -->
       <img
-        v-for="(img, idx) in block.images"
-        :key="idx"
-        :src="img.src"
-        alt=""
-        class="absolute w-48 h-48 object-cover rounded-lg opacity-0"
-        :style="{ top: img.top, left: img.left }"
+        :src="unimar"
+        alt="UNIMAR university logo."
+        class="story-image absolute h-48 w-auto object-contain rounded-lg opacity-0 left-1/4 -translate-x-1/2"
+        style="top: 60%;"
+      />
+      <img
+        :src="fc"
+        alt="Faculty of Computer Science logo."
+        class="story-image absolute h-48 w-48 object-contain rounded-lg opacity-0 left-3/4 -translate-x-1/2"
+        style="top: 60%;"
       />
 
-      <!-- Texto -->
       <div class="max-w-3xl text-center relative z-10 space-y-4">
-        <h2 class="text-4xl font-bold mb-6">{{ block.title }}</h2>
-        <p class="text-lg text-gray-700 leading-relaxed">{{ block.text }}</p>
+        <h2 class="text-5xl font-bold mb-6 text-white">Project Motivation</h2>
+        <p class="text-2xl text-gray-100 leading-relaxed">
+          This project was born from a challenge presented by a partner company of UNIMAR. The main goal was to demonstrate an e-commerce solution with full CRUD functionality.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="storytelling-block relative h-screen flex items-center justify-center px-8 bg-stone-900 z-10 overflow-hidden"
+    >
+      <div class="max-w-3xl text-center relative z-10 space-y-4">
+        <h2 class="text-5xl font-bold mb-6 text-white">Objective</h2>
+        <p class="text-2xl text-gray-100 leading-relaxed">
+          To showcase our proficiency in Vue, Tailwind, JavaScript, and C#.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="storytelling-block relative h-screen flex items-center justify-center px-8 bg-stone-900 z-10 overflow-hidden"
+    >
+      <img
+        :src="jhow"
+        alt="A photo of Jhonata Canevare, a member of the back-end team."
+        class="story-image absolute w-48 h-48 object-cover rounded-full opacity-0 left-1/4 -translate-x-1/2"
+        style="top: 70%;"
+      />
+      <img
+        :src="jhow"
+        alt="A photo of a team member."
+        class="story-image absolute w-48 h-48 object-cover rounded-full opacity-0 left-1/2 -translate-x-1/2"
+        style="top: 70%;"
+      />
+      <img
+        :src="jhow"
+        alt="A photo of a team member."
+        class="story-image absolute w-48 h-48 object-cover rounded-full opacity-0 left-3/4 -translate-x-1/2"
+        style="top: 70%;"
+      />
+
+      <div class="max-w-3xl text-center relative z-10 space-y-4">
+        <h2 class="text-5xl font-bold mb-6 text-white">Team</h2>
+        <p class="text-2xl text-gray-100 leading-relaxed">
+          Front-end: Cauã Reginato and Gui Oliveira.<br />
+          Back-end: Jhonata Canevare and Giovani Ferreira.
+        </p>
       </div>
     </section>
   </main>
-
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import jhow from "../assets/imgs/jhow.png"
-import unimar from "../assets/imgs/unimar.png"
-import fc from "../assets/imgs/fc.png"
+import { ref, onMounted } from "vue";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import unimar from "../assets/imgs/unimar.png";
+import fc from "../assets/imgs/fc.png";
+import jhow from "../assets/imgs/jhow.png";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
-const heroRef = ref(null)
-
-// Blocos de storytelling com posições fixas das imagens (Picsum Photos)
-const blocks = [
-  {
-    title: "Motivo do projeto",
-    text: "Este projeto veio como um desafio trazido por uma empresa parceira da UNIMAR, em que o desafio era mostrar um ecommerce com CRUD.",
-    images: [
-      { src: unimar, top: "30%", left: "20%",},
-      { src: fc, top: "60%", left: "60%" },
-
-    ],
-  },
-  {
-    title: "Objetivo",
-    text: "Conseguir mostrar nossa proficiência com Vue, Tailwind, Javascript e C#.",
-   
-  },
-  {
-    title: "Equipe",
-    text: "Front-end: Cauã Reginato e Gui Oliveira. Back-end: Jhonata Canevare e Giovani Ferreira",
-    images: [
-      { src: jhow, top: "15%", left: "60%" },
-      { src: jhow, top: "40%", left: "10%" },
-      { src: jhow, top: "60%", left: "80%" },
-      { src: jhow, top: "70%", left: "30%" },
-    ],
-  },
-]
+const heroRef = ref(null);
 
 onMounted(() => {
-  // PIN HERO
+  // Pin the hero section on scroll
   ScrollTrigger.create({
     trigger: heroRef.value,
     start: "top top",
-    end: "+=300%",
+    end: "bottom+=300%",
     pin: true,
     pinSpacing: false,
-  })
+  });
 
-  // Animação do texto e parágrafos + imagens
-  gsap.utils.toArray("section").forEach((sec, i) => {
-    if (i === 0) return // pular hero
+  // Create a separate timeline for each storytelling block
+  gsap.utils.toArray(".storytelling-block").forEach((section) => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%", // Start the animation when the top of the section enters the viewport
+        end: "bottom top",
+        toggleActions: "play none none none",
+      },
+    });
 
-    // h2
-    gsap.from(sec.querySelector("h2"), {
-      scrollTrigger: { trigger: sec, start: "top 80%" },
+    // Animate the heading (h2)
+    tl.from(section.querySelector("h2"), {
       opacity: 0,
       y: 50,
       duration: 1,
-    })
+    });
 
-    // p
-    gsap.from(sec.querySelector("p"), {
-      scrollTrigger: { trigger: sec, start: "top 75%" },
+    // Animate the paragraph (p)
+    tl.from(section.querySelector("p"), {
       opacity: 0,
       y: 30,
       duration: 1,
-      delay: 0.3,
-    })
+    }, "<0.3"); // Starts 0.3 seconds after the previous animation ends
 
-    // imagens
-    gsap.utils.toArray(sec.querySelectorAll("img.absolute")).forEach((img) => {
-      gsap.fromTo(
-        img,
-        { opacity: 0, scale: 0.8 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: img, start: "top 85%", toggleActions: "play none none none" },
-        }
-      )
-    })
-  })
-})
+    // Animate the images, if they exist in the section
+    const images = section.querySelectorAll(".story-image");
+    if (images.length) {
+      tl.from(images, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 1,
+        stagger: 0.2, // Animate each image with a 0.2s delay
+        ease: "power3.out",
+      }, "-=0.5"); // Starts 0.5 seconds before the previous animation ends (overlap effect)
+    }
+  });
+});
 </script>
