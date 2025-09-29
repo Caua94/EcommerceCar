@@ -109,9 +109,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
+// 1. Remova a importação 'import gsap from 'gsap';'
 
-// Form state
+// 2. Importe a função de animação do novo arquivo
+import { animateSignupEntrance } from '../utils/animations/SignAnimations.js'; // Ajuste o caminho se necessário
+
+// Form state (mantido)
 const fullName = ref('');
 const email = ref('');
 const password = ref('');
@@ -128,18 +131,12 @@ function handleSignup() {
   });
 }
 
+// 3. Chame a função importada no onMounted
 onMounted(() => {
-  // GSAP animations for a smooth entry
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-  tl.from('.gsap-signup-title', { opacity: 0, y: -20, duration: 1.2 })
-    .from('.gsap-signup-text', { opacity: 0, y: -20, duration: 1 }, "-=0.8")
-    .from('.gsap-signup-form', { opacity: 0, x: -50, stagger: 0.2, duration: 0.8 }, "-=0.5")
-    .from('.gsap-signup-button', { opacity: 0, scale: 0.8, duration: 0.8 }, "-=0.4")
-    .from('.gsap-signup-footer', { opacity: 0, y: 20, duration: 0.6 }, "-=0.3");
+  animateSignupEntrance();
 });
 </script>
 
 <style scoped>
-/* Scoped styles can be added here if needed, but Tailwind handles most of the styling */
+/* Estilos mantidos */
 </style>

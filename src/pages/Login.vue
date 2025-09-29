@@ -1,4 +1,6 @@
 <template>
+    <!-- O bloco <template> permanece EXATAMENTE igual. 
+         As classes 'gsap-...' são mantidas para o seletor. -->
     <div class="login-page w-screen h-screen flex justify-center items-center relative overflow-hidden">
         <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted
             playsinline preload="auto"></video>
@@ -55,30 +57,27 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
+// 1. Remova a importação 'import gsap from 'gsap';'
 
-// Form state
+// 2. Importe a função de animação do arquivo separado
+import { animateLoginEntrance } from '../utils/animations/LoginAnimations.js'; // Ajuste o caminho se necessário
+
+// Form state (mantido)
 const email = ref('');
 const password = ref('');
-const backgroundVideo = new URL('../assets/videos/Luxury_Car_Login_Page_Video.mp4', import.meta.url).href; // Reusing a video from the home page
+const backgroundVideo = new URL('../assets/videos/Luxury_Car_Login_Page_Video.mp4', import.meta.url).href;
 
 function handleLogin() {
     // Handle login logic here
     console.log('Login attempt with:', { email: email.value, password: password.value });
 }
 
+// 3. Chame a função importada no onMounted
 onMounted(() => {
-    // GSAP animations for a smooth, attractive entry
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    tl.from('.gsap-login-title', { opacity: 0, y: -20, duration: 1.2 })
-        .from('.gsap-login-text', { opacity: 0, y: -20, duration: 1 }, "-=0.8")
-        .from('.gsap-login-form', { opacity: 0, x: -50, stagger: 0.2, duration: 0.8 }, "-=0.5")
-        .from('.gsap-login-button', { opacity: 0, scale: 0.8, duration: 0.8 }, "-=0.4")
-        .from('.gsap-login-footer', { opacity: 0, y: 20, duration: 0.6 }, "-=0.3");
+    animateLoginEntrance();
 });
 </script>
 
 <style scoped>
-/* Scoped styles can be added here if needed, but Tailwind handles most of the styling */
+/* Estilos mantidos */
 </style>

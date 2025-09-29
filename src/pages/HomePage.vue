@@ -39,8 +39,9 @@
     </div>
   </main>
 
-  <section class="w-screen h-[1000px] flex justify-center items-center flex-col text-black gsap-reveal">
-    <p class="flex text-4xl font-semibold mb-8">Featured Listings</p>
+  <section class="w-screen h-auto flex justify-center items-center flex-col text-black gsap-reveal space-y-4 mb-12">
+    <p class="flex text-6xl font-bold pt-15">Featured Listings</p>
+    <p class="border-b border-black w-full"></p>
     <cardComponent/>
   </section>
 
@@ -67,7 +68,7 @@
   </section>
 
   <section id="brand" class="w-screen h-[600px] flex justify-center bg-gradient-to-b from-gray-400/90 to-white ">
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 place-items-center w-3/4 rounded-[500px] m-10 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 place-items-center w-3/4 rounded-[500px] m-5 gap-4">
       <img class="w-24 h-24 m-4 hover:scale-105 transition-transform gsap-reveal-img" src="../assets/imgs/nissan.png" alt="Nissan brand logo 1" />
       <img class="w-24 h-24 m-4 hover:scale-105 transition-transform gsap-reveal-img" src="../assets/imgs/nissan.png" alt="Nissan brand logo 2" />
       <img class="w-24 h-24 m-4 hover:scale-105 transition-transform gsap-reveal-img" src="../assets/imgs/nissan.png" alt="Nissan brand logo 3" />
@@ -87,14 +88,11 @@ import { onMounted, ref, nextTick } from 'vue';
 import ButtomArrow from '../components/ButtomArrow.vue';
 import cardComponent from '../components/cardComponent.vue';
 
-// 1. Import GSAP and ScrollTrigger
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// 1. Remova as importações e o registro do GSAP/ScrollTrigger daqui.
+// Eles agora estão no arquivo HomeAnimations.js.
+import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js'; // <-- Novo Import!
 
-// 2. Register the ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
-
-// Video sources
+// Video sources (Mantenha toda a lógica não-GSAP aqui)
 const videos = [
   new URL('../assets/videos/carVideo1.mp4', import.meta.url).href,
   new URL('../assets/videos/carVideo2.mp4', import.meta.url).href,
@@ -113,67 +111,9 @@ function startFade(index = null) {
   }, 500);
 }
 
-// Encapsulate animation logic for better code organization
-function setupAnimations() {
-  // Initial text animation on the hero section
-  gsap.from('.animate-text', {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: 'power3.out',
-    stagger: 0.3
-  });
-
-  // Reveal animation for sections on scroll
-  gsap.utils.toArray('.gsap-reveal').forEach(section => {
-    gsap.from(section, {
-      y: 50,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  });
-
-  // Slide-in text animation
-  gsap.utils.toArray('.gsap-reveal-text').forEach(text => {
-    gsap.from(text, {
-      x: 50,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: text,
-        start: 'top 90%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  });
-
-  // Staggered animation for brand images
-  gsap.from('.gsap-reveal-img', {
-    y: 50,
-    opacity: 0,
-    duration: 0.8,
-    ease: 'power3.out',
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: '#brand',
-      start: 'top 85%',
-      toggleActions: 'play none none none',
-      once: true
-    }
-  });
-}
-
+// 2. A função setupAnimations foi removida, restando apenas a chamada no onMounted.
 onMounted(() => {
-  setupAnimations();
+  setupHomeAnimations(); // <-- Chama a função importada
 });
 </script>
 

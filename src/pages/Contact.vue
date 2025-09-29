@@ -85,9 +85,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
+// 1. Remova a importação 'import gsap from 'gsap';' daqui.
 
-// Form state
+// 2. Importe a função de animação do novo arquivo
+import { animateContactEntrance } from '../utils/animations/ContactAnimations'; // Ajuste o caminho conforme sua estrutura
+
+// Form state (mantido)
 const form = ref({
   name: '',
   email: '',
@@ -97,6 +100,7 @@ const form = ref({
 const isSubmitting = ref(false);
 const backgroundImage = new URL('../assets/imgs/carContact.png', import.meta.url).href;
 
+// Lógica do formulário (mantida)
 async function handleFormSubmit() {
   isSubmitting.value = true;
   try {
@@ -116,21 +120,12 @@ async function handleFormSubmit() {
   }
 }
 
+// 3. Chame a função importada no onMounted
 onMounted(() => {
-  // GSAP animations for a smooth entry
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-  tl.from('.gsap-contact-title', { opacity: 0, y: -20, duration: 1.2 })
-    .from('.gsap-contact-text', { opacity: 0, y: -20, duration: 1 }, "-=0.8")
-    .from('.gsap-contact-form', { opacity: 0, x: -50, stagger: 0.2, duration: 0.8 }, "-=0.5")
-    .from('.gsap-contact-button', { opacity: 0, scale: 0.8, duration: 0.8 }, "-=0.4");
+  animateContactEntrance();
 });
 </script>
 
 <style scoped>
-/*
-  The background image will be a local asset,
-  so we use the URL import to handle it correctly with Vite.
-  The rest of the styles are handled by Tailwind CSS classes.
-*/
+/* Estilos mantidos */
 </style>

@@ -1,7 +1,5 @@
 <template>
-   
-  <div class="w-full h-[1000px] flex flex-col items-center justify-center p-4 overflow-hidden">
-    
+  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
     
     <!-- Mensagem de Carregamento -->
     <div v-if="loading" class="text-2xl font-semibold text-gray-700">
@@ -28,18 +26,18 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      
+
       <div ref="cardRef" class="w-full max-w-4xl backdrop-blur-sm rounded-3xl p-2">
         
         <div v-if="currentCar" :key="currentCar.id" class="w-full flex flex-col items-center gap-2">
-         
+          
           <div class="w-24 h-24">
             <!-- NOTA: A API não fornece um logo da marca, estamos usando um placeholder -->
             <img :src="currentCar.brandLogo" :alt="`${currentCar.title} logo`" class="w-full h-full object-contain">
           </div>
 
           <div>
-            <p class="text-6xl md:text-8xl font-bold uppercase  text-gray-800 text-center tracking-tight">{{ currentCar.title }}</p>
+            <p class="text-6xl md:text-8xl font-bold uppercase text-gray-600 text-center tracking-tight">{{ currentCar.title }}</p>
           </div>
 
           <div class="w-full max-w-3xl my-2">
@@ -53,7 +51,7 @@
           </div>
           
           <div class="mt-4">
-            <button class="bg-amber-500 h-24 w-[500px] text-2xl font-bold text-white shadow-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-105 active:scale-95">
+            <button class="bg-yellow-700 h-24 w-[500px] text-2xl font-bold text-white shadow-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-105 active:scale-95">
               Shop Now
             </button>
           </div>

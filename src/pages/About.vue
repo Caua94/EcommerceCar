@@ -84,62 +84,22 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+// 1. Remova as importações: import gsap from "gsap"; import { ScrollTrigger } from "gsap/ScrollTrigger";
+// 2. Remova o registro do plugin: gsap.registerPlugin(ScrollTrigger);
+
+// Importe a nova função de animação
+import { setupAboutPageAnimations } from "../utils/animations/AboutAnimations.js"; 
+
+// Importações de assets (MANTIDAS)
 import unimar from "../assets/imgs/unimar.png";
 import fc from "../assets/imgs/fc.png";
 import jhow from "../assets/imgs/jhow.png";
 
-gsap.registerPlugin(ScrollTrigger);
-
+// Referências reativas (MANTIDAS)
 const heroRef = ref(null);
 
 onMounted(() => {
-  // Pin the hero section on scroll
-  ScrollTrigger.create({
-    trigger: heroRef.value,
-    start: "top top",
-    end: "bottom+=300%",
-    pin: true,
-    pinSpacing: false,
-  });
-
-  // Create a separate timeline for each storytelling block
-  gsap.utils.toArray(".storytelling-block").forEach((section) => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 80%", // Start the animation when the top of the section enters the viewport
-        end: "bottom top",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animate the heading (h2)
-    tl.from(section.querySelector("h2"), {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-    });
-
-    // Animate the paragraph (p)
-    tl.from(section.querySelector("p"), {
-      opacity: 0,
-      y: 30,
-      duration: 1,
-    }, "<0.3"); // Starts 0.3 seconds after the previous animation ends
-
-    // Animate the images, if they exist in the section
-    const images = section.querySelectorAll(".story-image");
-    if (images.length) {
-      tl.from(images, {
-        opacity: 0,
-        scale: 0.8,
-        duration: 1,
-        stagger: 0.2, // Animate each image with a 0.2s delay
-        ease: "power3.out",
-      }, "-=0.5"); // Starts 0.5 seconds before the previous animation ends (overlap effect)
-    }
-  });
+  // Chama a função importada, passando a referência do elemento
+  setupAboutPageAnimations(heroRef.value);
 });
 </script>
