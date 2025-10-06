@@ -9,6 +9,7 @@ import Checkout from '../pages/Checkout.vue'
 import Login from '../pages/Login.vue'
 import Sign from '../pages/Sign.vue'
 import Contact from '../pages/Contact.vue'
+import CreateCar from '../pages/CreateCar.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomePage },
@@ -19,7 +20,8 @@ const routes = [
   { path: '/checkout', name: 'Checkout', component: Checkout },
   { path: '/login', name: 'login', component: Login},
   { path: '/sign', name: 'sign', component: Sign},
-  { path: '/contact', name: 'contact', component: Contact}
+  { path: '/contact', name: 'contact', component: Contact},
+  { path: '/createCar', name: 'createCar', component: CreateCar}
 ]
 
 const router = createRouter({

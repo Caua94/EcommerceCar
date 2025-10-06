@@ -1,7 +1,5 @@
 <template>
-   
-  <div class="w-full h-[1000px] flex flex-col items-center justify-center p-4 overflow-hidden">
-    
+  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
     
     <!-- Mensagem de Carregamento -->
     <div v-if="loading" class="text-2xl font-semibold text-gray-700">
@@ -28,18 +26,18 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      
+
       <div ref="cardRef" class="w-full max-w-4xl backdrop-blur-sm rounded-3xl p-2">
         
         <div v-if="currentCar" :key="currentCar.id" class="w-full flex flex-col items-center gap-2">
-         
-          <div class="w-24 h-24">
+          
+          <div class="w-40 h-40">
             <!-- NOTA: A API não fornece um logo da marca, estamos usando um placeholder -->
             <img :src="currentCar.brandLogo" :alt="`${currentCar.title} logo`" class="w-full h-full object-contain">
           </div>
 
           <div>
-            <p class="text-6xl md:text-8xl font-bold uppercase  text-gray-800 text-center tracking-tight">{{ currentCar.title }}</p>
+            <p class="text-6xl md:text-8xl font-bold uppercase text-gray-600 text-center tracking-tight">{{ currentCar.title }}</p>
           </div>
 
           <div class="w-full max-w-3xl my-2">
@@ -52,8 +50,9 @@
             <p>{{ currentCar.year }}</p>
           </div>
           
+          
           <div class="mt-4">
-            <button class="bg-amber-500 h-24 w-[500px] text-2xl font-bold text-white shadow-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-105 active:scale-95">
+            <button class="bg-yellow-700 h-24 w-[500px] text-2xl font-bold text-white shadow-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-105 active:scale-95">
               Shop Now
             </button>
           </div>
@@ -82,6 +81,7 @@ import gsap from 'gsap';
 // 1. Importar o nosso serviço de API de carros
 import carService from '../services/carService'; 
 
+ 
 // --- DATA ---
 // A lista de carros agora começa vazia e será preenchida pela API
 const cars = ref([]);
@@ -91,19 +91,39 @@ const error = ref(null);
 // --- LÓGICA DA API ---
 const loadCars = async () => {
   try {
+    // 1. Chama o serviço que busca TODOS os carros.
     const response = await carService.getAll();
-    // 2. Mapear os dados da API para o formato que o seu template espera
-    cars.value = response.data.map(apiCar => ({
-      id: apiCar.id, // Assumindo que a API retorna um ID
-      brandLogo: new URL('../assets/imgs/nissan.png', import.meta.url).href, // Placeholder
-      title: apiCar.nome,
-      image: apiCar.imagemUrl,
-      price: apiCar.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-      year: `Ano ${apiCar.ano}`,
-    }));
+    
+    // 2. Define a URL base da sua API para construir os links completos das imagens.
+    const api_base = "https://localhost:7108";
+    
+    // 3. Mapeia a resposta da API para o formato que o seu componente precisa.
+    cars.value = response.data.map(apiCar => {
+
+      // A URL do logo da marca é determinada aqui:
+      const brandLogoUrl = (apiCar.marca && apiCar.marca.imagemURL)
+        ? `${api_base}${apiCar.marca.imagemURL}` // Se a API retornou a marca e a URL, monta o link completo.
+        : ''; // Senão, deixa em branco (ou pode colocar um placeholder).
+
+      // A URL da imagem do carro.
+      const carImageUrl = apiCar.imagemUrl 
+        ? `${api_base}${apiCar.imagemUrl}` 
+        : '';
+
+      // 4. Retorna o objeto formatado que será usado no template.
+      return {
+        id: apiCar.id,
+        brandLogo: brandLogoUrl, // << USA A URL DA MARCA QUE VEIO DA API
+        title: apiCar.nome,
+        image: carImageUrl,
+        price: apiCar.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+        year: `Ano ${apiCar.ano}`,
+      };
+    });
+
   } catch (err) {
     console.error("Falha ao buscar carros da API:", err);
-    error.value = "Não foi possível carregar a lista de carros. Tente novamente mais tarde.";
+    error.value = "Não foi possível carregar a lista de carros.";
   } finally {
     loading.value = false;
   }

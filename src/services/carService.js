@@ -1,15 +1,14 @@
-// Importa a nossa instância configurada do Axios (com a baseURL)
-import apiClient from './api';
+// services/carService.js
+
+import apiClient from './api.js';
 
 // A rota base para este recurso na API (vem de [Route("api/[controller]")])
 const resource = '/Car';
 
-// Exportamos um objeto com métodos que mapeiam para cada endpoint da API
 export default {
   /**
    * Busca a lista de todos os carros.
    * Corresponde a: [HttpGet("GetCars")]
-   * @returns {Promise}
    */
   getAll() {
     return apiClient.get(`${resource}/GetCars`);
@@ -18,29 +17,28 @@ export default {
   /**
    * Busca um único carro pelo seu ID.
    * Corresponde a: [HttpGet("{id:guid}")]
-   * @param {string} id O ID (guid) do carro.
-   * @returns {Promise}
    */
   getById(id) {
     return apiClient.get(`${resource}/${id}`);
   },
 
   /**
-   * Cria um novo carro.
-   * Corresponde a: [HttpPost("PostCar")]
-   * @param {object} carData Os dados do novo carro (deve corresponder ao CarDTO).
+   * Cria um novo carro enviando dados de formulário (FormData).
+   * Corresponde a: [HttpPost("PostCar")] com [FromForm]
+   * @param {FormData} formData Os dados do novo carro e o arquivo de imagem.
    * @returns {Promise}
    */
-  create(carData) {
-    return apiClient.post(`${resource}/PostCar`, carData);
+  create(formData) {
+    // Ao passar um objeto FormData, o Axios define automaticamente o 
+    // Content-Type como 'multipart/form-data', que é o correto para upload de arquivos.
+    return apiClient.post(`${resource}/PostCar`, formData);
   },
 
   /**
    * Atualiza um carro existente.
    * Corresponde a: [HttpPut("{id:guid}")]
-   * @param {string} id O ID (guid) do carro a ser atualizado.
+   * @param {string} id O ID do carro a ser atualizado.
    * @param {object} carData Os dados atualizados do carro.
-   * @returns {Promise}
    */
   update(id, carData) {
     return apiClient.put(`${resource}/${id}`, carData);
@@ -49,11 +47,9 @@ export default {
   /**
    * Deleta um carro pelo seu ID.
    * Corresponde a: [HttpDelete("{id:guid}")]
-   * @param {string} id O ID (guid) do carro a ser deletado.
-   * @returns {Promise}
+   * @param {string} id O ID do carro a ser deletado.
    */
   delete(id) {
-    // Note que "delete" é uma palavra reservada, mas pode ser usada como nome de propriedade em um objeto.
     return apiClient.delete(`${resource}/${id}`);
   },
 };

@@ -3,13 +3,11 @@ import axios from 'axios';
 // Cria uma instância do Axios com a configuração base para a nossa API C#.
 const apiClient = axios.create({
   // A baseURL é a parte da URL que se repetirá em todas as chamadas.
-  // ATENÇÃO: Verifique nos seus controllers C# se eles têm o atributo [Route("api/[controller]")].
-  // Se não tiverem, a baseURL seria apenas 'https://localhost:7108'.
   baseURL: 'https://localhost:7108/api',
   
   // Cabeçalhos padrão que serão enviados em todas as requisições.
   headers: {
-    'Content-Type': 'application/json',
+    // A linha 'Content-Type' foi removida. O Axios cuidará disso automaticamente.
     'Accept': 'application/json'
   }
 });
