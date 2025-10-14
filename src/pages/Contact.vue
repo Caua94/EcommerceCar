@@ -85,12 +85,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-// 1. Remova a importação 'import gsap from 'gsap';' daqui.
 
-// 2. Importe a função de animação do novo arquivo
-import { animateContactEntrance } from '../utils/animations/ContactAnimations'; // Ajuste o caminho conforme sua estrutura
+import { animateContactEntrance } from '../utils/animations/ContactAnimations'; // Ajuste o 
 
-// Form state (mantido)
+
 const form = ref({
   name: '',
   email: '',
@@ -100,15 +98,15 @@ const form = ref({
 const isSubmitting = ref(false);
 const backgroundImage = new URL('../assets/imgs/carContact.png', import.meta.url).href;
 
-// Lógica do formulário (mantida)
+
 async function handleFormSubmit() {
   isSubmitting.value = true;
   try {
-    // Simulate an API call
+
     await new Promise(resolve => setTimeout(resolve, 2000));
     console.log('Form submitted:', form.value);
     alert('Message sent successfully!');
-    // Reset form
+
     form.value.name = '';
     form.value.email = '';
     form.value.message = '';
@@ -120,12 +118,8 @@ async function handleFormSubmit() {
   }
 }
 
-// 3. Chame a função importada no onMounted
 onMounted(() => {
   animateContactEntrance();
 });
 </script>
 
-<style scoped>
-/* Estilos mantidos */
-</style>

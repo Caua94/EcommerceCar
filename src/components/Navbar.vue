@@ -117,18 +117,16 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from "vue";
-// 1. Importe seus serviços de API
+
 import brandService from '../services/brandService.js';
 import categoryService from '../services/categoryService.js';
 
-// --- LÓGICA EXISTENTE ---
-const isScrolled = ref(true); // Alterado para true para que a navbar seja visível no carregamento
+
+const isScrolled = ref(true); 
 const productsOpen = ref(false);
 const productsPanelRef = ref(null);
 let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
-// --- FIM DA LÓGICA EXISTENTE ---
 
-// 2. Crie refs para armazenar os dados da API
 const brands = ref([]);
 const categories = ref([]);
 
@@ -164,10 +162,10 @@ watch(overlayOpen, (open) => {
   else document.body.classList.remove(cls);
 });
 
-// 3. Crie uma função para carregar os dados
+
 const loadPanelData = async () => {
   try {
-    // Roda as duas requisições em paralelo para mais eficiência
+    
     const [brandsResponse, categoriesResponse] = await Promise.all([
       brandService.getAll(),
       categoryService.getAll()
@@ -176,15 +174,15 @@ const loadPanelData = async () => {
     categories.value = categoriesResponse.data;
   } catch (error) {
     console.error("Falha ao carregar dados do painel:", error);
-    // Opcional: mostrar uma notificação de erro
+    
   }
 };
 
 onMounted(() => {
-  handleScroll(); // Executa uma vez para definir o estado inicial correto da navbar
+  handleScroll(); 
   window.addEventListener("scroll", handleScroll);
   window.addEventListener("keydown", handleKeydown);
-  // 4. Chame a função para carregar os dados quando o componente for montado
+  
   loadPanelData();
 });
 

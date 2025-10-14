@@ -1,21 +1,17 @@
 <template>
   <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
     
-    <!-- Mensagem de Carregamento -->
     <div v-if="loading" class="text-2xl font-semibold text-gray-700">
       Carregando carros...
     </div>
 
-    <!-- Mensagem de Erro -->
     <div v-else-if="error" class="text-center">
       <p class="text-2xl font-bold text-red-600">Ocorreu um erro!</p>
       <p class="text-lg text-gray-600">{{ error }}</p>
     </div>
 
-    <!-- Conteúdo Principal (Carrossel) -->
     <div v-else-if="cars.length > 0" class="w-full max-w-6xl flex items-center justify-center gap-4">
       
-      <!-- BOTÃO PREV ATUALIZADO -->
       <button 
         @click="prevPage" 
         :disabled="currentPage === 0"
@@ -32,7 +28,6 @@
         <div v-if="currentCar" :key="currentCar.id" class="w-full flex flex-col items-center gap-2">
           
           <div class="w-40 h-40">
-            <!-- NOTA: A API não fornece um logo da marca, estamos usando um placeholder -->
             <img :src="currentCar.brandLogo" :alt="`${currentCar.title} logo`" class="w-full h-full object-contain">
           </div>
 
@@ -45,7 +40,6 @@
           </div>
           
           <div class="flex gap-10 text-3xl md:text-4xl text-gray-700 font-semibold">
-            <!-- Mapeamos o Preço e o Ano para estes campos -->
             <p>{{ currentCar.price }}</p>
             <p>{{ currentCar.year }}</p>
           </div>
@@ -59,7 +53,6 @@
         </div>
       </div>
 
-      <!-- BOTÃO NEXT ATUALIZADO -->
       <button 
         @click="nextPage" 
         :disabled="currentPage === totalPages - 1"
@@ -78,42 +71,29 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import gsap from 'gsap';
-// 1. Importar o nosso serviço de API de carros
 import carService from '../services/carService'; 
 
- 
-// --- DATA ---
-// A lista de carros agora começa vazia e será preenchida pela API
 const cars = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-// --- LÓGICA DA API ---
 const loadCars = async () => {
   try {
-    // 1. Chama o serviço que busca TODOS os carros.
     const response = await carService.getAll();
-    
-    // 2. Define a URL base da sua API para construir os links completos das imagens.
     const api_base = "https://localhost:7108";
     
-    // 3. Mapeia a resposta da API para o formato que o seu componente precisa.
     cars.value = response.data.map(apiCar => {
-
-      // A URL do logo da marca é determinada aqui:
       const brandLogoUrl = (apiCar.marca && apiCar.marca.imagemURL)
-        ? `${api_base}${apiCar.marca.imagemURL}` // Se a API retornou a marca e a URL, monta o link completo.
-        : ''; // Senão, deixa em branco (ou pode colocar um placeholder).
+        ? `${api_base}${apiCar.marca.imagemURL}`
+        : '';
 
-      // A URL da imagem do carro.
       const carImageUrl = apiCar.imagemUrl 
         ? `${api_base}${apiCar.imagemUrl}` 
         : '';
 
-      // 4. Retorna o objeto formatado que será usado no template.
       return {
         id: apiCar.id,
-        brandLogo: brandLogoUrl, // << USA A URL DA MARCA QUE VEIO DA API
+        brandLogo: brandLogoUrl,
         title: apiCar.nome,
         image: carImageUrl,
         price: apiCar.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
@@ -123,26 +103,21 @@ const loadCars = async () => {
 
   } catch (err) {
     console.error("Falha ao buscar carros da API:", err);
-    error.value = "Não foi possível carregar a lista de carros.";
+    error.value = "Não foi possível carregar la lista de carros.";
   } finally {
     loading.value = false;
   }
 };
 
-// 3. Chamar a função para carregar os dados quando o componente for montado
 onMounted(loadCars);
 
-
-// --- PAGINATION & ANIMATION REFS ---
 const cardRef = ref(null); 
 const currentPage = ref(0);
 const itemsPerPage = 1;
 
-// --- COMPUTED PROPERTIES ---
 const totalPages = computed(() => Math.ceil(cars.value.length / itemsPerPage));
 const currentCar = computed(() => cars.value[currentPage.value]);
 
-// --- NAVIGATION & ANIMATION LOGIC (Nenhuma alteração necessária aqui) ---
 const animateAndChangePage = (direction) => {
   if (!cardRef.value) return;
 
@@ -183,8 +158,4 @@ const prevPage = () => {
   }
 };
 </script>
-
-<style scoped>
-/* Scoped styles can be added here if needed */
-</style>
 

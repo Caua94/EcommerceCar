@@ -84,22 +84,19 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-// 1. Remova as importações: import gsap from "gsap"; import { ScrollTrigger } from "gsap/ScrollTrigger";
-// 2. Remova o registro do plugin: gsap.registerPlugin(ScrollTrigger);
 
-// Importe a nova função de animação
 import { setupAboutPageAnimations } from "../utils/animations/AboutAnimations.js"; 
 
-// Importações de assets (MANTIDAS)
+
 import unimar from "../assets/imgs/unimar.png";
 import fc from "../assets/imgs/fc.png";
 import jhow from "../assets/imgs/jhow.png";
 
-// Referências reativas (MANTIDAS)
+
 const heroRef = ref(null);
 
 onMounted(() => {
-  // Chama a função importada, passando a referência do elemento
+
   setupAboutPageAnimations(heroRef.value);
 });
 </script>

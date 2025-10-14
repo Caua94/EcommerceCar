@@ -1,6 +1,5 @@
 <template>
-    <!-- O bloco <template> permanece EXATAMENTE igual. 
-         As classes 'gsap-...' são mantidas para o seletor. -->
+
     <div class="login-page w-screen h-screen flex justify-center items-center relative overflow-hidden">
         <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted
             playsinline preload="auto"></video>
@@ -57,27 +56,20 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-// 1. Remova a importação 'import gsap from 'gsap';'
 
-// 2. Importe a função de animação do arquivo separado
-import { animateLoginEntrance } from '../utils/animations/LoginAnimations.js'; // Ajuste o caminho se necessário
-
-// Form state (mantido)
+import { animateLoginEntrance } from '../utils/animations/LoginAnimations.js'; // Ajuste o 
 const email = ref('');
 const password = ref('');
 const backgroundVideo = new URL('../assets/videos/Luxury_Car_Login_Page_Video.mp4', import.meta.url).href;
 
 function handleLogin() {
-    // Handle login logic here
+
     console.log('Login attempt with:', { email: email.value, password: password.value });
 }
 
-// 3. Chame a função importada no onMounted
+
 onMounted(() => {
     animateLoginEntrance();
 });
 </script>
 
-<style scoped>
-/* Estilos mantidos */
-</style>

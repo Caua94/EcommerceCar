@@ -109,12 +109,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-// 1. Remova a importação 'import gsap from 'gsap';'
 
-// 2. Importe a função de animação do novo arquivo
-import { animateSignupEntrance } from '../utils/animations/SignAnimations.js'; // Ajuste o caminho se necessário
-
-// Form state (mantido)
+import { animateSignupEntrance } from '../utils/animations/SignAnimations.js'; 
 const fullName = ref('');
 const email = ref('');
 const password = ref('');
@@ -122,7 +118,7 @@ const confirmPassword = ref('');
 const backgroundVideo = new URL('../assets/videos/Luxury_Car_Login_Page_Video.mp4', import.meta.url).href;
 
 function handleSignup() {
-  // Handle signup logic here
+
   console.log('Signup attempt with:', { 
     fullName: fullName.value,
     email: email.value, 
@@ -131,12 +127,9 @@ function handleSignup() {
   });
 }
 
-// 3. Chame a função importada no onMounted
+
 onMounted(() => {
   animateSignupEntrance();
 });
 </script>
 
-<style scoped>
-/* Estilos mantidos */
-</style>

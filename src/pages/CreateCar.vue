@@ -108,7 +108,7 @@ import carService from '../services/carService.js';
 import brandService from '../services/brandService.js';
 import categoryService from '../services/categoryService.js';
 
-// --- STATE MANAGEMENT ---
+
 const activeTab = ref('car');
 const newCar = ref({
   nome: '',
@@ -138,7 +138,7 @@ const notification = ref({
   type: 'success'
 });
 
-// --- LIFECYCLE HOOKS ---
+
 onMounted(async () => {
   try {
     const brandsResponse = await brandService.getAll();
@@ -150,7 +150,7 @@ onMounted(async () => {
   }
 });
 
-// --- METHODS ---
+
 const showNotification = (message, type = 'success') => {
   notification.value = { show: true, message, type };
   setTimeout(() => {
