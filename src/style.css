@@ -1,24 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  --cor-primaria: #606060; /* Cinza para fundo ou títulos */
-  --cor-secundaria: #ffffff; /* Branco para texto principal */
-  --cor-destaque: #003366; /* Borgonha para preços e ícones de destaque */
-  --cor-fundo-claro: #f5f5f5; /* Off-white para seções com muito texto */
-}
 
 body{
   font-family: "Jura", sans-serif;

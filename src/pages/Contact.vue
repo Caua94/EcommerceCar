@@ -86,7 +86,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-import { animateContactEntrance } from '../utils/animations/ContactAnimations'; // Ajuste o 
+import { animateContactEntrance } from '../utils/animations/ContactAnimations'; 
 
 
 const form = ref({
