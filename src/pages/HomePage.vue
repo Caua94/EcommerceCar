@@ -57,7 +57,7 @@ import CardComponent from '../components/CardComponent.vue';
 import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import brandService from '../services/brandService.js';
 
-// --- LÓGICA DO CARROSSEL DE VÍDEOS ---
+
 const videos = [
   new URL('../assets/videos/carVideo1.mp4', import.meta.url).href,
   new URL('../assets/videos/carVideo2.mp4', import.meta.url).href,
@@ -82,11 +82,10 @@ const handleVideoEnd = () => {
   changeVideo(nextIndex);
 };
 
-// --- LÓGICA DAS MARCAS ---
 const brands = ref([]);
 const isLoadingBrands = ref(true);
 const brandsError = ref(null);
-const api_base = "https://localhost:7108"; // Sua implementação original mantida
+const api_base = "https://localhost:7108"; 
 
 const fetchBrands = async () => {
   try {
