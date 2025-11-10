@@ -25,11 +25,11 @@
               </svg>
             </button>
           </li>
-          <li><a href="#brand" class="hover:text-amber-300 transition-colors">Brands</a></li>
           <router-link class="hover:text-amber-300 transition-colors" to="/about">About</router-link>
           <router-link class="hover:text-amber-300 transition-colors" to="/login">Login</router-link>
           <router-link class="hover:text-amber-300 transition-colors" to="/contact">Contact</router-link>
           <router-link class="hover:text-amber-300 transition-colors" to="/createCar">Create</router-link>
+          <router-link class="hover:text-amber-300 transition-colors" to="/seeMore">Create</router-link>
         </ul>
         <button
           @click="openProducts"

@@ -3,7 +3,7 @@
     <div class="absolute z-40 text-white text-center bottom-32 space-y-6 inset-x-0">
       <p class="text-gray-200 font-medium text-2xl animate-text">Luxury Cars</p>
       <h1 class="text-7xl font-bold animate-text">Make Your Dream a Reality.</h1>
-      <router-link to="/shop" class="text-4xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform animate-text">
+      <router-link to="/cars" class="text-4xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform animate-text">
         <p>Shop Now</p>
         <ButtonArrow />
       </router-link>
@@ -85,7 +85,7 @@ const handleVideoEnd = () => {
 const brands = ref([]);
 const isLoadingBrands = ref(true);
 const brandsError = ref(null);
-const api_base = "https://localhost:7108"; 
+const api_base = "http://localhost:5132"; 
 
 const fetchBrands = async () => {
   try {

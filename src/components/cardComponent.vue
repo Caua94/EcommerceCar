@@ -23,7 +23,7 @@
         </svg>
       </button>
 
-      <div ref="cardRef" class="w-full max-w-4xl backdrop-blur-sm rounded-3xl p-2">
+      <div ref="cardRef" class="w-full max-w-4xl sm rounded-3xl p-2">
         
         <div v-if="currentCar" :key="currentCar.id" class="w-full flex flex-col items-center gap-2">
           
@@ -80,7 +80,7 @@ const error = ref(null);
 const loadCars = async () => {
   try {
     const response = await carService.getAll();
-    const api_base = "https://localhost:7108";
+    const api_base = "http://localhost:5132";
     
     cars.value = response.data.map(apiCar => {
       const brandLogoUrl = (apiCar.marca && apiCar.marca.imagemURL)

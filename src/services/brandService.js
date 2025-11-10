@@ -1,5 +1,3 @@
-
-
 import apiClient from './api.js';
 
 const resource = '/Brand';
@@ -14,7 +12,8 @@ export default {
   },
 
   create(formData) {
-    return apiClient.post(`${resource}/PostBrand`, formData);
+
+    return apiClient.post(`${resource}/AddBrand`, formData);
   },
 
   update(id, brandData) {

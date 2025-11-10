@@ -1,27 +1,27 @@
-
-
 import apiClient from './api.js';
 
 const resource = '/Car';
 
 export default {
-  getAll() {
-    return apiClient.get(`${resource}/GetCars`);
-  },
+  getAll() {
 
-  getById(id) {
-    return apiClient.get(`${resource}/${id}`);
-  },
+    return apiClient.get(`${resource}/GetCar`);
+  },
 
-  create(formData) {
-    return apiClient.post(`${resource}/PostCar`, formData);
-  },
+  getById(id) {
+    return apiClient.get(`${resource}/${id}`);
+  },
 
-  update(id, carData) {
-    return apiClient.put(`${resource}/${id}`, carData);
-  },
+  create(formData) {
+    
+    return apiClient.post(`${resource}/AddCar`, formData);
+  },
 
-  delete(id) {
-    return apiClient.delete(`${resource}/${id}`);
-  },
+  update(id, carData) {
+    return apiClient.put(`${resource}/${id}`, carData);
+  },
+
+  delete(id) {
+    return apiClient.delete(`${resource}/${id}`);
+  },
 };

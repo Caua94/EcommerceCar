@@ -14,18 +14,27 @@
         class="absolute top-3 left-3 w-14 h-14 bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-lg object-contain z-10"
       >
     </div>
-    <div class="p-4">
-      <h3 class="text-lg font-bold text-gray-800 truncate">{{ car.title }}</h3>
-      <p class="mt-2 text-xl font-semibold text-gray-900">{{ car.price }}</p>
-      <button class="mt-4 w-full bg-slate-900 text-white py-2 rounded-lg font-semibold hover:bg-yellow-900 transition-colors border-3 border-blue-400 drop-shadow-[0_0_3px_#00ffff]">
+    <div class="p-4 space-y-2">
+      <h3 class="text-2xl font-bold text-gray-800 truncate">{{ car.title }}</h3>
+      <p class=" text-xl font-semibold text-gray-900">{{ car.price }}</p>
+      <button 
+        @click="goToDetails" 
+        class="p-2 text-xl w-full bg-black text-white font-bold border-3 border-amber-600 rounded-xl hover:bg-amber-700">
         Ver Mais
       </button>
     </div>
   </div>
 </template>
-
+ c
 <script setup>
-defineProps({
+
+import { useRouter } from 'vue-router';
+
+
+const router = useRouter();
+
+
+const props = defineProps({
   car: {
     type: Object,
     required: true
@@ -34,5 +43,14 @@ defineProps({
 
 const handleImageError = (event) => {
   event.target.src = 'https://placehold.co/400x300/e2e8f0/475569?text=Imagem';
+};
+
+
+const goToDetails = () => {
+
+  router.push({ 
+    name: 'seeMore', 
+    params: { id: props.car.id } 
+  });
 };
 </script>

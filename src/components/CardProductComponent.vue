@@ -80,7 +80,7 @@ const error = ref(null);
 const loadCars = async () => {
   try {
     const response = await carService.getAll();
-    const api_base = "https://localhost:7108";
+    const api_base = "http://localhost:5132";
     
     cars.value = response.data.map(apiCar => {
       const brandLogoUrl = (apiCar.marca && apiCar.marca.imagemURL)

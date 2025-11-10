@@ -1,0 +1,153 @@
+<template>
+    <div class="bg-black text-white w-full min-h-screen flex justify-center items-center p-4 sm:p-8">
+
+        <div v-if="loading && !paymentDetails" class="text-xl">
+            Carregando detalhes do pedido...
+        </div>
+
+        <div v-if="!loading && !paymentDetails" class="text-xl text-red-400">
+            Erro ao carregar os detalhes do pagamento.
+        </div>
+
+        <div v-if="paymentDetails" class="bg-white text-gray-800 rounded-lg shadow-lg px-8 py-10 max-w-xl mx-auto">
+
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center">
+                    <img class="h-8 w-8 mr-2" src="https://tailwindflex.com/public/images/logos/favicon-32x32.png"
+                        alt="Logo" />
+                    <div class="text-gray-700 font-semibold text-lg">DreamCar</div>
+                </div>
+                <div class="text-gray-700 text-right">
+                    <div class="font-bold text-xl mb-1">ID: {{ paymentDetails.transactionId }}</div>
+                    <div class="text-sm">Data: {{ new Date().toLocaleDateString('pt-BR') }}</div>
+                    <div class="text-sm">Método: {{ paymentDetails.paymentMethod }}</div>
+                </div>
+            </div>
+
+            <div class="border-b-2 border-gray-300 pb-8 mb-8">
+                <h2 class="text-2xl font-bold mb-4">Cobrança Para:</h2>
+                <div class="text-gray-700 mb-2">Jhonata Cainavara</div>
+                <div class="text-gray-700 mb-2">123 Main St., Anytown, USA 12345</div>
+                <div class="text-gray-700">jow@example.com</div>
+            </div>
+
+            <table class="w-full text-left mb-8">
+                <thead>
+                    <tr>
+                        <th class="text-gray-700 font-bold uppercase py-2">Item</th>
+                        <th class="text-gray-700 font-bold uppercase py-2 text-right">Preço</th>
+                        <th class="text-gray-700 font-bold uppercase py-2 text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="py-4 text-gray-700">Compra de Carro</td>
+                        <td class="py-4 text-gray-700 text-right">R$ {{ paymentDetails.amount }}</td>
+                        <td class="py-4 text-gray-700 text-right">R$ {{ paymentDetails.amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="flex justify-end mb-8">
+                <div class="w-full md:w-1/2">
+                    <div class="flex justify-between mb-2">
+                        <div class="text-gray-700 mr-2">Taxa:</div>
+                        <div class="text-gray-700">R$ 0,00</div>
+                    </div>
+                    <div class="border-t border-gray-300"></div>
+                    <div class="flex justify-between mt-2">
+                        <div class="text-gray-700 font-bold text-xl">Total:</div>
+                        <div class="text-gray-700 font-bold text-xl">R$ {{ paymentDetails.amount }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t-2 border-gray-300 pt-8 mb-4">
+
+                <div class="mb-4">
+                    <span class="text-lg font-bold">Status:</span>
+                    <span class="py-1 px-3 rounded-full text-white" :class="{
+                        'bg-green-500': paymentDetails.status === 'approved',
+                        'bg-yellow-500': paymentDetails.status === 'pending',
+                        'bg-red-500': paymentDetails.status === 'refused' || paymentDetails.status === 'error'
+                    }">
+                        {{ paymentDetails.status }}
+                    </span>
+                </div>
+
+                <p v-if="paymentDetails.message" class="text-gray-700 mb-4 text-lg">
+                    {{ paymentDetails.message }}
+                </p>
+
+                <div v-if="paymentDetails.paymentMethod === 'boleto'" class="mb-4 p-4 bg-gray-50 rounded-lg">
+                    <h3 class="text-lg font-bold mb-2">Detalhes do Boleto</h3>
+                    <p class="text-gray-700 mb-1">
+                        <strong>Linha Digitável:</strong>
+                    </p>
+                    <input 
+                        type="text" 
+                        readonly 
+                        :value="paymentDetails.boletoNumber"
+                        class="w-full bg-gray-200 p-2 rounded border border-gray-300 text-sm mb-2"
+                        onclick="this.select();" 
+                    />
+                    <a :href="paymentDetails.boletoUrl" target="_blank"
+                        class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                        Abrir Boleto
+                    </a>
+                </div>
+
+                <div v-if="paymentDetails.paymentMethod === 'pix'" class="mb-4 p-4 bg-gray-50 rounded-lg">
+                    <h3 class="text-lg font-bold mb-2">Detalhes do PIX</h3>
+                    <p class="text-gray-700 mb-1">
+                        <strong>PIX Copia e Cola:</strong>
+                    </p>
+                    <textarea 
+                        readonly
+                        class="w-full bg-gray-200 p-2 rounded border border-gray-300 text-sm mb-2"
+                        rows="3" 
+                        onclick="this.select();"
+                    >{{ paymentDetails.pixCode }}</textarea>
+                    <p class="text-sm text-gray-600">Copie o código acima para pagar no seu app do banco.</p>
+                </div>
+
+                <p class="text-gray-700 mb-2">Obrigado pela sua compra!</p>
+                
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const paymentDetails = ref(null);
+const loading = ref(true); 
+
+onMounted(() => {
+    
+    if (history.state.paymentData) {
+        paymentDetails.value = history.state.paymentData;
+    } else {
+         página
+        console.warn("Dados de pagamento não encontrados no state. (Recarregou a página?)");
+    
+    }
+    loading.value = false;
+});
+
+// const fetchPaymentDetails = async (transactionId) => {
+//   try {
+//     // Crie um 'paymentService.getById(transactionId)'
+//     const response = await paymentService.getByTransactionId(transactionId);
+//     paymentDetails.value = response.data;
+//   } catch (error) {
+//     console.error("Erro ao buscar detalhes da transação:", error);
+//   } finally {
+//     loading.value = false;
+//   }
+// };
+</script>

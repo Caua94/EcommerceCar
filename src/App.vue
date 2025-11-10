@@ -2,7 +2,7 @@
   <div class="flex flex-col min-h-screen bg-white">
     <Navbar />
 
-    <main class="flex-grow">
+    <main class="flex-grow ">
       <router-view />
     </main>
 
