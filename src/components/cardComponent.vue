@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
+  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 py-8 overflow-hidden">
     
     <div v-if="loading" class="text-2xl font-semibold text-gray-700">
       Carregando carros...
@@ -10,15 +10,15 @@
       <p class="text-lg text-gray-600">{{ error }}</p>
     </div>
 
-    <div v-else-if="cars.length > 0" class="w-full max-w-6xl flex items-center justify-center gap-4">
+    <div v-else-if="cars.length > 0" class="w-full max-w-6xl flex items-center justify-center gap-2 md:gap-4">
       
       <button 
         @click="prevPage" 
         :disabled="currentPage === 0"
-        class="p-4 bg-black backdrop-blur-md border border-white/30 rounded-full shadow-xl hover:bg-black/50 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 disabled:opacity-40 disabled:shadow-lg disabled:cursor-not-allowed group"
+        class="p-2 md:p-4 bg-black backdrop-blur-md border border-white/30 rounded-full shadow-xl hover:bg-black/50 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 disabled:opacity-40 disabled:shadow-lg disabled:cursor-not-allowed group"
         aria-label="Previous Car"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
@@ -27,26 +27,30 @@
         
         <div v-if="currentCar" :key="currentCar.id" class="w-full flex flex-col items-center gap-2">
           
-          <div class="w-40 h-40">
+          <div class="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40">
             <img :src="currentCar.brandLogo" :alt="`${currentCar.title} logo`" class="w-full h-full object-contain">
           </div>
 
           <div>
-            <p class="text-6xl md:text-8xl font-bold uppercase text-gray-600 text-center tracking-tight">{{ currentCar.title }}</p>
+            <p class="text-5xl md:text-7xl lg:text-8xl font-dancing capitalize text-gray-600 text-center tracking-tight">{{ currentCar.title }}</p>
           </div>
 
           <div class="w-full max-w-3xl my-2">
             <img :src="currentCar.image" :alt="currentCar.title" class="w-full h-auto object-contain drop-shadow-xl" onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/475569?text=Imagem+Indisponível';">
           </div>
           
-          <div class="flex gap-10 text-3xl md:text-4xl text-gray-700 font-semibold">
+          <div class="flex gap-6 md:gap-10 text-2xl md:text-3xl lg:text-4xl text-gray-200 font-semibold">
             <p>{{ currentCar.price }}</p>
             <p>{{ currentCar.year }}</p>
           </div>
           
           
-          <div class="mt-4">
-            <button class="bg-yellow-700 h-24 w-[500px] text-2xl font-bold text-white shadow-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-105 active:scale-95">
+          <div class="mt-4 w-full flex justify-center">
+            <button class="h-16 md:h-20 lg:h-24 w-full max-w-xs md:max-w-md lg:w-[500px] 
+                           text-lg md:text-2xl 
+                           bg-yellow-700 font-bold text-white shadow-lg 
+                           hover:bg-amber-600 transition-all duration-300 
+                           transform hover:scale-105 active:scale-95 rounded-lg">
               Shop Now
             </button>
           </div>
@@ -56,10 +60,10 @@
       <button 
         @click="nextPage" 
         :disabled="currentPage === totalPages - 1"
-        class="p-4 bg-black backdrop-blur-md border border-white/30 rounded-full shadow-xl hover:bg-black/50 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 disabled:opacity-40 disabled:shadow-lg disabled:cursor-not-allowed group"
+        class="p-2 md:p-4 bg-black backdrop-blur-md border border-white/30 rounded-full shadow-xl hover:bg-black/50 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 disabled:opacity-40 disabled:shadow-lg disabled:cursor-not-allowed group"
         aria-label="Next Car"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>

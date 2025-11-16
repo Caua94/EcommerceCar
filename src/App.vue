@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-white">
+  <div class="flex flex-col min-h-screen bg-black">
     <Navbar />
 
     <main class="flex-grow ">
@@ -20,4 +20,5 @@ export default {
     Footer
   }
 };
+
 </script>
