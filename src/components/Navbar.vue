@@ -5,9 +5,9 @@
       isScrolled ? 'bg-stone-800/90 text-white shadow-md backdrop-blur-sm' : 'bg-transparent text-white'
     ]">
       <div class="max-w-7xl px-6 py-4 flex items-center h-full justify-between md:justify-start">
-        <router-link to="/" class="absolute left-10 w-24 h-24">
+        <div  class="absolute left-10 w-24 h-24">
           <img src="../assets/imgs/Logo.png" alt="Company Logo" class="w-full h-full object-contain" />
-        </router-link>
+        </div>
         <ul class="hidden md:flex ml-50 gap-15 font-bold text-2xl items-center">
           <router-link class="hover:text-amber-300 transition-colors" to="/">Home</router-link>
           <li>
@@ -23,6 +23,7 @@
           <router-link class="hover:text-amber-300 transition-colors" to="/login">Login</router-link>
           <router-link class="hover:text-amber-300 transition-colors" to="/contact">Contact</router-link>
           <router-link class="hover:text-amber-300 transition-colors" to="/createCar">Create</router-link>
+          <router-link class="hover:text-amber-300 transition-colors" to="/carsPerBrand">CarPERbrand</router-link>
 
         </ul>
         <button @click="openMobileNav" class="md:hidden rounded-lg text-white hover:bg-stone-800 transition-colors"
@@ -142,9 +143,9 @@ import categoryService from '../services/categoryService.js';
 
 const isScrolled = ref(true);
 const productsOpen = ref(false);
-const mobileNavOpen = ref(false); // <-- NOVO ESTADO para o menu mobile
+const mobileNavOpen = ref(false); 
 const productsPanelRef = ref(null);
-const mobileNavRef = ref(null); // <-- NOVO Ref para o menu mobile
+const mobileNavRef = ref(null);
 
 let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 
@@ -157,7 +158,7 @@ const handleScroll = () => {
   lastScrollY = currentScrollY;
 };
 
-// Funções para o painel de PRODUTOS (desktop)
+
 const openProducts = async () => {
   productsOpen.value = true;
   await nextTick();
@@ -167,7 +168,7 @@ const closeProducts = () => {
   productsOpen.value = false;
 };
 
-// Funções para o painel de NAVEGAÇÃO (mobile)
+
 const openMobileNav = async () => {
   mobileNavOpen.value = true;
   await nextTick();
@@ -177,7 +178,7 @@ const closeMobileNav = () => {
   mobileNavOpen.value = false;
 };
 
-// Função "fechar tudo" atualizada
+
 const closeAll = () => {
   productsOpen.value = false;
   mobileNavOpen.value = false;
@@ -187,7 +188,7 @@ const handleKeydown = (e) => {
   if (e.key === "Escape") closeAll();
 };
 
-// Overlay agora aparece se QUALQUER painel estiver aberto
+
 const overlayOpen = computed(() => productsOpen.value || mobileNavOpen.value);
 
 watch(overlayOpen, (open) => {

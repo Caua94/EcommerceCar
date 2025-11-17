@@ -250,7 +250,7 @@ const notification = ref({
 });
 
 onMounted(async () => {
-a
+
   animateLoginEntrance();
 
 

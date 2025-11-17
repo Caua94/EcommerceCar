@@ -74,7 +74,7 @@
         </div>
 
         <button type="submit" :disabled="isSubmitting || !car"
-          class="w-full bg-amber-600 hover:bg-amber-700 text-white text-lg font-bold py-3 px-6 rounded-lg transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed">
+          class="w-full bg-amber-600 hover:bg-gray-500 text-black hover:text-white text-lg font-bold py-3 px-6 rounded-lg transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed">
           {{ isSubmitting ? 'Processando...' : `Pagar` }}
         </button>
         <p v-if="error" class="text-red-500 text-center mt-4">{{ error }}</p>
@@ -99,7 +99,7 @@ const car = ref(null);
 const loading = ref(true);
 const isSubmitting = ref(false);
 const error = ref(null);
-const paymentMethod = ref('Card'); ão
+const paymentMethod = ref('Card'); 
 
 const cardDetails = ref({
   CardNumber: '',

@@ -12,10 +12,12 @@ import Contact from "../pages/Contact.vue";
 import CreateCar from "../pages/CreateCar.vue";
 import SeeMore from "../pages/SeeMore.vue";
 import PayOrder from "../pages/PayOrder.vue";
+import carsSellPerBrand from "../pages/carsSellPerBrand.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
   { path: "/cars", name: "Cars", component: Cars },
+  { path: "/carsPerBrand", name: "carsPerBrand", component: carsSellPerBrand },
   { path: "/about", name: "About", component: About },
   { path: "/cart/:id", name: "Cart", component: Cart, props: true },
   {
@@ -42,8 +44,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    // Retorna { top: 0 } para rolar sempre para o topo
-    return { top: 0 };
+     return { top: 0 };
   },
 });
 
