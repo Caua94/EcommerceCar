@@ -12,8 +12,7 @@ export default {
   },
 
   create(formData) {
-
-    return apiClient.post(`${resource}/AddBrand`, formData);
+    return apiClient.post(`${resource}/AddCloudinary`, formData);
   },
 
   update(id, brandData) {

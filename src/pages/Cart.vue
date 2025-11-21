@@ -6,16 +6,16 @@
     </div>
 
     <div v-if="!loading && car"
-      class="w-full max-w-6xl flex flex-col md:flex-row gap-8 md:gap-16 items-start mt-8 md:mt-0">
+      class="w-full max-w-6xl flex flex-col md:flex-row gap-8 md:gap-60 items-start mt-8 md:mt-0">
 
-      <div class="w-full md:w-1/2 space-y-6 sm:space-y-10">
+      <div class="w-full md:w-2/3 space-y-6 sm:space-y-10">
         <h2 class="text-3xl sm:text-4xl font-bold text-gray-200">Resumo da Compra</h2>
         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-10 items-center">
           <img :src="car.imagemUrl" :alt="car.nome"
             class="h-32 w-32 sm:h-40 sm:w-auto bg-gradient-to-b from-slate-900 to-neutral-500 from-60% via-70% to-100% rounded-lg border border-amber-500 object-cover">
           <div class="flex flex-col text-center sm:text-left">
-            <h3 class="text-xl sm:text-2xl font-semibold">{{ car.nome }}</h3>
-            <p class="text-3xl sm:text-4xl font-light text-amber-500 mt-2"> R${{ car.preco }}</p>
+            <h3 class="text-xl sm:text-2xl font-semibold">{{ car.name }}</h3>
+            <p class="text-3xl sm:text-4xl font-light text-amber-500 mt-2"> R${{ car.price }}</p>
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="w-full md:w-1/2 flex flex-col justify-center items-start space-y-5">
         <h2 class="text-2xl sm:text-3xl font-bold text-gray-200 mb-6 border-b w-full">Pagamento</h2>
         <div>
-          <h3 class="text-2xl sm:text-3xl font-bold text-gray-200 ">Total: R${{ car.preco }}</h3>
+          <h3 class="text-2xl sm:text-3xl font-bold text-gray-200 ">Total: R${{ car.price }}</h3>
           <p class="text-mg ">Sem taxa adicional</p>
         </div>
 
@@ -59,22 +59,19 @@ const car = ref(null);
 const loading = ref(true);
 const error = ref(null);
 
-onMounted(() => {
-  fetchCheckoutData();
-});
-
 
 const fetchCheckoutData = async () => {
   loading.value = true;
   try {
-    const api_base = "http://localhost:5132";
     const response = await carService.getById(props.id);
-    const carData = response.data;
+    const apiData = response.data;
+    car.value = {
+      ...apiData,
+      nome: apiData.name || apiData.nome,
+      preco: apiData.price || apiData.preco,
+      imagemUrl: apiData.imageUrl
+    };
 
-    if (carData.imagemUrl) {
-      carData.imagemUrl = `${api_base}${carData.imagemUrl}`;
-    }
-    car.value = carData;
   } catch (err) {
     console.error("Erro ao buscar dados do carro:", err);
     error.value = "Não foi possível carregar os dados do carro.";
@@ -83,15 +80,16 @@ const fetchCheckoutData = async () => {
   }
 };
 
+onMounted(() => {
+  fetchCheckoutData();
+});
 
 const goToPayment = () => {
   if (car.value) {
-
     router.push({
       name: 'pay-order',
       params: { id: car.value.id },
-
-      state: { carData: car.value }
+      state: { carData: JSON.parse(JSON.stringify(car.value)) } 
     });
   }
 };

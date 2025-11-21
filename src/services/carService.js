@@ -3,32 +3,30 @@ import apiClient from './api.js';
 const resource = '/Car';
 
 export default {
-  getCars(pageNumber, pageQuantity) {
-    return apiClient.get(`${resource}/GetCar`, {
-      params: {
-        pageNumber: pageNumber,
-        pageQuantity: pageQuantity
-      }
-    });
-  },
 
-  getAll() {
-    return apiClient.get(`${resource}/GetCar`);
-  },
+  filterCars(filterData) {
+    return apiClient.get(`${resource}/Filter`, {
+      params: filterData
+    });
+  },
 
-  getById(id) {
-    return apiClient.get(`${resource}/${id}`);
-  },
+  getAll() {
+    return apiClient.get(`${resource}/GetCars`);
+  },
 
-  create(formData) {
-    return apiClient.post(`${resource}/AddCar`, formData);
-  },
+  getById(id) {
+    return apiClient.get(`${resource}/${id}`);
+  },
 
-  update(id, carData) {
-    return apiClient.put(`${resource}/${id}`, carData);
-S },
+  create(formData) {
+    return apiClient.post(`${resource}/PostCar`, formData);
+  },
 
-  delete(id) {
-    return apiClient.delete(`${resource}/${id}`);
-  },
+  update(id, carData) {
+    return apiClient.put(`${resource}/${id}`, carData);
+  },
+
+  delete(id) {
+    return apiClient.delete(`${resource}/${id}`);
+  },
 };

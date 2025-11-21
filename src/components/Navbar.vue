@@ -1,48 +1,92 @@
 <template>
   <div>
+
     <nav :class="[
+
       'fixed top-0 w-full z-50 transition-all duration-300 h-26',
+
       isScrolled ? 'bg-stone-800/90 text-white shadow-md backdrop-blur-sm' : 'bg-transparent text-white'
+
     ]">
+
       <div class="max-w-7xl px-6 py-4 flex items-center h-full justify-between md:justify-start">
-        <div  class="absolute left-10 w-24 h-24">
+
+        <div class="absolute left-10 w-24 h-24">
+
           <img src="../assets/imgs/Logo.png" alt="Company Logo" class="w-full h-full object-contain" />
+
         </div>
+
         <ul class="hidden md:flex ml-50 gap-15 font-bold text-2xl items-center">
+
           <router-link class="hover:text-amber-300 transition-colors" to="/">Home</router-link>
+
           <li>
+
             <button @click="openProducts" class="hover:text-amber-300 transition-colors flex items-center gap-2"
               :aria-expanded="productsOpen ? 'true' : 'false'" aria-controls="products-drawer">
+
               Products
+
               <svg class="w-5 h-5 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+
                 <path fill-rule="evenodd" d="M6 6l6 4-6 4V6z" clip-rule="evenodd" />
+
               </svg>
+
             </button>
+
           </li>
+
           <router-link class="hover:text-amber-300 transition-colors" to="/about">About</router-link>
-          <router-link class="hover:text-amber-300 transition-colors" to="/login">Login</router-link>
+
+
+
           <router-link class="hover:text-amber-300 transition-colors" to="/contact">Contact</router-link>
-          <router-link class="hover:text-amber-300 transition-colors" to="/createCar">Create</router-link>
-          <router-link class="hover:text-amber-300 transition-colors" to="/carsPerBrand">CarPERbrand</router-link>
+
+          <router-link v-if="isAdmin" class="hover:text-amber-300 transition-colors" to="/createCar">Create</router-link>
+
+            <div class="absolute right-10 flex items-center gap-6">
+            
+            <div v-if="currentUser" class="flex items-center gap-4">
+              <span class="text-amber-400 font-semibold capitalize">Shop your dream, {{ currentUser }}</span>
+              <button @click.prevent="handleLogout" class="hover:text-red-400 transition-colors border border-white/30 hover:border-red-400 rounded-full px-4 py-1 text-sm">
+                Logout
+              </button>
+            </div>
+
+            <router-link v-else class="hover:text-amber-300 transition-colors hover:border rounded-full p-2" to="/login">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-8">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
+            </router-link>
+
+          </div>
+
+
 
         </ul>
-        <button @click="openMobileNav" class="md:hidden rounded-lg text-white hover:bg-stone-800 transition-colors"
-          aria-label="Open Navigation Menu" :aria-expanded="mobileNavOpen ? 'true' : 'false'"
-          aria-controls="mobile-nav-drawer">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+
+        <button @click="openMobileNav"
+          class="md:hidden rounded-lg text-white hover:bg-stone-800 transition-colors ml-auto"
+          aria-label="Open Navigation Menu">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
       </div>
     </nav>
+
     <aside id="mobile-nav-drawer" :class="[
       'fixed top-0 left-0 h-screen w-[30rem] max-w-[90vw] bg-stone-900 text-white z-[60] shadow-2xl',
       'transition-transform transform duration-700 ease-in-out',
       mobileNavOpen ? 'translate-x-0' : '-translate-x-full'
-    ]" tabindex="-1" ref="mobileNavRef" aria-label="Mobile Navigation Menu" style="overflow-y: auto;">
+    ]" tabindex="-1" ref="mobileNavRef" style="overflow-y: auto;">
       <div class="p-6 flex items-center justify-between border-b border-stone-700">
         <h3 class="text-5xl font-semibold">Menu</h3>
-        <button @click="closeMobileNav" class="p-2 rounded hover:bg-stone-800" aria-label="Close Menu">
+        <button @click="closeMobileNav" class="p-2 rounded hover:bg-stone-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -51,15 +95,26 @@
 
       <nav class="p-6">
         <ul class="space-y-2 text-3xl">
+          <li v-if="currentUser">
+            <div class="px-3 py-2 text-amber-400 capitalize">Shop your dream, {{ currentUser }}</div>
+            <button @click.prevent="handleLogout(); closeMobileNav()"
+              class="block w-full text-left px-3 py-2 rounded hover:bg-red-900/30 text-red-400">Logout</button>
+          </li>
+          <li v-else>
+            <router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
+              to="/login">Login</router-link>
+          </li>
           <li><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
               to="/">Home</router-link></li>
+
+
           <li><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
               to="/about">About</router-link></li>
           <li><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800" to="/cars">All
               Products</router-link></li>
           <li><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
               to="/contact">Contact</router-link></li>
-          <li><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
+          <li v-if="isAdmin"><router-link  @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
               to="/createCar">Create</router-link></li>
         </ul>
       </nav>
@@ -69,10 +124,10 @@
       'fixed top-0 left-0 h-screen w-[30rem] max-w-[90vw] bg-stone-900 text-white z-[60] shadow-2xl',
       'transition-transform transform duration-700 ease-in-out',
       productsOpen ? 'translate-x-0' : '-translate-x-full'
-    ]" tabindex="-1" ref="productsPanelRef" aria-label="Products Menu">
+    ]" tabindex="-1" ref="productsPanelRef">
       <div class="p-6 flex items-center justify-between border-b border-stone-700">
         <h3 class="text-5xl font-semibold">Products</h3>
-        <button @click="closeProducts" class="p-2 rounded hover:bg-stone-800" aria-label="Close Menu">
+        <button @click="closeProducts" class="p-2 rounded hover:bg-stone-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -99,35 +154,11 @@
                 Brands</div>
               <li v-if="brands.length === 0"><a class="block py-1 text-stone-400">Carregando...</a></li>
               <li v-for="brand in brands" :key="brand.id">
-                <router-link :to="`/shop/brand/${brand.nome}`" class="block py-1 hover:text-amber-300">{{ brand.nome
+                <router-link :to="`/carsPerBrand/${brand.id}`" class="block py-1 hover:text-amber-300">{{ brand.name
                 }}</router-link>
               </li>
             </ul>
           </li>
-
-          <li class="relative group">
-            <div class="flex justify-between items-center px-3 py-2 rounded hover:bg-stone-800 cursor-pointer">
-              Models
-              <svg class="w-5 h-5 transition-transform group-hover:rotate-90" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M6 6l6 4-6 4V6z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <ul
-              class="fixed left-full top-0 w-[30rem] h-screen bg-stone-900 shadow-lg p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-              <div
-                class="p-4 flex font-semibold items-center justify-between text-4xl uppercase tracking-wide text-stone-400 mb-4 border-b border-stone-700">
-                Models</div>
-              <li v-if="categories.length === 0"><a class="block py-1 text-stone-400">Carregando...</a></li>
-              <li v-for="category in categories" :key="category.id">
-                <router-link :to="`/shop/category/${category.nome}`" class="block py-1 hover:text-amber-300">{{
-                  category.nome }}</router-link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        <div class="text-4xl uppercase tracking-wide text-stone-400">Highlights</div>
-        <ul class="space-y-2 text-3xl">
         </ul>
       </nav>
     </aside>
@@ -138,19 +169,60 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from "vue";
+import { useRouter } from 'vue-router';
 import brandService from '../services/brandService.js';
 import categoryService from '../services/categoryService.js';
+import authService from '../services/authService.js';
 
+const router = useRouter();
 const isScrolled = ref(true);
 const productsOpen = ref(false);
-const mobileNavOpen = ref(false); 
+const mobileNavOpen = ref(false);
 const productsPanelRef = ref(null);
 const mobileNavRef = ref(null);
+const brands = ref([]);
+const categories = ref([]);
+const currentUser = ref(null);
+const isAdmin = ref(false);
 
 let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 
-const brands = ref([]);
-const categories = ref([]);
+const checkLoginStatus = () => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    const savedName = localStorage.getItem('userName');
+    if (savedName && savedName !== "undefined") {
+        currentUser.value = savedName;
+    } else {
+        currentUser.value = "User";
+    }
+
+   
+    const role = localStorage.getItem('userRole');
+  
+    if (role === 'Admin' || role === 'admin') {
+        isAdmin.value = true;
+    } else {
+        isAdmin.value = false;
+    }
+
+  } else {
+    currentUser.value = null;
+    isAdmin.value = false; 
+  }
+};
+
+const handleLogout = () => {
+  if (authService.logout) {
+      authService.logout();
+  }
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('userRole');
+  localStorage.removeItem('userName');
+  currentUser.value = null;
+  isAdmin.value = false;
+  window.location.href = '/login';
+};
 
 const handleScroll = () => {
   const currentScrollY = window.scrollY;
@@ -158,37 +230,12 @@ const handleScroll = () => {
   lastScrollY = currentScrollY;
 };
 
-
-const openProducts = async () => {
-  productsOpen.value = true;
-  await nextTick();
-  productsPanelRef.value?.focus();
-};
-const closeProducts = () => {
-  productsOpen.value = false;
-};
-
-
-const openMobileNav = async () => {
-  mobileNavOpen.value = true;
-  await nextTick();
-  mobileNavRef.value?.focus();
-};
-const closeMobileNav = () => {
-  mobileNavOpen.value = false;
-};
-
-
-const closeAll = () => {
-  productsOpen.value = false;
-  mobileNavOpen.value = false;
-};
-
-const handleKeydown = (e) => {
-  if (e.key === "Escape") closeAll();
-};
-
-
+const openProducts = async () => { productsOpen.value = true; await nextTick(); productsPanelRef.value?.focus(); };
+const closeProducts = () => { productsOpen.value = false; };
+const openMobileNav = async () => { mobileNavOpen.value = true; await nextTick(); mobileNavRef.value?.focus(); };
+const closeMobileNav = () => { mobileNavOpen.value = false; };
+const closeAll = () => { productsOpen.value = false; mobileNavOpen.value = false; };
+const handleKeydown = (e) => { if (e.key === "Escape") closeAll(); };
 const overlayOpen = computed(() => productsOpen.value || mobileNavOpen.value);
 
 watch(overlayOpen, (open) => {
@@ -211,6 +258,7 @@ const loadPanelData = async () => {
 };
 
 onMounted(() => {
+  checkLoginStatus();
   handleScroll();
   window.addEventListener("scroll", handleScroll);
   window.addEventListener("keydown", handleKeydown);

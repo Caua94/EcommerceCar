@@ -17,7 +17,7 @@ import carsSellPerBrand from "../pages/carsSellPerBrand.vue";
 const routes = [
   { path: "/", name: "Home", component: HomePage },
   { path: "/cars", name: "Cars", component: Cars },
-  { path: "/carsPerBrand", name: "carsPerBrand", component: carsSellPerBrand },
+  { path: "/carsPerBrand/:id", name: "carsPerBrand", component: carsSellPerBrand, props: true },
   { path: "/about", name: "About", component: About },
   { path: "/cart/:id", name: "Cart", component: Cart, props: true },
   {

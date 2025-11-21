@@ -10,8 +10,8 @@
       <div class="text-center mb-6">
         <h2 class="text-3xl font-bold text-gray-200 mb-5">Pagamento</h2>
         <p class="text-lg text-gray-200">
-          Você está pagando <span class="text-amber-500 font-bold">R$ {{ car.preco }}</span> por
-          <span class="text-gray-200 font-bold">{{ car.nome }}</span>.
+          Você está pagando <span class="text-amber-500 font-bold">R$ {{ car.price }}</span> por
+          <span class="text-gray-200 font-bold">{{ car.name }}</span>.
         </p>
       </div>
       

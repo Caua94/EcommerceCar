@@ -7,7 +7,7 @@ export default {
     return apiClient.get(`${resource}/GetUsers`);
   },
 
-  postUser(userData) {
-    return apiClient.post(`${resource}/PostUser`, userData);
-  },
+  createUser(userDTO) {
+    return apiClient.post(`${resource}/PostUser`, userDTO);
+  }
 };

@@ -46,7 +46,7 @@
           
           
           <div class="mt-4 w-full flex justify-center">
-            <button class="h-16 md:h-20 lg:h-24 w-full max-w-xs md:max-w-md lg:w-[500px] 
+            <button @click="goToDetails"  class="h-16 md:h-20 lg:h-24 w-full max-w-xs md:max-w-md lg:w-[500px] 
                            text-lg md:text-2xl 
                            bg-yellow-700 font-bold text-white shadow-lg 
                            hover:bg-amber-600 transition-all duration-300 
@@ -76,38 +76,61 @@
 import { ref, computed, onMounted } from 'vue';
 import gsap from 'gsap';
 import carService from '../services/carService'; 
+import { useRouter } from 'vue-router';
+
 
 const cars = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const api_base = "http://localhost:5132";
+
+const router = useRouter();
+
+
+
+const goToDetails = () => {
+  
+  if (currentCar.value) {
+    router.push({ 
+      name: 'seeMore', 
+      params: { id: currentCar.value.id } 
+    });
+  }
+}
+
+
+
+const resolveUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('https')) {
+    return path;
+  }
+  return `${api_base}${path}`;
+};
 
 const loadCars = async () => {
   try {
     const response = await carService.getAll();
-    const api_base = "http://localhost:5132";
     
     cars.value = response.data.map(apiCar => {
-      const brandLogoUrl = (apiCar.marca && apiCar.marca.imagemURL)
-        ? `${api_base}${apiCar.marca.imagemURL}`
-        : '';
-
-      const carImageUrl = apiCar.imagemUrl 
-        ? `${api_base}${apiCar.imagemUrl}` 
-        : '';
+      const brandImgPath = apiCar.brand.imageURL ;
+      const carImgPath = apiCar.imageUrl || apiCar.image || apiCar.ImageUrl;
 
       return {
         id: apiCar.id,
-        brandLogo: brandLogoUrl,
-        title: apiCar.nome,
-        image: carImageUrl,
-        price: apiCar.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-        year: `Ano ${apiCar.ano}`,
+        brandLogo: resolveUrl(brandImgPath),
+        title: apiCar.name,
+        image: resolveUrl(carImgPath),
+        price: apiCar.price?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || 'R$ 0,00',
+        year: `Ano ${apiCar.year}`,
+        speed: apiCar.speed,
+        engine: apiCar.engine
       };
     });
 
   } catch (err) {
     console.error("Falha ao buscar carros da API:", err);
-    error.value = "Não foi possível carregar la lista de carros.";
+    error.value = "Não foi possível carregar a lista de carros.";
   } finally {
     loading.value = false;
   }

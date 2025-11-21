@@ -6,7 +6,10 @@ body{
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+  
 }
+
+
 
 .quantico-regular {
   font-family: "Quantico", sans-serif;
@@ -45,3 +48,5 @@ body{
   font-weight: 700;
   font-style: bold;
 }
+
+.animate-spin-once { animation: spin-once 1s linear 1; }

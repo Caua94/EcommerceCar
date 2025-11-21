@@ -57,7 +57,7 @@
     </div>
 
     <div
-      class="storytelling-block relative h-screen w-screen flex items-center justify-center px-4 sm:px-8 bg-stone-900 z-10 overflow-hidden">
+      class="storytelling-block relative h-screen w-screen flex items-center justify-center px-4 sm:px-8 bg-black z-10 overflow-hidden">
       <img :src="car.imagemInteriorUrl" class="h-full w-full object-cover" :alt="car.nome" />
     </div>
 
@@ -68,16 +68,14 @@
   </div>
 </template>
 
-<script setup>
 
-import { ref, onMounted, nextTick } from "vue";
+<script setup>
+import { ref, onMounted, nextTick , watch} from "vue";
 import { setupAboutPageAnimations } from "../utils/animations/seeMoreAnimations.js";
 import carService from '../services/carService.js';
-
 import categoryService from "../services/categoryService.js";
 import brandService from "../services/brandService.js";
 import { useRouter } from 'vue-router';
-
 
 const props = defineProps({
   id: {
@@ -86,53 +84,74 @@ const props = defineProps({
   }
 });
 
-
 const car = ref(null);
 const router = useRouter();
 const heroRef = ref(null);
+const api_base = "http://localhost:5132";
+
+const resolveUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('https')) {
+    return path;
+  }
+  return `${api_base}${path}`;
+};
 
 const fetchCarDetails = async () => {
   try {
-    const api_base = "http://localhost:5132";
-
-
     const response = await carService.getById(props.id);
-    const carData = response.data;
+    const apiData = response.data;
 
+    const mappedCar = {
+      ...apiData,
+      nome: apiData.name || apiData.Name || apiData.nome,
+      descricao: apiData.description || apiData.Description || apiData.descricao,
+      velocidade: apiData.speed || apiData.Speed || apiData.velocidade,
+      motor: apiData.engine || apiData.Engine || apiData.motor,
+      ano: apiData.year || apiData.Year || apiData.ano,
+      
+      
+      imagemUrl: resolveUrl(apiData.imageUrl || apiData.ImageUrl || apiData.imagemUrl),
+      imagemInteriorUrl: resolveUrl(apiData.innerImageUrl || apiData.InnerImageUrl || apiData.imagemInteriorUrl),
+      imagemMotorUrl: resolveUrl(apiData.imageEngineUrl || apiData.ImageEngineUrl || apiData.imagemMotorUrl),
+      videoDemoUrl: resolveUrl(apiData.videoDemoUrl || apiData.VideoDemoUrl),
+      
+  
+      categoriaId: apiData.categoryId || apiData.CategoryId || apiData.categoriaId,
+      marcaId: apiData.brandId || apiData.BrandId || apiData.marcaId
+    };
 
-    if (carData.categoriaId) {
+ 
+    if (mappedCar.categoriaId) {
       try {
-        const categoryResponse = await categoryService.getById(carData.categoriaId);
-        carData.categoria = categoryResponse.data;
+        const categoryResponse = await categoryService.getById(mappedCar.categoriaId);
+        mappedCar.categoria = {
+          nome: categoryResponse.data.name || categoryResponse.data.Name || categoryResponse.data.nome
+        };
       } catch (catError) {
         console.error("Erro ao buscar categoria:", catError);
       }
     }
 
-    if (carData.marcaId) {
+
+    if (mappedCar.marcaId) {
       try {
-        const brandResponse = await brandService.getById(carData.marcaId);
-        carData.marca = brandResponse.data;
-        if (carData.marca && carData.marca.imagemURL) {
-          carData.marca.imagemURL = `${api_base}${carData.marca.imagemURL}`;
-        }
+        const brandResponse = await brandService.getById(mappedCar.marcaId);
+        const brandData = brandResponse.data;
+        
+        mappedCar.marca = {
+          ...brandData,
+          
+          imagemURL: resolveUrl(brandData.imageUrl || brandData.ImageURL || brandData.imageURL || brandData.logoBrand)
+        };
       } catch (brandError) {
         console.error("Erro ao buscar marca:", brandError);
       }
     }
 
-    if (carData.imagemUrl) carData.imagemUrl = `${api_base}${carData.imagemUrl}`;
-    if (carData.imagemInteriorUrl) carData.imagemInteriorUrl = `${api_base}${carData.imagemInteriorUrl}`;
-    if (carData.imagemMotorUrl) carData.imagemMotorUrl = `${api_base}${carData.imagemMotorUrl}`;
-    if (carData.videoDemoUrl) carData.videoDemoUrl = `${api_base}${carData.videoDemoUrl}`;
-
-
-    car.value = carData;
-
+    car.value = mappedCar;
 
     await nextTick();
-
-
     setupAboutPageAnimations(heroRef.value);
 
   } catch (error) {
@@ -148,9 +167,9 @@ const goToCheckout = () => {
 
 
 
-onMounted(() => {
 
+onMounted(() => {
+  
   fetchCarDetails();
 });
-
 </script>

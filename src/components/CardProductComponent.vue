@@ -71,7 +71,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import gsap from 'gsap';
-import carService from '../services/carService'; 
+import carService from '../services/carService';
 
 const cars = ref([]);
 const loading = ref(true);
