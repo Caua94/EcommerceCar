@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-black text-white w-full min-h-screen flex justify-center items-center p-4 sm:p-8">
+    <div class="bg-black text-white w-full min-h-screen flex justify-center items-center p-15 mt-15 sm:p-10 lg:p-30">
 
         <div v-if="loading && !paymentDetails" class="text-xl">
             Carregando detalhes do pedido...
@@ -26,7 +26,7 @@
 
             <div class="border-b-2 border-gray-300 pb-8 mb-8">
                 <h2 class="text-2xl font-bold mb-4">Cobrança Para:</h2>
-                <div class="text-gray-700 mb-2">Jhonata Cainavara</div>
+                <div class="text-gray-700 mb-2">Jhow da Unimar</div>
                 <div class="text-gray-700 mb-2">123 Main St., Anytown, USA 12345</div>
                 <div class="text-gray-700">jow@example.com</div>
             </div>

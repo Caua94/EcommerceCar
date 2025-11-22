@@ -1,12 +1,13 @@
 <template>
-  <main class="w-screen h-[100vh] relative flex items-center justify-center overflow-hidden bg-black">
+  <main class="w-screen h-[100vh] relative flex items-center justify-center overflow-hidden bg-black ">
+    <div class="absolute z-20 inset-0 bg-black/60 transition-colors duration-300 "></div>
     <div class="absolute z-40 text-white text-center bottom-32 space-y-6 inset-x-0 px-4">
-      <p class="text-gray-200 font-medium text-xl md:text-2xl animate-text">Luxury Cars</p>
-      <h1 class="text-5xl md:text-7xl font-bold animate-text">Make Your Dream a Reality.</h1>
+      <p class="text-gray-200 font-medium text-xl md:text-2xl animate-text playfair-display-sc-regular">Luxury Cars</p>
+      <h1 class="text-5xl md:text-7xl font-bold animate-text playfair-display-sc-bold-italic">Make Your Dream a Reality.</h1>
       <router-link to="/cars"
-        class="text-2xl md:text-4xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform animate-text">
-        <p>Shop Now</p>
-        <ButtonArrow />
+        class="text-2xl md:text-4xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform animate-text playfair-display-sc-regular">
+        <p class="flex items-center gap-2">Shop Now <ButtonArrow /></p>
+        
       </router-link>
     </div>
     <video :src="videos[currentVideoIndex]"
@@ -22,8 +23,8 @@
   </main>
 
   <section
-    class="w-screen h-full flex justify-center items-center flex-col text-black gsap-blur-in space-y-4 pt-12 md:pt-20 pb-12 md:pb-20 bg-gradient-to-b from-white via-white via-70% to-black">
-    <p class="flex text-4xl md:text-6xl font-bold">Featured Listings</p>
+    class="w-screen h-full flex justify-center items-center flex-col text-black gsap-blur-in space-y-4 pt-12 md:pt-20 pb-12 md:pb-20 bg-gradient-to-b from-white via-white via-70% to-black ">
+    <p class="flex text-4xl md:text-6xl font-bold playfair-display-sc-bold">Featured Listings</p>
     <p class="border-b border-black w-11/12 md:w-3/4"></p>
     <CardComponent />
   </section>
@@ -36,11 +37,11 @@
     </div>
 
     <div
-      class="w-screen md:w-2/5 h-full bg-gradient-to-l from-black/90 to-black/10 text-white flex flex-col justify-center items-center absolute right-0 p-4 shadow-2xl space-y-2 md:space-y-4 bg-black g">
+      class="w-screen md:w-2/5 h-full bg-gradient-to-l from-black/90 to-black/10 text-white flex flex-col justify-center items-center absolute right-0 p-4 shadow-2xl space-y-2 md:space-y-4 bg-black ">
 
-      <p class="text-5xl md:text-7xl font-dancing ">Drive Your Dream</p>
+      <p class="text-5xl md:text-7xl font-dancing  ">Drive Your Dream</p>
       <router-link to="/cars"
-        class="text-2xl md:text-3xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform">
+        class="text-2xl md:text-3xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform playfair-display-sc-regular">
         <p>Shop Now</p>
         <ButtonArrow />
       </router-link>
@@ -48,7 +49,7 @@
   </section>
 
   <div class="flex justify-center itens-center w-screen bg-black border-b border-white pt-12 md:pt-20 gsap-blur-in">
-    <h1 class="text-4xl md:text-6xl text-white bg-black font-boldter">Our Brands</h1>
+    <h1 class="text-4xl md:text-6xl text-white bg-black font-boldter playfair-display-sc-bold">Our Brands</h1>
   </div>
 
   <section id="brand" class="w-screen min-h-screen h-auto flex justify-center items-center bg-black py-10 md:py-20 gsap-blur-in">
@@ -65,7 +66,7 @@
 
     <div v-else class="grid grid-cols-1 md:grid-cols-2 place-items-center gap-8 w-11/12 lg:w-3/4">
 
-      <div v-for="brand in brands" :key="brand.id" class="w-screen max-w-[600px] h-[500px] md:h-[700px] rounded-lg shadow-md 
+      <div v-for="brand in brands" :key="brand.id" class="w-screen max-w-[500px] h-[500px] md:h-[600px] rounded-lg shadow-md 
                   hover:scale-105 transition-transform duration-300 ease-in-out 
                   gsap-blur-in relative overflow-hidden 
                   bg-cover bg-center grid place-items-center" :style="{ backgroundImage: `url(${brand.bgBrandUrl})` }">
@@ -77,7 +78,7 @@
           class="relative z-20 object-contain w-24 h-24 md:w-32 md:h-22 px-4 md:px-8 bg-white rounded-full opacity-65" />
 
         <h1 class="text-white z-20 relative text-5xl md:text-7xl font-dancing capitalize">{{ brand.name }}</h1>
-        <router-link :to="`/carsPerBrand/${brand.id}`" class="text-white z-20 relative text-xl md:text-2xl bottom-0 hover:text-amber-300 hover:underline hover:scale-105">See More</router-link>
+        <router-link :to="`/carsPerBrand/${brand.id}`" class="text-white z-20 relative text-xl md:text-2xl bottom-0 hover:text-amber-300 hover:underline hover:scale-105 playfair-display-sc-regular  ">See More</router-link>
 
       </div>
     </div>
@@ -88,11 +89,11 @@
       true.</h1>
   </div>
 
-  <div class="w-screen h-full bg-black flex items-center justify-center p-6 md:p-20">
+  <div class="w-screen h-full bg-black flex items-center justify-center p-6 md:p-20 playfair-display-sc-regular">
 
-    <div class="relative w-screen max-w-[450px] lg:max-w-[900px] h-auto aspect-square rounded-[100px] lg:rounded-[200px] overflow-hidden 
+    <div class="relative w-screen max-w-[450px] lg:max-w-[650px] h-auto aspect-square rounded-[100px] lg:rounded-[200px] overflow-hidden 
                 hover:scale-105 transition-transform duration-300 ease-in-out 
-                gsap-blur-in">
+                gsap-blur-in flex items-center-safe">
 
       <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-0.5 z-0 bg-cover bg-center"
         :style="{ backgroundImage: 'url(' + groupDev + ')' }">
@@ -101,9 +102,9 @@
       <div class="absolute inset-0 bg-black/60 z-10 transition-colors duration-300 hover:bg-black/40"></div>
 
       <div class="relative z-20 text-white grid place-items-center h-full w-screen p-8 text-center space-y-4">
-        <h1 class="text-4xl md:text-6xl font-bold">What is DreamCar?</h1>
-        <p class="text-xl md:text-3xl">An e-commerce project focused on luxury cars <br> created by 3 developers</p>
-        <router-link to="/about" class="text-xl md:text-3xl text-amber-300 hover:underline hover:scale-105">Learn
+        <h1 class="text-4xl md:text-5xl font-bold playfair-display-sc-bold">What is DreamCar?</h1>
+        <p class="text-xl md:text-2xl">An e-commerce project focused on luxury cars <br> created by 3 developers</p>
+        <router-link to="/about" class="text-xl md:text-2xl text-amber-300 hover:underline hover:scale-105">Learn
           More</router-link>
       </div>
 

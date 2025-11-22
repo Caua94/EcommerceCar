@@ -1,0 +1,2 @@
+Button= group relative overflow-hidden bg-black hover:text-black text-white
+          <span class="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-600 ease-out group-hover:h-full"></span>

@@ -32,7 +32,7 @@ export function setupHomeAnimations() {
       ease: 'power3.out',
       scrollTrigger: {
         trigger: elem,
-        start: 'top 65%', 
+        start: 'top 75%', 
         toggleActions: 'play none none none',
         once: true 
       }

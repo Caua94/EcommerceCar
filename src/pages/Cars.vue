@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="playfair-display-sc-regular">
     <header class="relative h-[70vh] w-full flex items-center justify-center text-center text-white p-4 bg-white">
       <div class="absolute inset-0 w-full h-full bg-white bg-opacity-50 z-10">
         <img src="../assets/imgs/carsPagebg.jpg" alt="A woman driving a modern car"
           class="absolute inset-0 w-full h-full object-cover z-0 [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]">
       </div>
-      <div class="relative z-20">
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight drop-shadow-md">Experience True Luxury</h1>
-        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto drop-shadow">Discover our curated collection of the world's
+      <div class="relative z-20 ">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight drop-shadow-md playfair-display-sc-bold-italic animate-text">Experience True Luxury</h1>
+        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto drop-shadow animate-text">Discover our curated collection of the world's
           most desirable automobiles.</p>
       </div>
     </header>
@@ -16,13 +16,13 @@
       <CarCarousel />
     </section>
 
-    <header class="relative h-[40vh] w-full flex items-center justify-center text-center text-white p-4 shadow-2xl">
+    <header class="relative h-[40vh] w-full flex items-center justify-center text-center text-white p-4 shadow-2xl gsap-blur-in">
       <div class="relative z-20">
         <h1 class="text-5xl md:text-7xl font-dancing capitalize">Realize your Dream, Shop Your Dream Car</h1>
       </div>
     </header>
 
-    <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-black">
+    <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-black gsap-blur-in">
 
       <div class="relative text-white flex justify-between items-center m-10 border-b pb-4">
         <p class="text-4xl">Models</p>
@@ -91,6 +91,7 @@
 <script setup>
 import { ref, onMounted, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router'; 
+import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import FilterComponent from '../components/FilterComponent.vue';
 import CarCarousel from '../components/CardComponent.vue';
 import CarCard from '../components/CardCarProductGrade.vue';
@@ -229,6 +230,7 @@ watch(
 );
 
 onMounted(() => {
+  setupHomeAnimations();
   syncFiltersWithUrl(); 
   fetchInitialCars();
 });

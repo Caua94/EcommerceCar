@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 py-8 overflow-hidden">
-    
+  <div class="w-full min-h-screen flex flex-col items-center justify-center p-4 py-8 overflow-hidden playfair-display-sc-regular">
+
     <div v-if="loading" class="text-2xl font-semibold text-gray-700">
       Carregando carros...
     </div>
@@ -11,59 +11,62 @@
     </div>
 
     <div v-else-if="cars.length > 0" class="w-full max-w-6xl flex items-center justify-center gap-2 md:gap-4">
-      
-      <button 
-        @click="prevPage" 
-        :disabled="currentPage === 0"
+
+      <button @click="prevPage" :disabled="currentPage === 0"
         class="p-2 md:p-4 bg-black backdrop-blur-md border border-white/30 rounded-full shadow-xl hover:bg-black/50 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 disabled:opacity-40 disabled:shadow-lg disabled:cursor-not-allowed group"
-        aria-label="Previous Car"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        aria-label="Previous Car">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 md:h-8 md:w-8 text-white transform group-hover:-translate-x-1 transition-transform" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <div ref="cardRef" class="w-full max-w-4xl sm rounded-3xl p-2">
-        
+
         <div v-if="currentCar" :key="currentCar.id" class="w-full flex flex-col items-center gap-2">
-          
+
           <div class="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40">
             <img :src="currentCar.brandLogo" :alt="`${currentCar.title} logo`" class="w-full h-full object-contain">
           </div>
 
           <div>
-            <p class="text-5xl md:text-7xl lg:text-8xl font-dancing capitalize text-gray-600 text-center tracking-tight">{{ currentCar.title }}</p>
+            <p
+              class="text-5xl md:text-7xl lg:text-8xl font-dancing capitalize text-gray-800 text-center tracking-tight">
+              {{ currentCar.title }}</p>
           </div>
 
           <div class="w-full max-w-3xl my-2">
-            <img :src="currentCar.image" :alt="currentCar.title" class="w-full h-auto object-contain drop-shadow-xl" onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/475569?text=Imagem+Indisponível';">
+            <img :src="currentCar.image" :alt="currentCar.title" class="w-full h-auto object-contain drop-shadow-xl"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/475569?text=Imagem+Indisponível';">
           </div>
-          
-          <div class="flex gap-6 md:gap-10 text-2xl md:text-3xl lg:text-4xl text-gray-200 font-semibold">
+
+          <div class="flex gap-6 md:gap-10 text-2xl md:text-3xl lg:text-4xl lg:text-gray-700 font-semibold">
             <p>{{ currentCar.price }}</p>
             <p>{{ currentCar.year }}</p>
           </div>
-          
-          
+
+
           <div class="mt-4 w-full flex justify-center">
-            <button @click="goToDetails"  class="h-16 md:h-20 lg:h-24 w-full max-w-xs md:max-w-md lg:w-[500px] 
+            <button @click="goToDetails" class="group relative h-16 md:h-20 lg:h-20 w-full max-w-xs md:max-w-md lg:w-[500px] 
                            text-lg md:text-2xl 
-                           bg-yellow-700 font-bold text-white shadow-lg 
-                           hover:bg-amber-600 transition-all duration-300 
-                           transform hover:scale-105 active:scale-95 rounded-lg">
-              Shop Now
+                           bg-black  font-bold text-white shadow-lg 
+                           hover:text-black transition-all duration-300 
+                           transform hover:scale-105 active:scale-95 rounded-xl overflow-hidden">
+              <span
+                class="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-600 ease-out group-hover:h-full"></span>
+              <span class="relative z-10">Shop Now</span>
             </button>
           </div>
         </div>
       </div>
 
-      <button 
-        @click="nextPage" 
-        :disabled="currentPage === totalPages - 1"
+      <button @click="nextPage" :disabled="currentPage === totalPages - 1"
         class="p-2 md:p-4 bg-black backdrop-blur-md border border-white/30 rounded-full shadow-xl hover:bg-black/50 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 disabled:opacity-40 disabled:shadow-lg disabled:cursor-not-allowed group"
-        aria-label="Next Car"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8 text-white transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        aria-label="Next Car">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 md:h-8 md:w-8 text-white transform group-hover:translate-x-1 transition-transform" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -75,7 +78,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import gsap from 'gsap';
-import carService from '../services/carService'; 
+import carService from '../services/carService';
 import { useRouter } from 'vue-router';
 
 
@@ -89,11 +92,11 @@ const router = useRouter();
 
 
 const goToDetails = () => {
-  
+
   if (currentCar.value) {
-    router.push({ 
-      name: 'seeMore', 
-      params: { id: currentCar.value.id } 
+    router.push({
+      name: 'seeMore',
+      params: { id: currentCar.value.id }
     });
   }
 }
@@ -111,9 +114,9 @@ const resolveUrl = (path) => {
 const loadCars = async () => {
   try {
     const response = await carService.getAll();
-    
+
     cars.value = response.data.map(apiCar => {
-      const brandImgPath = apiCar.brand.imageURL ;
+      const brandImgPath = apiCar.brand.imageURL;
       const carImgPath = apiCar.imageUrl || apiCar.image || apiCar.ImageUrl;
 
       return {
@@ -138,7 +141,7 @@ const loadCars = async () => {
 
 onMounted(loadCars);
 
-const cardRef = ref(null); 
+const cardRef = ref(null);
 const currentPage = ref(0);
 const itemsPerPage = 1;
 
@@ -158,8 +161,8 @@ const animateAndChangePage = (direction) => {
       } else {
         currentPage.value--;
       }
-      gsap.fromTo(cardRef.value, 
-        { xPercent: slideInX, opacity: 0 }, 
+      gsap.fromTo(cardRef.value,
+        { xPercent: slideInX, opacity: 0 },
         { xPercent: 0, opacity: 1, duration: 0.4, ease: 'power3.out' }
       );
     }

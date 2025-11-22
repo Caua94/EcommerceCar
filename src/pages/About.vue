@@ -1,5 +1,5 @@
 <template>
-  <main class="relative w-full h-full overflow-x-hidden">
+  <main class="relative w-full h-full overflow-x-hidden playfair-display-sc-regular">
     <section
       ref="heroRef"
       class="relative h-screen w-full flex items-center justify-center overflow-hidden"

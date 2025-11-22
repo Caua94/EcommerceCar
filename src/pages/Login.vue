@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page w-screen h-screen flex justify-center items-center relative overflow-hidden">
+  <div class="login-page w-screen h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular">
     <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted
       playsinline preload="auto"></video>
     <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>

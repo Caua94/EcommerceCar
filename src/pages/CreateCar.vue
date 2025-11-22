@@ -1,11 +1,11 @@
 <template>
-  <div class="login-page w-full min-h-screen flex justify-center items-center relative overflow-hidden p-4 sm:p-8">
+  <div class="login-page w-full min-h-screen flex justify-center items-center relative overflow-hidden p-4 sm:p-8 playfair-display-sc-regular">
     <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted
       playsinline preload="auto"></video>
     <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
 
     <div
-      class="relative z-20 w-full max-w-4xl  bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 transform transition-transform duration-500 ease-in-out mt-20">
+      class="relative z-20 w-full max-w-4xl bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 transform transition-transform duration-500 ease-in-out mt-50">
 
       <transition 
         enter-active-class="transition ease-out duration-300"

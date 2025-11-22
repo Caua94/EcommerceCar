@@ -1,5 +1,5 @@
 <template>
-  <main class="relative w-full h-full overflow-x-hidden">
+  <main class="relative w-full h-full overflow-x-hidden playfair-display-sc-regular">
     <section ref="heroRef" class="relative h-screen w-screen flex items-center justify-center overflow-hidden">
       <video :src="car?.videoDemoUrl" class="h-screen object-cover z-0" autoplay loop muted playsinline
         preload="auto"></video>
@@ -10,26 +10,28 @@
     class="fixed top-1/2 left-2 w-16 h-16 sm:left-3 sm:w-25 sm:h-25 bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-lg object-contain z-50">
 
   <button @click="goToCheckout"
-    class="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center opacity-90 bg-black hover:bg-amber-800 text-white font-semibold py-3 px-8 sm:py-4 sm:px-12 rounded-full shadow-lg z-30 hover:opacity-100 border border-amber-500 hover:scale-110">
-    <span class="">Buy now</span>
+    class="fixed group  overflow-hidden bg-black hover:text-black text-white bottom-6 left-1/2 -translate-x-1/2 flex items-center opacity-90   font-semibold py-3 px-8 sm:py-4 sm:px-12 rounded-full shadow-lg z-30 hover:opacity-100 border border-white hover:border-black hover:scale-110">
+    <span class="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-800 ease-out group-hover:h-full"></span>
+    <span class="relative z-10 playfair-display-sc-regular">Buy now</span>
   </button>
 
   <div v-if="car">
+  
     <div
       class="storytelling-block relative grid grid-cols place-items-center justify-center px-4 sm:px-8 py-16 bg-gradient-to-b from-black to-gray-600 z-10 overflow-hidden text-white">
 
       <img :src="car.imagemUrl" class="h-full w-full" :alt="car.nome">
 
       <div class="max-w-3xl text-center relative z-10 space-y-4 mt-8 sm:mt-0">
-        <h2 class="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6">{{ car.nome }}</h2>
-        <p class="text-lg sm:text-2xl leading-relaxed">
+        <h2 class="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 font-dancing">{{ car.nome }}</h2>
+        <p class="text-lg sm:text-2xl leading-relaxed playfair-display-sc-regular">
           {{ car.descricao }}
         </p>
       </div>
     </div>
 
     <div
-      class="storytelling-block relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 z-10 overflow-hidden bg-gradient-to-b from-gray-600 to-black">
+      class="storytelling-block relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 z-10 overflow-hidden bg-gradient-to-b from-gray-600 to-black playfair-display-sc-regular">
 
       <h2 class="text-3xl sm:text-5xl font-bold text-white mb-8 sm:mb-10 max-w-3xl mx-auto text-center">Details</h2>
       <img class="h-64 sm:h-96 mb-8" :src="car.imagemMotorUrl">

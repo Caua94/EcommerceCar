@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <header class="relative h-screen w-full flex items-center justify-center text-center text-white p-4 shadow-2xl">
-      <div class="absolute inset-0 w-full bg-black bg-opacity-50 z-10">
+  <div class=" playfair-display-sc-regular">
+    <header class="relative h-screen w-full flex items-center justify-center text-center text-white p-4 shadow-2xl ">
+      <div class="absolute inset-0 w-full bg-black bg-opacity-50 z-10 ">
         <img v-if="currentBrand && currentBrand.logoBrandUrl" :src="currentBrand.logoBrandUrl" :alt="currentBrand.name"
           class="absolute inset-0 w-full h-full object-cover z-0 [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]">
         <div v-else class="absolute inset-0 w-full h-full bg-gray-900 z-0"></div>
@@ -9,7 +9,7 @@
       
       <div class="absolute inset-0 bg-black/60 z-10 transition-colors duration-300"></div>
       
-      <div class="relative z-20 grid place-items-center space-y-5">
+      <div class="relative z-20 grid place-items-center space-y-5 animate-text ">
         <h1 class="text-5xl md:text-9xl font-dancing">
           {{ currentBrand ? currentBrand.name : 'Carregando...' }}
         </h1>
@@ -23,7 +23,7 @@
     </header>
 
     <section v-if="currentBrand"
-      class="w-full h-[400px] md:h-[600px] flex justify-center items-center overflow-hidden shadow-4xl gsap-blur-in relative bg-black border-t border-b border-gray-500 mt-20">
+      class="w-full h-[400px] md:h-[600px] flex justify-center items-center overflow-hidden shadow-4xl  relative bg-black border-t border-b border-gray-500 mt-20 gsap-blur-in">
 
       <div class="absolute left-0 md:w-2/5 h-full">
         <img :src="currentBrand.bgBrandUrl" :alt="'Interior of ' + currentBrand.name" class="w-full h-full object-cover [mask-image:linear-gradient(to_right,black_70%,transparent_100%)]" />
@@ -31,7 +31,7 @@
 
       <div
         class="w-full md:w-2/5 h-full bg-gradient-to-l from-black/90 to-black/10 text-white flex flex-col justify-center items-center absolute right-5 p-4 shadow-2xl space-y-2 md:space-y-4 bg-black">
-        <h1 class="text-5xl md:text-8xl text-right">What is {{ currentBrand.name }}?</h1>
+        <h1 class="text-5xl md:text-8xl text-right playfair-display-sc-bold">What is {{ currentBrand.name }}?</h1>
         
         <p class="text-xl md:text-3xl text-right line-clamp-6">
           {{ currentBrand.description || `Descubra a excelência e o design inconfundível da ${currentBrand.name}.` }}
@@ -41,7 +41,7 @@
       </div>
     </section>
 
-    <div class="relative h-[40vh] w-full flex items-center justify-center text-center text-white p-4 shadow-2xl">
+    <div class="relative h-[40vh] w-full flex items-center justify-center text-center text-white p-4 shadow-2xl gsap-blur-in">
       <div class="relative z-20">
         <h1 class="text-5xl md:text-7xl font-dancing capitalize">
           Realize your Dream, Shop Your {{ currentBrand ? currentBrand.name : 'Car' }}
@@ -117,6 +117,7 @@
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
+import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import CarCard from '../components/CardCarProductGrade.vue';
 import FilterComponent from '../components/FilterComponent.vue';
 import carService from '../services/carService'; 
@@ -278,7 +279,9 @@ watch(
 );
 
 onMounted(() => {
+  setupHomeAnimations();
   syncFiltersWithUrl();
   fetchData();
+  
 });
 </script>

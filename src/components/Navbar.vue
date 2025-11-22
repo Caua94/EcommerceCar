@@ -3,7 +3,7 @@
 
     <nav :class="[
 
-      'fixed top-0 w-full z-50 transition-all duration-300 h-26',
+      'fixed top-0 w-full z-50 transition-all duration-300 h-26 playfair-display-sc-regular',
 
       isScrolled ? 'bg-stone-800/90 text-white shadow-md backdrop-blur-sm' : 'bg-transparent text-white'
 
@@ -26,7 +26,7 @@
             <button @click="openProducts" class="hover:text-amber-300 transition-colors flex items-center gap-2"
               :aria-expanded="productsOpen ? 'true' : 'false'" aria-controls="products-drawer">
 
-              Products
+              Cars
 
               <svg class="w-5 h-5 transition-transform" viewBox="0 0 20 20" fill="currentColor">
 
@@ -44,18 +44,22 @@
 
           <router-link class="hover:text-amber-300 transition-colors" to="/contact">Contact</router-link>
 
-          <router-link v-if="isAdmin" class="hover:text-amber-300 transition-colors" to="/createCar">Create</router-link>
+          <router-link v-if="isAdmin" class="hover:text-amber-300 transition-colors"
+            to="/createCar">Create</router-link>
 
-            <div class="absolute right-10 flex items-center gap-6">
-            
+          <div class="absolute right-10 flex items-center gap-6">
+
             <div v-if="currentUser" class="flex items-center gap-4">
-              <span class="text-amber-400 font-semibold capitalize">Shop your dream, {{ currentUser }}</span>
-              <button @click.prevent="handleLogout" class="hover:text-red-400 transition-colors border border-white/30 hover:border-red-400 rounded-full px-4 py-1 text-sm">
+              <span v-if="isAdmin" class="text-amber-400 font-semibold capitalize text-lg">Admin, {{ currentUser }}</span>
+              <span v-else class="text-amber-400 font-semibold capitalize text-lg">Shop your dream, {{ currentUser }}</span>
+              <button @click.prevent="handleLogout"
+                class="hover:text-red-400 transition-colors border border-white/30 hover:border-red-400 rounded-full px-4 py-1 text-sm">
                 Logout
               </button>
             </div>
 
-            <router-link v-else class="hover:text-amber-300 transition-colors hover:border rounded-full p-2" to="/login">
+            <router-link v-else class="hover:text-amber-300 transition-colors hover:border rounded-full p-2"
+              to="/login">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-8">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -79,9 +83,9 @@
       </div>
     </nav>
 
-    <aside id="mobile-nav-drawer" :class="[
+    <aside id="mobile-nav-drawer " :class="[
       'fixed top-0 left-0 h-screen w-[30rem] max-w-[90vw] bg-stone-900 text-white z-[60] shadow-2xl',
-      'transition-transform transform duration-700 ease-in-out',
+      'transition-transform transform duration-700 ease-in-out playfair-display-sc-regular',
       mobileNavOpen ? 'translate-x-0' : '-translate-x-full'
     ]" tabindex="-1" ref="mobileNavRef" style="overflow-y: auto;">
       <div class="p-6 flex items-center justify-between border-b border-stone-700">
@@ -114,19 +118,19 @@
               Products</router-link></li>
           <li><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
               to="/contact">Contact</router-link></li>
-          <li v-if="isAdmin"><router-link  @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
+          <li v-if="isAdmin"><router-link @click="closeMobileNav" class="block px-3 py-2 rounded hover:bg-stone-800"
               to="/createCar">Create</router-link></li>
         </ul>
       </nav>
     </aside>
 
-    <aside id="products-drawer" :class="[
+    <aside id="products-drawer " :class="[
       'fixed top-0 left-0 h-screen w-[30rem] max-w-[90vw] bg-stone-900 text-white z-[60] shadow-2xl',
-      'transition-transform transform duration-700 ease-in-out',
+      'transition-transform transform duration-700 ease-in-out playfair-display-sc-regular',
       productsOpen ? 'translate-x-0' : '-translate-x-full'
     ]" tabindex="-1" ref="productsPanelRef">
       <div class="p-6 flex items-center justify-between border-b border-stone-700">
-        <h3 class="text-5xl font-semibold">Products</h3>
+        <h3 class="text-5xl font-semibold">Cars</h3>
         <button @click="closeProducts" class="p-2 rounded hover:bg-stone-800">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
@@ -192,29 +196,29 @@ const checkLoginStatus = () => {
   if (token) {
     const savedName = localStorage.getItem('userName');
     if (savedName && savedName !== "undefined") {
-        currentUser.value = savedName;
+      currentUser.value = savedName;
     } else {
-        currentUser.value = "User";
+      currentUser.value = "User";
     }
 
-   
+
     const role = localStorage.getItem('userRole');
-  
+
     if (role === 'Admin' || role === 'admin') {
-        isAdmin.value = true;
+      isAdmin.value = true;
     } else {
-        isAdmin.value = false;
+      isAdmin.value = false;
     }
 
   } else {
     currentUser.value = null;
-    isAdmin.value = false; 
+    isAdmin.value = false;
   }
 };
 
 const handleLogout = () => {
   if (authService.logout) {
-      authService.logout();
+    authService.logout();
   }
   localStorage.removeItem('authToken');
   localStorage.removeItem('userRole');

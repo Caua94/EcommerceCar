@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black text-white w-full min-h-screen flex justify-center items-center p-4 sm:p-8">
+  <div class="bg-black text-white w-full min-h-screen flex justify-center items-center p-4 sm:p-8 playfair-display-sc-regular">
 
     <div v-if="loading" class="text-xl">
       Carregando...
@@ -15,67 +15,68 @@
         </p>
       </div>
       
-      <form @submit.prevent="handlePayment" class="space-y-6 bg-gray-900 p-8 rounded-lg shadow-xl border border-gray-700">
+      <form @submit.prevent="handlePayment" class="space-y-6 bg-black p-8 rounded-lg shadow-xl border border-gray-200">
 
-        <div class="payment-methods flex gap-4 border-b border-gray-700 pb-4">
+        <div class="payment-methods flex gap-4 border-b border-gray-200 pb-4">
           <label class="flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border-2 border-transparent w-full"
-            :class="{ 'border-amber-500 bg-gray-700': paymentMethod === 'Card' }">
+            :class="{ ' bg-gray-200 text-black': paymentMethod === 'Card' }">
             <input type="radio" v-model="paymentMethod" value="Card" class="hidden"> Cartão
           </label>
           <label class="flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border-2 border-transparent w-full"
-            :class="{ 'border-amber-500 bg-gray-700': paymentMethod === 'Pix' }">
+            :class="{ ' bg-gray-200 text-black': paymentMethod === 'Pix' }">
             <input type="radio" v-model="paymentMethod" value="Pix" class="hidden"> PIX
           </label>
           <label class="flex items-center justify-center gap-2 cursor-pointer p-3 rounded-lg border-2 border-transparent w-full"
-            :class="{ 'border-amber-500 bg-gray-700': paymentMethod === 'Boleto' }">
+            :class="{ ' bg-gray-200 text-black': paymentMethod === 'Boleto' }">
             <input type="radio" v-model="paymentMethod" value="Boleto" class="hidden"> Boleto
           </label>
         </div>
 
-        <div v-if="paymentMethod === 'Card'" class="payment-details space-y-4">
+        <div v-if="paymentMethod === 'Card'" class="payment-details space-y-4 text-black">
           <input v-model="cardDetails.CardNumber" placeholder="Número do Cartão" required
-                 class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                 class="w-full bg-white  text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
           <input v-model="cardDetails.HolderName" placeholder="Nome no Cartão" required
-                 class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                 class="w-full bg-white  text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
           <div class="flex gap-4">
             <input v-model="cardDetails.ExpirationDate" placeholder="MM/AA" required
-                   class="w-1/2 bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                   class="w-1/2 bg-white  text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
             <input v-model="cardDetails.CVV" placeholder="CVV" required
-                   class="w-1/2 bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                   class="w-1/2 bg-white  text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
           </div>
           <select v-model.number="cardDetails.Installments" required
-                  class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
-            <option class="bg-gray-800 text-white" value="1">1x sem juros</option>
-            <option class="bg-gray-800 text-white" value="2">2x sem juros</option>
-            <option class="bg-gray-800 text-white" value="3">3x sem juros</option>
+                  class="w-full bg-white  text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+            <option class="bg-white " value="1">1x sem juros</option>
+            <option class="bg-white " value="2">2x sem juros</option>
+            <option class="bg-white " value="3">3x sem juros</option>
           </select>
         </div>
 
         <div v-if="paymentMethod === 'Pix'" class="payment-details space-y-4">
           <select v-model="pixDetails.KeyType" required
-                  class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
-            <option class="bg-gray-800 text-white" value="">Selecione o tipo de chave</option>
-            <option class="bg-gray-800 text-white" value="CPF">CPF</option>
-            <option class="bg-gray-800 text-white" value="Email">Email</option>
-            <option class="bg-gray-800 text-white" value="Phone">Telefone</option>
-            <option class="bg-gray-800 text-white" value="Random">Chave Aleatória</option>
+                  class="w-full bg-white text-black text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+            <option class="bg-white text-black" value="">Selecione o tipo de chave</option>
+            <option class="bg-white text-black" value="CPF">CPF</option>
+            <option class="bg-white text-black" value="Email">Email</option>
+            <option class="bg-white text-black" value="Phone">Telefone</option>
+            <option class="bg-white text-black" value="Random">Chave Aleatória</option>
           </select>
           <input v-model="pixDetails.Key" placeholder="Sua chave PIX" required
-                 class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                 class="w-full bg-white text-black text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
         </div>
 
         <div v-if="paymentMethod === 'Boleto'" class="payment-details space-y-4">
           <input v-model="boletoDetails.FullName" placeholder="Nome Completo" required
-                 class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                 class="w-full bg-white text-black text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
           <input v-model="boletoDetails.CPF" placeholder="CPF" required
-                 class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                 class="w-full bg-white text-black text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
           <input v-model="boletoDetails.Address" placeholder="Endereço Completo" required
-                 class="w-full bg-gray-800 text-white text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                 class="w-full bg-white text-black text-base p-3 rounded-lg border border-gray-700 transition-colors focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none">
         </div>
 
         <button type="submit" :disabled="isSubmitting || !car"
-          class="w-full bg-amber-600 hover:bg-gray-500 text-black hover:text-white text-lg font-bold py-3 px-6 rounded-lg transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed">
-          {{ isSubmitting ? 'Processando...' : `Pagar` }}
+          class="relative group overflow-hidden w-full bg-white  text-black hover:text-white hover:border-white border text-lg font-bold py-3 px-6 rounded-lg transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed">
+           <span class="absolute bottom-0 left-0 w-full h-0 bg-black transition-all duration-600 ease-out group-hover:h-full"></span>
+         <span class="relative z-10">{{ isSubmitting ? 'Processando...' : `Pagar` }}</span> 
         </button>
         <p v-if="error" class="text-red-500 text-center mt-4">{{ error }}</p>
       </form>

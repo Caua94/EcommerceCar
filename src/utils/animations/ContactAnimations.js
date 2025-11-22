@@ -12,9 +12,5 @@ export function animateContactEntrance() {
       { opacity: 0, x: -50, stagger: 0.2, duration: 0.8 },
       "-=0.5"
     )
-    .from(
-      ".gsap-contact-button",
-      { opacity: 0, scale: 0.8, duration: 0.8 },
-      "-=0.4"
-    );
+  
 }

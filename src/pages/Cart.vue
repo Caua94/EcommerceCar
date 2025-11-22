@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black text-white w-full min-h-screen flex justify-center items-center relative overflow-hidden p-4 sm:p-8 space">
+  <div class="bg-black text-white w-full min-h-screen flex justify-center items-center relative overflow-hidden p-4 sm:p-8 space playfair-display-sc-regular">
 
     <div v-if="loading" class="text-xl">
       Carregando...
@@ -30,8 +30,10 @@
         <router-link to="/contact" class="text-lg sm:text-2xl hover:text-blue-400 ">Suport</router-link>
 
         <button @click="goToPayment" type="submit" :disabled="isSubmitting || !car"
-          class="w-full bg-white hover:bg-gray-700 text-black text-lg sm:text-2xl font-bold py-4 sm:py-6 px-8 rounded-xl transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed hover:text-white">
-          {{ isSubmitting ? 'Processando...' : `Checkout payment` }}
+          class="relative group overflow-hidden w-full bg-white hover:border-white border text-black text-lg sm:text-2xl font-bold py-4 sm:py-6 px-8 rounded-xl transition-colors duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed hover:text-white">
+          
+          <span class="absolute bottom-0 left-0 w-full h-0 bg-black transition-all duration-600 ease-out group-hover:h-full"></span>
+          <span class="relative z-10">{{ isSubmitting ? 'Processando...' : `Checkout payment` }}</span>
         </button>
         <div class="flex justify-center gap-2 mt-4 w-full">
           <img src="https://readymadeui.com/images/visa.webp" class="w-12" alt="card1" />

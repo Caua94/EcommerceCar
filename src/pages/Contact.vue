@@ -1,5 +1,5 @@
 <template>
-  <div class="contact-page w-screen h-screen flex relative overflow-hidden">
+  <div class="contact-page w-screen h-screen flex relative overflow-hidden playfair-display-sc-regular">
     <div
       class="w-1/2 h-full bg-cover bg-center hidden md:block"
       :style="{ backgroundImage: `url(${backgroundImage})` }"
@@ -72,9 +72,10 @@
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="w-full py-4 bg-amber-500 text-white font-bold text-xl rounded-xl hover:bg-amber-600 transition-colors transform hover:scale-105 active:scale-95 duration-200 gsap-contact-button disabled:bg-gray-500 disabled:hover:scale-100 disabled:cursor-not-allowed"
+            class="group relative overflow-hidden bg-white hover:text-white text-black w-full py-4  font-bold text-xl rounded-xl  transform hover:scale-105 active:scale-95 duration-200 gsap-contact-button disabled:bg-gray-500 disabled:hover:scale-100 disabled:cursor-not-allowed"
           >
-            <span v-if="!isSubmitting">Send Message</span>
+            <span class="absolute bottom-0 left-0 w-full h-0 bg-gray-800 transition-all duration-600 ease-out group-hover:h-full"></span>
+            <span class="relative z-10" v-if="!isSubmitting">Send Message</span>
             <span v-else>Sending...</span>
           </button>
         </form>
