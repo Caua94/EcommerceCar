@@ -4,7 +4,7 @@ const resource = '/Category';
 
 export default {
   getAll() {
-    // 👇 ATUALIZADO: De "GetCategories" para "GetCategory"
+    
     return apiClient.get(`${resource}/GetCategory`);
   },
 
