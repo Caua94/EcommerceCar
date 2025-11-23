@@ -95,7 +95,7 @@ import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import FilterComponent from '../components/FilterComponent.vue';
 import CarCarousel from '../components/CardComponent.vue';
 import CarCard from '../components/CardCarProductGrade.vue';
-import carService from '../services/carService';
+import carService from '../services/carService.js';
 
 const route = useRoute(); 
 

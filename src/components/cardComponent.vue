@@ -116,7 +116,7 @@ const loadCars = async () => {
     const response = await carService.getAll();
 
     cars.value = response.data.map(apiCar => {
-      const brandImgPath = apiCar.brand.imageURL;
+      const brandImgPath = apiCar.brand.imageUrl;
       const carImgPath = apiCar.imageUrl || apiCar.image || apiCar.ImageUrl;
 
       return {

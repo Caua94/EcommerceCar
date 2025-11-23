@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomePage from "../pages/HomePage.vue";
-import Cars from "../pages/Cars.vue";
+import Cars from "../pages/AllsCars.vue";
 import About from "../pages/About.vue";
 import Cart from "../pages/Cart.vue";
 import OrderConfirmation from "../pages/OrderConfirmation.vue";
@@ -12,7 +12,7 @@ import Contact from "../pages/Contact.vue";
 import CreateCar from "../pages/CreateCar.vue";
 import SeeMore from "../pages/SeeMore.vue";
 import PayOrder from "../pages/PayOrder.vue";
-import carsSellPerBrand from "../pages/carsSellPerBrand.vue";
+import carsSellPerBrand from "../pages/CarsSellPerBrand.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
@@ -21,7 +21,7 @@ const routes = [
   { path: "/about", name: "About", component: About },
   { path: "/cart/:id", name: "Cart", component: Cart, props: true },
   {
-    path: "/confirmation/:transactionId'",
+    path: "/confirmation/:transactionId",
     name: "confirmation",
     component: OrderConfirmation,
     props: true,
@@ -44,8 +44,13 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-     return { top: 0 };
-  },
+
+    if (savedPosition) {
+      return savedPosition;
+    }
+
+    return { top: 0, left: 0, behavior: 'instant' };
+  }
 });
 
 export default router;

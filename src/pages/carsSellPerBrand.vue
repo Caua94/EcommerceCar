@@ -51,7 +51,7 @@
 
     <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-black">
       
-      <div class="relative  text-white flex justify-between items-center m-10 border-b pb-4">
+      <div id="carList" class="relative  text-white flex justify-between items-center m-10 border-b pb-4">
         <p class="text-4xl">Models</p>
 
         <button @click="openProducts" class="hover:text-amber-300 transition-colors flex items-center gap-2"
@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <div v-else id="carList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div v-else  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <CarCard v-for="car in carList" :key="car.id" :car="car" />
       </div>
       
@@ -120,8 +120,8 @@ import { useRoute } from 'vue-router';
 import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import CarCard from '../components/CardCarProductGrade.vue';
 import FilterComponent from '../components/FilterComponent.vue';
-import carService from '../services/carService'; 
-import brandService from '../services/brandService';
+import carService from '../services/carService.js'; 
+import brandService from '../services/brandService.js';
 
 const route = useRoute();
 

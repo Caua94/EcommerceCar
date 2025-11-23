@@ -78,7 +78,7 @@
           class="relative z-20 object-contain w-24 h-24 md:w-32 md:h-22 px-4 md:px-8 bg-white rounded-full opacity-65" />
 
         <h1 class="text-white z-20 relative text-5xl md:text-7xl font-dancing capitalize">{{ brand.name }}</h1>
-        <router-link :to="`/carsPerBrand/${brand.id}`" class="text-white z-20 relative text-xl md:text-2xl bottom-0 hover:text-amber-300 hover:underline hover:scale-105 playfair-display-sc-regular  ">See More</router-link>
+        <router-link :to="`/carsPerBrand/${brand.id}`" class="text-white z-20 relative text-xl md:text-2xl bottom-0 hover:text-amber-300 hover:scale-105 playfair-display-sc-regular  ">See More</router-link>
 
       </div>
     </div>
