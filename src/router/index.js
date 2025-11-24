@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-
 import HomePage from "../pages/HomePage.vue";
 import Cars from "../pages/AllsCars.vue";
 import About from "../pages/About.vue";
@@ -14,6 +13,7 @@ import SeeMore from "../pages/SeeMore.vue";
 import PayOrder from "../pages/PayOrder.vue";
 import carsSellPerBrand from "../pages/CarsSellPerBrand.vue";
 import UpdateCarBrand from "../pages/UpdateCar&Brand.vue";
+import { useLoader } from "../composables/useLoader";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
@@ -46,13 +46,26 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-
     if (savedPosition) {
       return savedPosition;
     }
-
     return { top: 0, left: 0, behavior: 'instant' };
   }
+});
+
+const { showLoading, hideLoading } = useLoader();
+
+router.beforeEach((to, from, next) => {
+  showLoading();
+  setTimeout(() => {
+    next();
+  }, 300);
+});
+
+router.afterEach(() => {
+  setTimeout(() => {
+    hideLoading();
+  }, 400);
 });
 
 export default router;

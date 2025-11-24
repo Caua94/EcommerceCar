@@ -212,12 +212,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import carService from '../services/carService.js';
 import brandService from '../services/brandService.js';
 import categoryService from '../services/categoryService.js';
-
 import { animateLoginEntrance } from '../utils/animations/LoginAnimations.js';
+import { useLoader } from '../composables/useLoader.js';
+
+const { isLoading } = useLoader();
 const backgroundVideo = new URL('../assets/videos/Luxury_Car_Login_Page_Video.mp4', import.meta.url).href;
 
 const activeTab = ref('car');
@@ -250,18 +252,15 @@ const loadingCar = ref(false);
 const loadingBrand = ref(false);
 const loadingCategory = ref(false);
 
-// Car Files
 const carVideoFile = ref(null);
 const carImageInteriorFile = ref(null);
 const carImageFile = ref(null);
 const carImageMotorFile = ref(null);
 const car3dFile = ref(null);
-// Brand Files
 const BrandImageFile = ref(null);
 const BgBrandFile = ref(null);
 const LogoBrandFile = ref(null);
 
-// Refs
 const carImageInputRef = ref(null);
 const brandImageInputRef = ref(null);
 const bgBrandInputRef = ref(null);
@@ -277,7 +276,6 @@ const notification = ref({
 });
 
 onMounted(async () => {
-  animateLoginEntrance();
   try {
     const brandsResponse = await brandService.getAll();
     allBrands.value = brandsResponse.data;
@@ -288,37 +286,19 @@ onMounted(async () => {
   }
 });
 
+watch(isLoading, (val) => {
+  if (!val) {
+    nextTick(() => {
+      animateLoginEntrance();
+    });
+  }
+});
+
 const showNotification = (message, type = 'success') => {
   notification.value = { show: true, message, type };
   setTimeout(() => {
     notification.value.show = false;
   }, 3000);
-};
-
-const resetForm = (formRef) => {
-  if (formRef === newCar) {
-    newCar.value = { ...initialCarState };
-    carImageFile.value = null;
-    carImageInteriorFile.value = null;
-    carImageMotorFile.value = null;
-    carVideoFile.value = null;
-    car3dFile.value = null;
-    if (carImageInputRef.value) carImageInputRef.value.value = '';
-    if (carImageInteriorInputRef.value) carImageInteriorInputRef.value.value = '';
-    if (carImageMotorInputRef.value) carImageMotorInputRef.value.value = '';
-    if (carVideoInputRef.value) carVideoInputRef.value.value = '';
-    if (car3dFile.value) car3dFileRef.value.value = '';
-  } else if (formRef === newBrand) {
-    newBrand.value = { ...initialBrandState };
-    BrandImageFile.value = null;
-    BgBrandFile.value = null;
-    LogoBrandFile.value = null;
-    if (brandImageInputRef.value) brandImageInputRef.value.value = '';
-    if (bgBrandInputRef.value) bgBrandInputRef.value.value = '';
-    if (logoBrandInputRef.value) logoBrandInputRef.value.value = '';
-  } else {
-    newCategory.value = { ...initialCategoryState };
-  }
 };
 
 const handleCarImageUpload = (event) => { carImageFile.value = event.target.files[0]; };
@@ -357,7 +337,10 @@ const handleCreateCar = async () => {
 
     await carService.create(formData);
     showNotification('Carro criado com sucesso!', 'success');
-    resetForm(newCar);
+    
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   } catch (error) {
     showNotification('Erro ao criar carro: ' + (error.response?.data?.message || error.message), 'error');
   } finally {
@@ -391,7 +374,9 @@ const handleCreateBrand = async () => {
 
     await brandService.create(formData);
     showNotification('Marca criada com sucesso!', 'success');
-    resetForm(newBrand);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   } catch (error) {
     showNotification('Erro ao criar marca: ' + (error.response?.data?.message || error.message), 'error');
   } finally {
@@ -409,7 +394,9 @@ const handleCreateCategory = async () => {
   try {
     await categoryService.create({ Name: newCategory.value.Name });
     showNotification('Categoria criada com sucesso!', 'success');
-    resetForm(newCategory);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   } catch (error) {
     showNotification('Erro ao criar categoria: ' + (error.response?.data?.message || error.message), 'error');
   } finally {

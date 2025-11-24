@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page w-screen h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular">
+  <div class="login-page w-full h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular">
     <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted
       playsinline preload="auto"></video>
     <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
@@ -13,7 +13,6 @@
 
       <form @submit.prevent="handleLogin" class="space-y-6">
         
-        <!-- Email Input -->
         <div class="gsap-login-form">
           <label for="email" class="block text-gray-300 text-sm font-bold mb-2 ml-1">
             Email Address or Username
@@ -23,7 +22,6 @@
             placeholder="name@example.com" />
         </div>
 
-        <!-- Password Input -->
         <div class="gsap-login-form">
           <label for="password" class="block text-gray-300 text-sm font-bold mb-2 ml-1">
             Password
@@ -55,11 +53,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router'; 
 import authService from '../services/authService.js';
 import { animateLoginEntrance } from '../utils/animations/LoginAnimations.js';
+import { useLoader } from '../composables/useLoader.js';
 
+const { isLoading } = useLoader();
 const router = useRouter();
 const email = ref('');
 const password = ref('');
@@ -89,17 +89,15 @@ async function handleLogin() {
         });
 
         const tokenData = response.data.token;
-        const tokenString = tokenData.token || tokenData; 
+        const tokenString = tokenData.token || tokenData;
 
         if (tokenString) {
             localStorage.setItem('authToken', tokenString);
 
             const decoded = parseJwt(tokenString);
-            
-    
+
             let finalName = response.data.name || response.data.Name;
-            
-          
+
             if (!finalName && decoded) {
                 finalName = decoded.unique_name || decoded.name || decoded.sub;
             }
@@ -110,15 +108,16 @@ async function handleLogin() {
 
             localStorage.setItem('userName', finalName);
 
-          
             const userRole = decoded.role || decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "User";
             localStorage.setItem('userRole', userRole);
 
             if (userRole === 'Admin') {
-                router.push('/createCar');
+                window.location.href = '/createCar';
             } else {
-                router.push('/');
+                window.location.href = '/';
             }
+            
+
         } else {
             alert("Token inválido recebido do servidor.");
         }
@@ -132,7 +131,11 @@ async function handleLogin() {
     }
 }
 
-onMounted(() => {
-    animateLoginEntrance();
+watch(isLoading, (val) => {
+  if (!val) {
+    nextTick(() => {
+      animateLoginEntrance();
+    });
+  }
 });
 </script>

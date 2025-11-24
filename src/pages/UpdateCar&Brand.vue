@@ -13,7 +13,7 @@
         leave-from-class="opacity-100 transform translate-y-0"
         leave-to-class="opacity-0 transform -translate-y-2">
         <div v-if="notification.show" :class="notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'"
-          class="mb-4 text-white py-3 px-6 rounded-lg shadow-lg absolute -top-20 left-0 right-0 mx-auto w-11/12">
+          class="mb-4 text-white py-3 px-6 rounded-lg shadow-lg absolute -top-20 left-0 right-0 mx-auto w-11/12 text-center font-bold">
           {{ notification.message }}
         </div>
       </transition>
@@ -21,7 +21,7 @@
       <div class="flex border-b-2 border-white/20 gsap-login-form">
         <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
           activeTab === tab.id ? 'border-amber-400 text-amber-400' : 'border-transparent text-gray-400 hover:text-amber-400 hover:border-gray-300',
-          'py-4 px-1 border-b-2 font-medium text-sm w-1/3 transition duration-150 ease-in-out'
+          'py-4 px-1 border-b-2 font-medium text-sm w-1/2 transition duration-150 ease-in-out'
         ]">
           {{ tab.name }}
         </button>
@@ -31,65 +31,64 @@
 
         <form v-if="activeTab === 'car'" @submit.prevent="handleUpdateCar" class="space-y-6">
           <div class="flex justify-between items-center mb-6">
-             <h2 class="text-3xl font-bold text-white gsap-login-title">Editar Carro</h2>
-             <button type="button" @click="router.back()" class="text-gray-300 hover:text-white underline">Voltar</button>
+             <h2 class="text-3xl font-bold text-white gsap-login-title">Edit Car</h2>
+             <button type="button" @click="router.back()" class="text-gray-300 hover:text-white underline">Go Back</button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
             <div>
-              <label for="car-nome" class="block text-sm font-medium text-white">Nome do Modelo</label>
-              <input v-model="currentCar.Name" type="text" id="car-nome"
+              <label for="car-name" class="block text-sm font-medium text-white">Model Name</label>
+              <input v-model="currentCar.Name" type="text" id="car-name"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
 
             <div>
-              <label for="car-preco" class="block text-sm font-medium text-white">Preço (R$)</label>
-              <input v-model.number="currentCar.Price" type="number" id="car-preco"
+              <label for="car-price" class="block text-sm font-medium text-white">Price (R$)</label>
+              <input v-model.number="currentCar.Price" type="number" id="car-price"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
 
             <div class="md:col-span-2">
-              <label for="car-descricao" class="block text-sm font-medium text-white">Descrição</label>
-              <textarea v-model="currentCar.Description" id="car-descricao" rows="3"
+              <label for="car-desc" class="block text-sm font-medium text-white">Description</label>
+              <textarea v-model="currentCar.Description" id="car-desc" rows="3"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"></textarea>
             </div>
 
             <div>
-              <label for="car-ano" class="block text-sm font-medium text-white">Ano</label>
-              <input v-model.number="currentCar.Year" type="number" id="car-ano"
+              <label for="car-year" class="block text-sm font-medium text-white">Year</label>
+              <input v-model.number="currentCar.Year" type="number" id="car-year"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
 
             <div>
-              <label for="car-estoque" class="block text-sm font-medium text-white">Estoque</label>
-              <input v-model.number="currentCar.Stock" type="number" id="car-estoque" min="0"
+              <label for="car-stock" class="block text-sm font-medium text-white">Stock</label>
+              <input v-model.number="currentCar.Stock" type="number" id="car-stock" min="0"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
             <div>
-              <label for="car-nome" class="block text-sm font-medium text-white">Motor do modelo</label>
-              <input v-model="currentCar.Engine" type="text" id="car-nome"
-                class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
-                required>
-            </div>
-
-            <div>
-              <label for="car-nome" class="block text-sm font-medium text-white">Velocidade-km/h</label>
-              <input v-model="currentCar.Speed" type="text" id="car-nome"
+              <label for="car-engine" class="block text-sm font-medium text-white">Engine Model</label>
+              <input v-model="currentCar.Engine" type="text" id="car-engine"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
 
             <div>
-              <label for="car-marca" class="block text-sm font-medium text-white">Marca</label>
-              <select v-model="currentCar.BrandId" id="car-marca"
+              <label for="car-speed" class="block text-sm font-medium text-white">Top Speed (km/h)</label>
+              <input v-model="currentCar.Speed" type="text" id="car-speed"
+                class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
+                required>
+            </div>
+
+            <div>
+              <label for="car-brand" class="block text-sm font-medium text-white">Brand</label>
+              <select v-model="currentCar.BrandId" id="car-brand"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors appearance-none"
                 required>
-                <option disabled value="" class="bg-gray-900">Selecione uma marca</option>
+                <option disabled value="" class="bg-gray-900">Select Brand</option>
                 <option v-for="brand in allBrands" :key="brand.id" :value="brand.id" class="bg-gray-900 ">
                   {{ brand.name }}
                 </option>
@@ -97,11 +96,11 @@
             </div>
 
             <div>
-              <label for="car-categoria" class="block text-sm font-medium text-white">Categoria</label>
-              <select v-model="currentCar.CategoryId" id="car-categoria"
+              <label for="car-category" class="block text-sm font-medium text-white">Category</label>
+              <select v-model="currentCar.CategoryId" id="car-category"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors appearance-none"
                 required>
-                <option disabled value="" class="bg-gray-900">Selecione uma categoria</option>
+                <option disabled value="" class="bg-gray-900">Select Category</option>
                 <option v-for="cat in allCategories" :key="cat.id" :value="cat.id" class="bg-gray-900">
                   {{ cat.name }}
                 </option>
@@ -109,85 +108,82 @@
             </div>
             
             <div class="md:col-span-2">
-              <label for="car-imagem" class="block text-sm font-medium text-white mb-2">Imagem do Carro (Deixe vazio para manter a atual)</label>
-              <input @change="handleCarImageUpload" type="file" id="car-imagem"
-                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
-                ref="carImageInputRef">
+              <label for="car-img" class="block text-sm font-medium text-white mb-2">Car Image (Leave empty to keep current)</label>
+              <input @change="handleCarImageUpload" type="file" id="car-img"
+                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
             <div class="md:col-span-2">
-              <label for="car-imagem-int" class="block text-sm font-medium text-white mb-2">Imagem do interior (Deixe vazio para manter a atual)</label>
-              <input @change="handleCarImageInteriorUpload" type="file" id="car-imagem-int"
-                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
-                ref="carImageInteriorInputRef">
+              <label for="car-img-int" class="block text-sm font-medium text-white mb-2">Interior Image (Leave empty to keep current)</label>
+              <input @change="handleCarImageInteriorUpload" type="file" id="car-img-int"
+                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
             <div class="md:col-span-2">
-              <label for="car-imagem-mot" class="block text-sm font-medium text-white mb-2">Imagem do motor (Deixe vazio para manter a atual)</label>
-              <input @change="handleCarImageMotorUpload" type="file" id="car-imagem-mot"
-                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
-                ref="carImageMotorInputRef">
+              <label for="car-img-eng" class="block text-sm font-medium text-white mb-2">Engine Image (Leave empty to keep current)</label>
+              <input @change="handleCarImageMotorUpload" type="file" id="car-img-eng"
+                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
             <div class="md:col-span-2">
-              <label for="car-video" class="block text-sm font-medium text-white mb-2">Video do Carro (Deixe vazio para manter o atual)</label>
+              <label for="car-video" class="block text-sm font-medium text-white mb-2">Video (Leave empty to keep current)</label>
               <input @change="handleCarVideoUpload" type="file" id="car-video"
-                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
-                ref="carVideoInputRef">
+                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
             <div class="md:col-span-2">
-              <label for="car-3d" class="block text-sm font-medium text-white mb-2">Modelo 3d do carro (Deixe vazio para manter o atual)</label>
+              <label for="car-3d" class="block text-sm font-medium text-white mb-2">3D Model (Leave empty to keep current)</label>
               <input @change="handleCar3dUpload" type="file" id="car-3d"
-                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
-                ref="car3dRef">
+                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
           </div>
 
           <button type="submit"
             class="w-full py-4 mt-8 bg-amber-400 text-white font-bold text-lg rounded-xl hover:bg-amber-500 transition-colors transform hover:scale-105 active:scale-95 duration-200 gsap-login-button"
             :disabled="loadingCar">
-            {{ loadingCar ? 'Atualizando...' : 'Atualizar Carro' }}
+            {{ loadingCar ? 'Updating...' : 'Update Car' }}
           </button>
         </form>
 
-        <form v-if="activeTab === 'brand'" @submit.prevent="handleCreateBrand" class="space-y-6">
-          <h2 class="text-3xl font-bold text-white mb-6 gsap-login-title">Adicionar Nova Marca</h2>
-          <p class="text-gray-400 text-sm mb-4">Esta aba cria uma nova marca. Para editar uma marca existente, use o painel de marcas.</p>
+        <form v-if="activeTab === 'brand'" @submit.prevent="handleUpdateBrand" class="space-y-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-white mb-6 gsap-login-title">Edit Brand</h2>
+            <button type="button" @click="router.back()" class="text-gray-300 hover:text-white underline">Go Back</button>
+          </div>
           
+          <div v-if="!currentBrand.id" class="text-red-400 text-center mb-4">
+             Warning: No Brand Data loaded. Please verify the ID.
+          </div>
+
           <div>
-            <label for="brand-nome" class="block text-sm font-medium text-white">Nome da Marca</label>
-            <input v-model="newBrand.Name" type="text" id="brand-nome"
+            <label for="brand-name" class="block text-sm font-medium text-white">Brand Name</label>
+            <input v-model="currentBrand.Name" type="text" id="brand-name"
               class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
               required>
           </div>
           <div>
             <label for="brand-desc" class="block text-sm font-medium text-white">Brand Description</label>
-            <input v-model="newBrand.Description" type="text" id="brand-desc"
+            <textarea v-model="currentBrand.Description" id="brand-desc" rows="4"
               class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
-              required>
+              required></textarea>
           </div>
 
           <div>
-            <label for="brand-imagem" class="block text-sm font-medium text-white mb-2">Logo da Marca</label>
-            <input @change="handleBrandImageUpload" type="file" id="brand-imagem"
-              class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500"
-              ref="brandImageInputRef">
+            <label for="brand-img" class="block text-sm font-medium text-white mb-2">Main Image (Leave empty to keep current)</label>
+            <input @change="handleBrandImageUpload" type="file" id="brand-img"
+              class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500">
           </div>
           <div>
-            <label for="bg-brand-imagem" class="block text-sm font-medium text-white mb-2">Brand Background</label>
-            <input @change="handleBgBrandUpload" type="file" id="bg-brand-imagem"
-              class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500"
-              ref="bgBrandInputRef">
+            <label for="bg-brand-img" class="block text-sm font-medium text-white mb-2">Brand Background (Leave empty to keep current)</label>
+            <input @change="handleBgBrandUpload" type="file" id="bg-brand-img"
+              class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500">
           </div>
           <div>
-            <label for="brand-banner" class="block text-sm font-medium text-white mb-2">Brand Banner</label>
-            <input @change="handleLogoBrandUpload" type="file" id="brand-banner"
-              class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500"
-              ref="logoBrandInputRef">
+            <label for="brand-logo" class="block text-sm font-medium text-white mb-2">Brand Logo (Leave empty to keep current)</label>
+            <input @change="handleLogoBrandUpload" type="file" id="brand-logo"
+              class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500">
           </div>
           
-
           <button type="submit"
             class="w-full py-4 mt-8 bg-amber-400 text-white font-bold text-lg rounded-xl hover:bg-amber-600 transition-colors transform hover:scale-105 active:scale-95 duration-200 gsap-login-button"
             :disabled="loadingBrand">
-            {{ loadingBrand ? 'Salvando...' : 'Salvar Marca' }}
+            {{ loadingBrand ? 'Updating...' : 'Update Brand' }}
           </button>
         </form>
 
@@ -210,9 +206,10 @@ const backgroundVideo = new URL('../assets/videos/Luxury_Car_Login_Page_Video.mp
 
 const activeTab = ref('car');
 const tabs = ref([
-  { id: 'car', name: 'Editar Carro' },
-  { id: 'brand', name: 'Criar Marca' },
+  { id: 'car', name: 'Edit Car' },
+  { id: 'brand', name: 'Edit Brand' }, 
 ]);
+
 
 const currentCar = ref({
   Name: '',
@@ -226,12 +223,19 @@ const currentCar = ref({
   BrandId: ''
 });
 
-const newBrand = ref({ Name: '', Description: '' });
+
+const currentBrand = ref({ 
+  id: null,
+  Name: '', 
+  Description: '' 
+});
+
 const allBrands = ref([]);
 const allCategories = ref([]);
 
 const loadingCar = ref(false);
 const loadingBrand = ref(false);
+
 
 const carVideoFile = ref(null);
 const carImageInteriorFile = ref(null);
@@ -242,16 +246,6 @@ const car3dFile = ref(null);
 const BrandImageFile = ref(null);
 const BgBrandFile = ref(null);
 const LogoBrandFile = ref(null);
-
-const carImageInputRef = ref(null);
-const carImageInteriorInputRef = ref(null);
-const carImageMotorInputRef = ref(null);
-const carVideoInputRef = ref(null);
-const car3dRef = ref(null);
-
-const brandImageInputRef = ref(null);
-const bgBrandInputRef = ref(null);
-const logoBrandInputRef = ref(null);
 
 const notification = ref({
   show: false,
@@ -267,20 +261,30 @@ const checkAdmin = () => {
     }
 }
 
+
 onMounted(async () => {
   checkAdmin();
   animateLoginEntrance();
+  
+
   try {
     const brandsResponse = await brandService.getAll();
     allBrands.value = brandsResponse.data;
     const categoriesResponse = await categoryService.getAll();
     allCategories.value = categoriesResponse.data;
+  } catch (e) {
+    console.error("Error loading auxiliary data", e);
+  }
 
-    const carId = route.params.id;
-    if (carId) {
-        const carResponse = await carService.getById(carId);
+
+  const routeId = route.params.id;
+  if (routeId) {
+     
+      try {
+        const carResponse = await carService.getById(routeId);
         const data = carResponse.data;
         
+     
         currentCar.value = {
             Name: data.name || data.Name,
             Price: data.price || data.Price,
@@ -292,9 +296,29 @@ onMounted(async () => {
             BrandId: data.brandId || data.BrandId,
             CategoryId: data.categoryId || data.CategoryId
         };
-    }
-  } catch (error) {
-    showNotification('Erro ao carregar dados.', 'error');
+        activeTab.value = 'car';
+      } catch (carError) {
+       
+        console.warn("ID not found for Car, attempting Brand fetch...");
+        
+        try {
+          const brandResponse = await brandService.getById(routeId);
+          const bData = brandResponse.data;
+          
+  
+          currentBrand.value = {
+            id: bData.id,
+            Name: bData.name || bData.Name,
+            Description: bData.description || bData.Description
+          };
+          
+          
+          activeTab.value = 'brand';
+          
+        } catch (brandError) {
+          showNotification('Error: ID not found for Car or Brand.', 'error');
+        }
+      }
   }
 });
 
@@ -305,14 +329,17 @@ const showNotification = (message, type = 'success') => {
   }, 3000);
 };
 
+
 const handleCarImageUpload = (event) => { carImageFile.value = event.target.files[0]; };
-const handleBrandImageUpload = (event) => { BrandImageFile.value = event.target.files[0]; };
-const handleBgBrandUpload = (event) => { BgBrandFile.value = event.target.files[0]; };
-const handleLogoBrandUpload = (event) => { LogoBrandFile.value = event.target.files[0]; };
 const handleCarImageInteriorUpload = (event) => { carImageInteriorFile.value = event.target.files[0]; };
 const handleCarImageMotorUpload = (event) => { carImageMotorFile.value = event.target.files[0]; };
 const handleCarVideoUpload = (event) => { carVideoFile.value = event.target.files[0]; };
 const handleCar3dUpload = (event) => { car3dFile.value = event.target.files[0]; };
+
+const handleBrandImageUpload = (event) => { BrandImageFile.value = event.target.files[0]; };
+const handleBgBrandUpload = (event) => { BgBrandFile.value = event.target.files[0]; };
+const handleLogoBrandUpload = (event) => { LogoBrandFile.value = event.target.files[0]; };
+
 
 const handleUpdateCar = async () => {
   loadingCar.value = true;
@@ -336,45 +363,54 @@ const handleUpdateCar = async () => {
     if (car3dFile.value) formData.append('Model3DUrl', car3dFile.value);
 
     await carService.update(route.params.id, formData);
-    showNotification('Carro atualizado com sucesso!', 'success');
+    showNotification('Car updated successfully!', 'success');
     
     setTimeout(() => {
         router.push('/cars'); 
     }, 1500);
 
   } catch (error) {
-    showNotification('Erro ao atualizar: ' + (error.response?.data?.message || error.message), 'error');
+    showNotification('Update Failed: ' + (error.response?.data?.message || error.message), 'error');
   } finally {
     loadingCar.value = false;
   }
 };
 
-const handleCreateBrand = async () => {
+
+const handleUpdateBrand = async () => {
   loadingBrand.value = true;
-  if (!newBrand.value.Name || !BrandImageFile.value) {
-    showNotification('Preencha nome e imagem.', 'error');
+  
+
+  if (!currentBrand.value.Name) {
+    showNotification('Brand Name is required.', 'error');
     loadingBrand.value = false;
     return;
   }
+  
   try {
     const formData = new FormData();
-    formData.append('Name', newBrand.value.Name);
-    formData.append('Description', newBrand.value.Description || '');
+
+    formData.append('Id', route.params.id); 
+    formData.append('Name', currentBrand.value.Name);
+    formData.append('Description', currentBrand.value.Description || '');
 
     if (BrandImageFile.value) formData.append('Image', BrandImageFile.value);
     if (BgBrandFile.value) formData.append('BgBrand', BgBrandFile.value);
     if (LogoBrandFile.value) formData.append('LogoBrand', LogoBrandFile.value);
 
-    await brandService.create(formData);
-    showNotification('Marca criada!', 'success');
-    newBrand.value = { Name: '', Description: '' };
+   
+    await brandService.update(route.params.id, formData);
     
-    // Atualiza a lista de marcas no select
-    const brandsResponse = await brandService.getAll();
-    allBrands.value = brandsResponse.data;
+    showNotification('Brand updated successfully!', 'success');
+    
+    setTimeout(() => {
+      
+      router.push(`/`); 
+    }, 1500);
 
   } catch (error) {
-    showNotification('Erro ao criar marca.', 'error');
+    console.error(error);
+    showNotification('Error updating brand: ' + (error.response?.data?.message || error.message), 'error');
   } finally {
     loadingBrand.value = false;
   }

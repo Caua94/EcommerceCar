@@ -1,6 +1,6 @@
 <template>
   <main class="relative w-full h-full overflow-x-hidden playfair-display-sc-regular">
-    <section ref="heroRef" class="relative h-screen w-screen flex items-center justify-center overflow-hidden">
+    <section ref="heroRef" class="relative h-screen w-full flex items-center justify-center overflow-hidden">
       <video :src="car?.videoDemoUrl" class="h-screen object-cover z-0" autoplay loop muted playsinline
         preload="auto"></video>
     </section>
@@ -16,7 +16,7 @@
     <span class="relative z-10 playfair-display-sc-regular">Buy now</span>
   </button>
 
-  <div v-if="car" class="w-screen">
+  <div v-if="car" class="w-full">
 
     <div
       class="storytelling-block relative grid grid-cols place-items-center justify-center px-4 sm:px-8 py-16 bg-gradient-to-b from-black to-gray-600 z-10 overflow-hidden text-white">
@@ -91,7 +91,7 @@
 
     <div
     
-      class="storytelling-block relative h-screen w-screen flex flex-col items-center justify-center  bg-black z-10 overflow-hidden pt-30 space-y-30">
+      class="storytelling-block relative h-screen w-full flex flex-col items-center justify-center  bg-black z-10 overflow-hidden pt-30 space-y-30">
       <h1 class="capitalize font-dancing text-4xl sm:text-7xl text-white ">Inside your Dreams</h1>
       <img :src="car.imagemInteriorUrl" class="h-full w-full object-cover" :alt="car.nome" />
     </div>
@@ -100,7 +100,7 @@
   </div>
 
 
-  <div v-else class="h-screen w-screen flex items-center justify-center bg-black text-white text-3xl">
+  <div v-else class="h-screen w-full flex items-center justify-center bg-black text-white text-3xl">
     Carregando...
   </div>
 </template>

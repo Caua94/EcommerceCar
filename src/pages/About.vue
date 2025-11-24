@@ -71,7 +71,7 @@
       <div class="max-w-3xl text-center relative z-10 space-y-4">
         <h2 class="text-5xl font-bold mb-6 text-white">Team</h2>
         <p class="text-2xl text-gray-100 leading-relaxed">
-          Front-end: Cauã Reginato and Gui Oliveira.<br />
+          Front-end: Cauã Reginato.<br />
           Back-end: Jhonata Canevare and Giovani Ferreira.
         </p>
       </div>

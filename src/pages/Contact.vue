@@ -1,5 +1,5 @@
 <template>
-  <div class="contact-page w-screen h-screen flex relative overflow-hidden playfair-display-sc-regular">
+  <div class="contact-page w-full h-screen flex relative overflow-hidden playfair-display-sc-regular">
     <div
       class="w-1/2 h-full bg-cover bg-center hidden md:block"
       :style="{ backgroundImage: `url(${backgroundImage})` }"
