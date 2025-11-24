@@ -156,7 +156,12 @@ const currentBrand = ref(null);
 const error = ref(null);
 const isLoading = ref(true);
 const hasMorePages = ref(true);
-const api_base = "http://localhost:5132";
+
+// --- AJUSTE PARA O RENDER ---
+// Pega a URL do ambiente. Se tiver "/api" no final, remove (para pegar imagens na raiz)
+const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132";
+// ----------------------------
+
 const productsOpen = ref(false);
 const productsPanelRef = ref(null);
 
@@ -206,13 +211,20 @@ const handleDelete = async () => {
   }
 };
 
+// --- AJUSTE DE SEGURANÇA NA URL ---
 const resolveUrl = (path) => {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('https')) {
     return path;
   }
-  return `${api_base}${path}`;
+  
+  // Garante a formatação correta da URL da imagem
+  const baseUrl = api_base.endsWith('/') ? api_base.slice(0, -1) : api_base;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  
+  return `${baseUrl}${cleanPath}`;
 };
+// ----------------------------------
 
 const mapApiProduct = (apiProduct) => {
   const brandImg = apiProduct.brand?.imageUrl || apiProduct.brand?.imageURL || apiProduct.marca?.imagemURL;

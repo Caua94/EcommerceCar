@@ -124,15 +124,26 @@ const props = defineProps({
 const car = ref(null);
 const router = useRouter();
 const heroRef = ref(null);
-const api_base = "http://localhost:5132";
 
+// --- AJUSTE PARA O RENDER ---
+// Pega a URL do ambiente e remove o "/api" para acessar as imagens/vídeos/3D na raiz
+const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132";
+// ----------------------------
+
+// --- AJUSTE NO RESOLVE URL ---
 const resolveUrl = (path) => {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('https')) {
     return path;
   }
-  return `${api_base}${path}`;
+  
+  // Garante a formatação correta (evita // ou falta de /)
+  const baseUrl = api_base.endsWith('/') ? api_base.slice(0, -1) : api_base;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  
+  return `${baseUrl}${cleanPath}`;
 };
+// -----------------------------
 
 const fetchCarDetails = async () => {
   try {
@@ -147,15 +158,13 @@ const fetchCarDetails = async () => {
       motor: apiData.engine || apiData.Engine || apiData.motor,
       ano: apiData.year || apiData.Year || apiData.ano,
 
-
+      // ResolveUrl agora usa o endereço do Render para carregar o modelo 3D
       model3d: resolveUrl(apiData.model3DUrl || apiData.Model3DURL || apiData.Model3dUrl),
-
 
       imagemUrl: resolveUrl(apiData.imageUrl || apiData.ImageUrl || apiData.imagemUrl),
       imagemInteriorUrl: resolveUrl(apiData.innerImageUrl || apiData.InnerImageUrl || apiData.imagemInteriorUrl),
       imagemMotorUrl: resolveUrl(apiData.imageEngineUrl || apiData.ImageEngineUrl || apiData.imagemMotorUrl),
       videoDemoUrl: resolveUrl(apiData.videoDemoUrl || apiData.VideoDemoUrl),
-
 
       categoriaId: apiData.categoryId || apiData.CategoryId || apiData.categoriaId,
       marcaId: apiData.brandId || apiData.BrandId || apiData.marcaId
@@ -181,7 +190,6 @@ const fetchCarDetails = async () => {
 
         mappedCar.marca = {
           ...brandData,
-
           imagemURL: resolveUrl(brandData.imageUrl || brandData.ImageURL || brandData.imageURL || brandData.logoBrand)
         };
       } catch (brandError) {
@@ -205,11 +213,7 @@ const goToCheckout = () => {
   }
 };
 
-
-
-
 onMounted(() => {
-
   fetchCarDetails();
 });
 </script>

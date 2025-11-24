@@ -155,15 +155,26 @@ const handleVideoEnd = () => {
 const brands = ref([]);
 const isLoadingBrands = ref(true);
 const brandsError = ref(null);
-const api_base = "http://localhost:5132";
 
+// --- AJUSTE PARA O RENDER ---
+// Pega a URL do ambiente e remove o "/api" para acessar as imagens na raiz
+const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132";
+// ----------------------------
+
+// --- AJUSTE NO RESOLVE URL ---
 const resolveUrl = (path) => {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('https')) {
     return path;
   }
-  return `${api_base}${path}`;
+  
+  // Lógica segura para evitar barras duplas ou falta de barra
+  const baseUrl = api_base.endsWith('/') ? api_base.slice(0, -1) : api_base;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  
+  return `${baseUrl}${cleanPath}`;
 };
+// -----------------------------
 
 const fetchBrands = async () => {
   try {
