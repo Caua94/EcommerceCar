@@ -11,7 +11,7 @@ import Contact from "../pages/Contact.vue";
 import CreateCar from "../pages/CreateCar.vue";
 import SeeMore from "../pages/SeeMore.vue";
 import PayOrder from "../pages/PayOrder.vue";
-import carsSellPerBrand from "../pages/CarsSellPerBrand.vue";
+import carsSellPerBrand from "../pages/CarsPerBrand.vue";
 import UpdateCarBrand from "../pages/UpdateCar&Brand.vue";
 import { useLoader } from "../composables/useLoader";
 
