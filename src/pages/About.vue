@@ -4,11 +4,8 @@
       ref="heroRef"
       class="relative h-screen w-full flex items-center justify-center overflow-hidden"
     >
-      <img
-        src="../assets/imgs/womansInCar.jpg"
-        alt="A woman in a luxury car, symbolizing freedom and elegance."
-        class="absolute top-0 left-0 w-full h-full object-cover"
-      />
+    
+      <img src="../assets/imgs/womansInCar.jpg" alt="" class="object-cover object-center z-0 absolute">
       <h1 class="relative text-white text-6xl font-bold z-10 drop-shadow-lg">
         About the Project
       </h1>

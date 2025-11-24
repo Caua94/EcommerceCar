@@ -126,8 +126,14 @@
                 ref="carImageInputRef">
             </div>
             <div class="md:col-span-2">
-              <label for="car-imagem" class="block text-sm font-medium text-white mb-2">Video do Carro</label>
+              <label for="car-video" class="block text-sm font-medium text-white mb-2">Video do Carro</label>
               <input @change="handleCarVideoUpload" type="file" id="car-imagem"
+                class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
+                ref="carImageInputRef">
+            </div>
+            <div class="md:col-span-2">
+              <label for="car-3d" class="block text-sm font-medium text-white mb-2">Modelo 3d do carro</label>
+              <input @change="handleCar3dUpload" type="file" id="car-3d"
                 class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
                 ref="carImageInputRef">
             </div>
@@ -249,7 +255,7 @@ const carVideoFile = ref(null);
 const carImageInteriorFile = ref(null);
 const carImageFile = ref(null);
 const carImageMotorFile = ref(null);
-
+const car3dFile = ref(null);
 // Brand Files
 const BrandImageFile = ref(null);
 const BgBrandFile = ref(null);
@@ -296,10 +302,12 @@ const resetForm = (formRef) => {
     carImageInteriorFile.value = null;
     carImageMotorFile.value = null;
     carVideoFile.value = null;
+    car3dFile.value = null;
     if (carImageInputRef.value) carImageInputRef.value.value = '';
     if (carImageInteriorInputRef.value) carImageInteriorInputRef.value.value = '';
     if (carImageMotorInputRef.value) carImageMotorInputRef.value.value = '';
     if (carVideoInputRef.value) carVideoInputRef.value.value = '';
+    if (car3dFile.value) car3dFileRef.value.value = '';
   } else if (formRef === newBrand) {
     newBrand.value = { ...initialBrandState };
     BrandImageFile.value = null;
@@ -320,6 +328,7 @@ const handleLogoBrandUpload = (event) => { LogoBrandFile.value = event.target.fi
 const handleCarImageInteriorUpload = (event) => { carImageInteriorFile.value = event.target.files[0]; };
 const handleCarImageMotorUpload = (event) => { carImageMotorFile.value = event.target.files[0]; };
 const handleCarVideoUpload = (event) => { carVideoFile.value = event.target.files[0]; };
+const handleCar3dUpload = (event) => {car3dFile.value = event.target.files[0]; };
 
 const handleCreateCar = async () => {
   loadingCar.value = true;
@@ -344,6 +353,7 @@ const handleCreateCar = async () => {
     if (carImageInteriorFile.value) formData.append('InnerImage', carImageInteriorFile.value);
     if (carImageMotorFile.value) formData.append('ImageEngine', carImageMotorFile.value);
     if (carVideoFile.value) formData.append('VideoDemoUrl', carVideoFile.value);
+    if (car3dFile.value) formData.append('Model3DUrl', car3dFile.value);
 
     await carService.create(formData);
     showNotification('Carro criado com sucesso!', 'success');

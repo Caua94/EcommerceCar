@@ -24,7 +24,7 @@
 
   <section
     class="w-screen h-full flex justify-center items-center flex-col text-black gsap-blur-in space-y-4 pt-12 md:pt-20 pb-12 md:pb-20 bg-gradient-to-b from-white via-white via-70% to-black ">
-    <p class="flex text-4xl md:text-6xl font-bold playfair-display-sc-bold">Featured Listings</p>
+    <p class="flex text-4xl md:text-6xl  playfair-display-sc-regular">Featured Listings</p>
     <p class="border-b border-black w-11/12 md:w-3/4"></p>
     <CardComponent />
   </section>
@@ -49,7 +49,7 @@
   </section>
 
   <div class="flex justify-center itens-center w-screen bg-black border-b border-white pt-12 md:pt-20 gsap-blur-in">
-    <h1 class="text-4xl md:text-6xl text-white bg-black font-boldter playfair-display-sc-bold">Our Brands</h1>
+    <h1 class="text-4xl md:text-6xl text-white bg-black  playfair-display-sc-regular">Our Brands</h1>
   </div>
 
   <section id="brand" class="w-screen min-h-screen h-auto flex justify-center items-center bg-black py-10 md:py-20 gsap-blur-in">

@@ -12,24 +12,25 @@
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-6">
-        <div class="relative gsap-login-form">
-          <input type="email" id="email" v-model="email" required
-            class="peer w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
-            placeholder=" " />
-          <label for="email"
-            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 transition-all duration-300 transform-gpu peer-placeholder-shown:text-base peer-focus:text-sm peer-focus:-top-4 peer-focus:left-4 peer-focus:text-amber-400 peer-placeholder-shown:-translate-y-1/2 peer-focus:-translate-y-full">
+        
+        <!-- Email Input -->
+        <div class="gsap-login-form">
+          <label for="email" class="block text-gray-300 text-sm font-bold mb-2 ml-1">
             Email Address or Username
           </label>
+          <input type="email" id="email" v-model="email" required
+            class="w-full p-3 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
+            placeholder="name@example.com" />
         </div>
 
-        <div class="relative gsap-login-form">
-          <input type="password" id="password" v-model="password" required
-            class="peer w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
-            placeholder=" " />
-          <label for="password"
-            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 transition-all duration-300 transform-gpu peer-placeholder-shown:text-base peer-focus:text-sm peer-focus:-top-4 peer-focus:left-4 peer-focus:text-amber-400 peer-placeholder-shown:-translate-y-1/2 peer-focus:-translate-y-full">
+        <!-- Password Input -->
+        <div class="gsap-login-form">
+          <label for="password" class="block text-gray-300 text-sm font-bold mb-2 ml-1">
             Password
           </label>
+          <input type="password" id="password" v-model="password" required
+            class="w-full p-3 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
+            placeholder="••••••••" />
         </div>
 
         <div class="text-right gsap-login-form">
@@ -93,25 +94,23 @@ async function handleLogin() {
         if (tokenString) {
             localStorage.setItem('authToken', tokenString);
 
-            // Decodifica o token primeiro
             const decoded = parseJwt(tokenString);
             
-            // 1. Tenta pegar o nome da resposta direta da API
+    
             let finalName = response.data.name || response.data.Name;
             
-            // 2. Se não veio, tenta pegar do Token (claim 'unique_name' ou 'sub')
+          
             if (!finalName && decoded) {
                 finalName = decoded.unique_name || decoded.name || decoded.sub;
             }
 
-            // 3. Se ainda não achou, usa o começo do email digitado como fallback
             if (!finalName) {
                 finalName = email.value.split('@')[0];
             }
 
             localStorage.setItem('userName', finalName);
 
-            // Role
+          
             const userRole = decoded.role || decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "User";
             localStorage.setItem('userRole', userRole);
 

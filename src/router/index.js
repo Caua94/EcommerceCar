@@ -13,6 +13,7 @@ import CreateCar from "../pages/CreateCar.vue";
 import SeeMore from "../pages/SeeMore.vue";
 import PayOrder from "../pages/PayOrder.vue";
 import carsSellPerBrand from "../pages/CarsSellPerBrand.vue";
+import UpdateCarBrand from "../pages/UpdateCar&Brand.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
@@ -37,6 +38,7 @@ const routes = [
   { path: "/sign", name: "sign", component: Sign },
   { path: "/contact", name: "contact", component: Contact },
   { path: "/createCar", name: "createCar", component: CreateCar },
+  { path: "/update/:id", name: "update", component: UpdateCarBrand },
   { path: "/seeMore/:id", name: "seeMore", component: SeeMore, props: true },
 ];
 

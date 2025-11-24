@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-black text-white py-10">
+  <footer class="bg-black text-white py-10 w-full ">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div>
         <h3 class="text-lg font-semibold mb-4">MinhaLogo</h3>

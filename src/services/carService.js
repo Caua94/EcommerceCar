@@ -19,11 +19,20 @@ export default {
   },
 
   create(formData) {
-    return apiClient.post(`${resource}/PostCar`, formData);
+    return apiClient.post(`${resource}/PostCar`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   },
 
+
   update(id, carData) {
-    return apiClient.put(`${resource}/${id}`, carData);
+    return apiClient.put(`${resource}/${id}`, carData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   },
 
   delete(id) {

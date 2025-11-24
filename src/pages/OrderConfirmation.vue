@@ -13,7 +13,7 @@
 
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-center">
-                    <img class="h-8 w-8 mr-2" src="https://tailwindflex.com/public/images/logos/favicon-32x32.png"
+                    <img class="h-8 w-8 mr-2 bg-black" src="../assets/imgs/Logo.png"
                         alt="Logo" />
                     <div class="text-gray-700 font-semibold text-lg">DreamCar</div>
                 </div>
