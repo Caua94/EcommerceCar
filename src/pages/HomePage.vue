@@ -117,7 +117,7 @@ import { onMounted, onUnmounted, ref, nextTick, watch } from 'vue';
 import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import brandService from '../services/brandService.js';
 import groupDev from '../assets/imgs/mosaicoAlunos.png';
-import CardComponent from '../components/cardComponent.vue';
+import CardComponent from '../components/CardComponentcar.vue';
 import ButtonArrow from '../utils/animations/ButtonArrow.vue';
 import { useLoader } from '../composables/useLoader.js';
 

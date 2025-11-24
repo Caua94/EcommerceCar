@@ -183,7 +183,7 @@ import { ref, onMounted, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { setupHomeAnimations } from '../utils/animations/HomeAnimations.js';
 import FilterComponent from '../components/FilterComponent.vue';
-import CarCarousel from '../components/CardComponent.vue';
+import CarCarousel from '../components/CardComponentcar.vue';
 import CarCard from '../components/CardCarProductGrade.vue';
 import carService from '../services/carService.js';
 
