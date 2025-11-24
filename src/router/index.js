@@ -12,7 +12,7 @@ import CreateCar from "../pages/CreateCar.vue";
 import SeeMore from "../pages/SeeMore.vue";
 import PayOrder from "../pages/PayOrder.vue";
 import carsSellPerBrand from "../pages/CarsPerBrand.vue";
-import UpdateCarBrand from "../pages/UpdateCar&Brand.vue";
+import UpdateCarBrand from "../pages/UpdateCarEBrand.vue";
 import { useLoader } from "../composables/useLoader";
 
 const routes = [
