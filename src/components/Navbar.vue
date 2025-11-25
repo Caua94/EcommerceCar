@@ -3,7 +3,7 @@
 
     <nav :class="[
 
-      'fixed top-0 w-full z-50 transition-all duration-300 h-26 playfair-display-sc-regular',
+      'fixed top-0 w-full z-50 transition-all duration-300 h-22 playfair-display-sc-regular',
 
       isScrolled ? 'bg-stone-800/90 text-white shadow-md backdrop-blur-sm' : 'bg-transparent text-white'
 

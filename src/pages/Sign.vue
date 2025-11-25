@@ -1,9 +1,9 @@
 <template>
-  <div class="signup-page w-full h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular">
+  <div class="signup-page w-full h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular ">
     <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted playsinline preload="auto"></video>
     <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
 
-    <div class="relative z-20 w-full max-w-2xl p-8 bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl space-y-6 border border-white/20 transform transition-transform duration-500 ease-in-out overflow-y-auto max-h-[90vh]" ref="signupCard">
+    <div class="relative z-20 w-full max-w-2xl p-30  bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl space-y-6 border border-white/20 transform transition-transform duration-500 ease-in-out overflow-y-auto max-h-[110vh] mt-15 " ref="signupCard">
       
       <div class="text-center space-y-2">
         <h2 class="text-4xl font-bold text-white tracking-wide gsap-signup-title">Create Account</h2>

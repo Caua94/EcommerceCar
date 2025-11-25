@@ -47,7 +47,7 @@
 
 
 
-  <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-black gsap-blur-in playfair-display-sc-regular">
+  <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-black  playfair-display-sc-regular">
 
 
 
@@ -195,12 +195,7 @@ const error = ref(null);
 const isLoading = ref(true);
 const hasMorePages = ref(true);
 
-// --- MUDANÇA AQUI ---
-// Agora ele pega a URL do Render (Environment Variable). 
-// Se não achar (no seu PC), usa o localhost.
-// Nota: Removi o "/api" do final aqui porque geralmente as imagens estão na raiz, 
-// mas verifique se suas imagens precisam de /api antes.
-// Se a imagem quebrar no Render, mude para: import.meta.env.VITE_API_URL
+
 const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132";
 // --------------------
 

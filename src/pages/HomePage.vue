@@ -71,7 +71,7 @@
                   gsap-blur-in relative overflow-hidden 
                   bg-cover bg-center grid place-items-center" :style="{ backgroundImage: `url(${brand.bgBrandUrl})` }">
 
-        <div class="absolute inset-0 bg-black/60 z-10 transition-colors duration-300 hover:bg-black/40">
+        <div class="absolute inset-0 bg-black/40 z-10 transition-colors duration-300 hover:bg-black/10">
         </div>
 
         <img :src="brand.imageUrl" :alt="`${brand.name} logo`"
