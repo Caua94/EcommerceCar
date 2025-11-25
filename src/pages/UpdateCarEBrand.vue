@@ -128,7 +128,7 @@
                 class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
             <div class="md:col-span-2">
-              <label for="car-3d" class="block text-sm font-medium text-white mb-2">3D Model (Leave empty to keep current)</label>
+              <label for="car-3d" class="block text-sm font-medium text-white mb-2">3D Model < 10Mb (Leave empty to keep current)</label>
               <input @change="handleCar3dUpload" type="file" id="car-3d"
                 class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500">
             </div>
