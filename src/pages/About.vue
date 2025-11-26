@@ -74,7 +74,7 @@
           <p class="text-sm text-gray-400 playfair-display-sc-regular-italic">Robust & Secure API</p>
         </div>
         <div class="tech-card bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-xl text-center hover:bg-white/10 transition-colors duration-300 group">
-          <h3 class="text-2xl text-amber-400 mb-2 playfair-display-sc-bold">SQL Server</h3>
+          <h3 class="text-2xl text-amber-400 mb-2 playfair-display-sc-bold">MySQL Server</h3>
           <p class="text-sm text-gray-400 playfair-display-sc-regular-italic">Data Integrity & Speed</p>
         </div>
       </div>
@@ -84,7 +84,7 @@
       
       <div class="text-center mb-16 space-y-4">
         <h2 class="text-5xl md:text-8xl text-white font-dancing">DreamCar</h2>
-        <p class="text-gray-400 tracking-widest text-sm playfair-display-sc-black">DEVELOPER INSIDE YOUR DREAMS</p>
+        <p class="text-gray-400 tracking-widest text-sm playfair-display-sc-black uppercase">The developers team that make your dream come true</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 w-full max-w-7xl">
@@ -96,7 +96,7 @@
           <div class="mt-6 text-center space-y-2">
             <h3 class="text-2xl text-white playfair-display-sc-bold">Cauã Reginato</h3>
             <p class="text-amber-400 text-sm tracking-wide playfair-display-sc-bold-italic">FRONT-END & UI/UX</p>
-            <p class="text-gray-500 text-xs max-w-xs mx-auto playfair-display-sc-regular">Responsible for visual architecture, interactivity, and user experience using Vue and GSAP.</p>
+            <p class="text-gray-500 text-xs max-w-xs mx-auto playfair-display-sc-regular">Responsible for visual architecture, interactivity, and user experience using Vue, Tailwind and GSAP.</p>
             
             <div class="flex gap-4 justify-center mt-4">
               <a href="https://www.instagram.com/caua94_rd/following/" target="_blank" class="text-gray-400 hover:text-amber-400 transition-all hover:scale-110">
@@ -142,7 +142,7 @@
           <div class="mt-6 text-center space-y-2">
             <h3 class="text-2xl text-white playfair-display-sc-bold">Giovani Ferreira</h3>
             <p class="text-amber-400 text-sm tracking-wide playfair-display-sc-bold-italic">BACK-END ARCHITECT ASSIST.</p>
-            <p class="text-gray-500 text-xs max-w-xs mx-auto playfair-display-sc-regular">Coding in c# and assistence.</p>
+            <p class="text-gray-500 text-xs max-w-xs mx-auto playfair-display-sc-regular">Coding in c# and assistance.</p>
 
             <div class="flex gap-4 justify-center mt-4">
               <a href="https://www.instagram.com/ferreiragiovanni01/" target="_blank" class="text-gray-400 hover:text-amber-400 transition-all hover:scale-110">

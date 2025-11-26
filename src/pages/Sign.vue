@@ -1,18 +1,18 @@
 <template>
-  <div class="signup-page w-full h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular ">
+  <div class="signup-page w-full h-screen flex justify-center items-center relative overflow-hidden playfair-display-sc-regular">
     <video :src="backgroundVideo" class="absolute top-0 left-0 w-full h-full object-cover z-0" autoplay loop muted playsinline preload="auto"></video>
     <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
 
-    <div class="relative z-20 w-full max-w-2xl p-30  bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl space-y-6 border border-white/20 transform transition-transform duration-500 ease-in-out overflow-y-auto max-h-[110vh] mt-15 " ref="signupCard">
+    <div class="relative z-20 w-[90%] md:w-full max-w-2xl p-6 md:p-12 bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl space-y-6 border border-white/20 transform transition-transform duration-500 ease-in-out overflow-y-auto max-h-[90vh] mt-20 md:mt-24 custom-scrollbar" ref="signupCard">
       
       <div class="text-center space-y-2">
-        <h2 class="text-4xl font-bold text-white tracking-wide gsap-signup-title">Create Account</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-white tracking-wide gsap-signup-title">Create Account</h2>
         <p class="text-gray-300 text-sm gsap-signup-text">Join us to start your journey.</p>
       </div>
 
-      <form @submit.prevent="handleSignup" class="space-y-5">
+      <form @submit.prevent="handleSignup" class="space-y-4 md:space-y-5">
         
-        <div class="grid grid-cols-1 gap-5">
+        <div class="grid grid-cols-1 gap-4 md:gap-5">
           <div class="gsap-signup-form">
             <label for="fullname" class="block text-gray-300 text-sm font-bold mb-2 ml-1">Full Name</label>
             <input type="text" id="fullname" v-model="fullName" required 
@@ -31,7 +31,7 @@
         <div class="border-t border-white/10 pt-4 mt-2">
             <p class="text-amber-400 text-sm font-bold mb-4 uppercase tracking-widest">Address</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-4 md:mb-5">
                 <div class="gsap-signup-form md:col-span-1">
                     <label for="cep" class="block text-gray-300 text-sm font-bold mb-2 ml-1">CEP</label>
                     <input type="text" id="cep" v-model="cep" @blur="buscarCep" maxlength="9" required 
@@ -47,13 +47,13 @@
                 </div>
             </div>
 
-            <div class="gsap-signup-form mb-5">
+            <div class="gsap-signup-form mb-4 md:mb-5">
                 <label for="road" class="block text-gray-400 text-sm font-bold mb-2 ml-1">Street / Road</label>
                 <input type="text" id="road" v-model="road" readonly 
                   class="w-full p-3 text-gray-300 bg-white/5 border border-white/10 rounded-xl focus:outline-none cursor-not-allowed" />
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
                 <div class="gsap-signup-form">
                     <label for="neighborhood" class="block text-gray-400 text-sm font-bold mb-2 ml-1">Neighborhood</label>
                     <input type="text" id="neighborhood" v-model="neighborhood" readonly 
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 pt-2">
             <div class="gsap-signup-form">
                 <label for="password" class="block text-gray-300 text-sm font-bold mb-2 ml-1">Password</label>
                 <input type="password" id="password" v-model="password" required 
@@ -206,3 +206,21 @@ onMounted(() => {
   animateSignupEntrance();
 });
 </script>
+
+<style scoped>
+/* Adicionei isso para garantir que a barra de rolagem interna fique bonita */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+</style>

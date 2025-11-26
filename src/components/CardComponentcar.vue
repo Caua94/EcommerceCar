@@ -41,9 +41,9 @@
               onerror="this.onerror=null;this.src='https://placehold.co/800x600/e2e8f0/475569?text=Imagem+Indisponível';">
           </div>
 
-          <div class="flex gap-6 md:gap-10 text-2xl md:text-3xl lg:text-4xl lg:text-gray-700 font-semibold">
+          <div class="flex gap-6 md:gap-10 text-lg md:text-xl lg:text-3xl lg:text-gray-700 font-semibold">
             <p>{{ currentCar.price }}</p>
-            <p>{{ currentCar.year }}</p>
+           
           </div>
 
 

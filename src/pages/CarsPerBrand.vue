@@ -22,25 +22,30 @@
       </div>
     </header>
 
-    <section v-if="currentBrand"
-      class="w-full h-[400px] md:h-[600px] flex justify-center items-center overflow-hidden shadow-4xl  relative bg-black border-t border-b border-gray-500 mt-20 gsap-blur-in">
+<section v-if="currentBrand"
+  class="w-full h-[400px] md:h-[600px] flex justify-center items-center overflow-hidden shadow-4xl relative bg-black border-t border-b border-gray-500 mt-20 gsap-blur-in">
 
-      <div class="absolute left-0 md:w-2/5 h-full">
-        <img :src="currentBrand.bgBrandUrl" :alt="'Interior of ' + currentBrand.name"
-          class="w-full h-full object-cover [mask-image:linear-gradient(to_right,black_70%,transparent_100%)]" />
-      </div>
+  <div class="absolute inset-0 md:left-0 md:right-auto md:w-2/5 h-full z-0">
+    <img 
+      :src="currentBrand.bgBrandUrl" 
+      :alt="'Interior of ' + currentBrand.name"
+      class="w-full h-full object-cover opacity-40 md:opacity-100 md:[mask-image:linear-gradient(to_right,black_70%,transparent_100%)] transition-opacity duration-500" 
+    />
+  </div>
 
-      <div
-        class="w-full md:w-2/5 h-full bg-gradient-to-l from-black/90 to-black/10 text-white flex flex-col justify-center items-center absolute right-5 p-4 shadow-2xl space-y-2 md:space-y-4 bg-black">
-        <h1 class="text-5xl md:text-8xl text-right playfair-display-sc-bold">What is {{ currentBrand.name }}?</h1>
+  <div
+    class="relative z-10 w-full px-6 md:px-0 md:w-2/5 h-full flex flex-col justify-center items-center md:absolute md:right-5 md:p-4 space-y-2 md:space-y-4 text-white">
+    
+    <h1 class="text-4xl md:text-7xl text-center md:text-right playfair-display-sc-bold drop-shadow-lg">
+      What is {{ currentBrand.name }}?
+    </h1>
 
-        <p class="text-xl md:text-3xl text-right line-clamp-6">
-          {{ currentBrand.description || `Descubra a excelência e o design inconfundível da ${currentBrand.name}.` }}
-        </p>
+    <p class="text-xl md:text-3xl text-center md:text-right line-clamp-6 drop-shadow-md text-gray-100">
+      {{ currentBrand.description || `Descubra a excelência e o design inconfundível da ${currentBrand.name}.` }}
+    </p>
 
-        <a class="hover:scale-105 hover:text-blue-400 hover:underline" href="#">Learn More</a>
-      </div>
-    </section>
+  </div>
+</section>
 
     <div
       class="relative h-[40vh] w-full flex items-center justify-center text-center text-white p-4 shadow-2xl gsap-blur-in">

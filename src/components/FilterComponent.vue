@@ -3,7 +3,7 @@
     
     <div class="p-6 flex items-center justify-between border-b border-stone-700">
       <h3 class="text-5xl font-semibold">Filters</h3>
-      <button @click="$emit('close')" class="p-2 rounded hover:bg-stone-800 transition-colors" aria-label="Close Menu">
+      <button type="button" @click="$emit('close')" class="p-2 rounded hover:bg-stone-800 transition-colors" aria-label="Close Menu">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -21,20 +21,42 @@
       <div class="space-y-2">
         <label class="text-sm uppercase tracking-wider text-stone-400 font-bold">Price Range</label>
         <div class="flex gap-4">
-          <input v-model.number="filters.PriceMin" type="number" placeholder="Min" 
-            class="w-1/2 bg-stone-800 border border-stone-700 rounded p-3 text-white focus:border-amber-500 focus:outline-none" />
-          <input v-model.number="filters.PriceMax" type="number" placeholder="Max" 
-            class="w-1/2 bg-stone-800 border border-stone-700 rounded p-3 text-white focus:border-amber-500 focus:outline-none" />
+          <div class="relative w-1/2">
+            <span class="absolute left-3 top-3 text-stone-500 pointer-events-none">R$</span>
+            <input v-model.number="filters.PriceMin" type="number" placeholder="Min" 
+              class="w-full bg-stone-800 border border-stone-700 rounded p-3 pl-10 text-white focus:border-amber-500 focus:outline-none" />
+          </div>
+          <div class="relative w-1/2">
+            <span class="absolute left-3 top-3 text-stone-500 pointer-events-none">R$</span>
+            <input v-model.number="filters.PriceMax" type="number" placeholder="Max" 
+              class="w-full bg-stone-800 border border-stone-700 rounded p-3 pl-10 text-white focus:border-amber-500 focus:outline-none" />
+          </div>
         </div>
       </div>
 
       <div class="space-y-2">
         <label class="text-sm uppercase tracking-wider text-stone-400 font-bold">Year Range</label>
         <div class="flex gap-4">
-          <input v-model.number="filters.YearMin" type="number" placeholder="Min" 
-            class="w-1/2 bg-stone-800 border border-stone-700 rounded p-3 text-white focus:border-amber-500 focus:outline-none" />
-          <input v-model.number="filters.YearMax" type="number" placeholder="Max" 
-            class="w-1/2 bg-stone-800 border border-stone-700 rounded p-3 text-white focus:border-amber-500 focus:outline-none" />
+          <div class="relative w-1/2">
+            <select v-model.number="filters.YearMin" 
+              class="w-full bg-stone-800 border border-stone-700 rounded p-3 text-white focus:border-amber-500 focus:outline-none appearance-none cursor-pointer">
+              <option :value="null" class="text-stone-500">Min Year</option>
+              <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-stone-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+          </div>
+          <div class="relative w-1/2">
+            <select v-model.number="filters.YearMax" 
+              class="w-full bg-stone-800 border border-stone-700 rounded p-3 text-white focus:border-amber-500 focus:outline-none appearance-none cursor-pointer">
+              <option :value="null" class="text-stone-500">Max Year</option>
+              <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-stone-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -49,7 +71,7 @@
         </div>
         
         <div v-show="openSections.brands" class="grid grid-cols-2 gap-2 mt-2">
-          <button v-for="brand in brands" :key="brand.id" @click="selectBrand(brand.id)"
+          <button type="button" v-for="brand in brands" :key="brand.id" @click="selectBrand(brand.id)"
             :class="['p-2 rounded text-sm text-left transition-all border', filters.BrandId === brand.id ? 'bg-amber-600 border-amber-600 text-white font-bold' : 'bg-stone-800 border-transparent hover:border-stone-600 text-gray-300']">
             {{ brand.name }}
           </button>
@@ -65,7 +87,7 @@
         </div>
 
         <div v-show="openSections.categories" class="grid grid-cols-2 gap-2 mt-2">
-          <button v-for="category in categories" :key="category.id" @click="selectCategory(category.id)"
+          <button type="button" v-for="category in categories" :key="category.id" @click="selectCategory(category.id)"
             :class="['p-2 rounded text-sm text-left transition-all border', filters.CategoryId === category.id ? 'bg-amber-600 border-amber-600 text-white font-bold' : 'bg-stone-800 border-transparent hover:border-stone-600 text-gray-300']">
             {{ category.name }}
           </button>
@@ -75,12 +97,12 @@
     </div>
 
     <div class="p-6 border-t border-stone-700 bg-stone-900 space-y-3">
-      <button @click="applyFilters" 
+      <button type="button" @click="applyFilters" 
         class="w-full py-4 bg-white text-black font-bold text-xl uppercase tracking-widest hover:bg-amber-400 transition-colors rounded">
         Apply Filters
       </button>
       
-      <button @click="clearFilters" 
+      <button type="button" @click="clearFilters" 
         class="w-full py-2 text-stone-500 hover:text-white text-sm uppercase tracking-wide transition-colors">
         Clear All
       </button>
@@ -90,7 +112,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import brandService from '../services/brandService';
 import categoryService from '../services/categoryService';
@@ -108,6 +130,15 @@ const props = defineProps({
 
 const brands = ref([]);
 const categories = ref([]);
+
+const currentYear = new Date().getFullYear() + 1;
+const availableYears = computed(() => {
+  const years = [];
+  for (let i = currentYear; i >= 1950; i--) {
+    years.push(i);
+  }
+  return years;
+});
 
 const openSections = reactive({
   brands: true,
@@ -176,6 +207,7 @@ const clearFilters = () => {
     BrandId: null,
     CategoryId: null
   };
+  applyFilters();
 };
 
 onMounted(() => {
@@ -183,10 +215,10 @@ onMounted(() => {
   
   const q = route.query;
   filters.value.Name = q.Name || '';
-  filters.value.PriceMin = q.PriceMin || null;
-  filters.value.PriceMax = q.PriceMax || null;
-  filters.value.YearMin = q.YearMin || null;
-  filters.value.YearMax = q.YearMax || null;
+  filters.value.PriceMin = q.PriceMin ? Number(q.PriceMin) : null;
+  filters.value.PriceMax = q.PriceMax ? Number(q.PriceMax) : null;
+  filters.value.YearMin = q.YearMin ? Number(q.YearMin) : null;
+  filters.value.YearMax = q.YearMax ? Number(q.YearMax) : null;
   filters.value.CategoryId = q.CategoryId || null;
   if(props.showBrands) filters.value.BrandId = q.BrandId || null;
 });

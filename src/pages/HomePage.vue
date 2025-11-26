@@ -3,11 +3,14 @@
     <div class="absolute z-20 inset-0 bg-black/60 transition-colors duration-300 "></div>
     <div class="absolute z-40 text-white text-center bottom-32 space-y-6 inset-x-0 px-4">
       <p class="text-gray-200 font-medium text-xl md:text-2xl animate-text playfair-display-sc-regular">Luxury Cars</p>
-      <h1 class="text-5xl md:text-7xl font-bold animate-text playfair-display-sc-bold-italic">Make Your Dream a Reality.</h1>
+      <h1 class="text-5xl md:text-7xl font-bold animate-text playfair-display-sc-bold-italic">Make Your Dream a Reality.
+      </h1>
       <router-link to="/cars"
         class="text-2xl md:text-4xl hover:text-amber-300 hover:scale-105 flex items-center justify-center gap-4 transition-transform animate-text playfair-display-sc-regular">
-        <p class="flex items-center gap-2">Shop Now <ButtonArrow /></p>
-        
+        <p class="flex items-center gap-2">Shop Now
+          <ButtonArrow />
+        </p>
+
       </router-link>
     </div>
     <video :src="videos[currentVideoIndex]"
@@ -23,9 +26,15 @@
   </main>
 
   <section
-    class="w-full h-full flex justify-center items-center flex-col text-black gsap-blur-in space-y-4 pt-12 md:pt-20 pb-12 md:pb-20 bg-gradient-to-b from-white via-white via-70% to-black ">
-    <p class="flex text-4xl md:text-6xl  playfair-display-sc-regular">Featured Listings</p>
-    <p class="border-b border-black w-11/12 md:w-3/4"></p>
+    class="w-full h-full flex justify-center items-center flex-col text-black gsap-blur-in  pt-12 md:pt-20 pb-12 md:pb-20 bg-gradient-to-b from-white via-white via-70% to-black">
+
+    <div class="space-y-6 flex justify-center items-center flex-col">
+      <p class="flex text-4xl md:text-6xl playfair-display-sc-regular tracking-widest text-center">
+        Featured Listings
+      </p>
+
+      <div class="h-px w-11/12 md:w-3/4 bg-gradient-to-r from-transparent via-black to-transparent opacity-40"></div>
+    </div>
     <CardComponent />
   </section>
 
@@ -33,7 +42,8 @@
     class="w-full h-[400px] md:h-[600px] flex justify-center items-center overflow-hidden shadow-4xl gsap-blur-in relative bg-black">
 
     <div class="absolute left-0 md:w-3/5 h-full bg-black rounded-r-full">
-      <img src="../assets/imgs/moça.png" alt="Interior of a luxury car" class="w-full h-full object-cover rounded-r-full " />
+      <img src="../assets/imgs/moça.png" alt="Interior of a luxury car"
+        class="w-full h-full object-cover rounded-r-full " />
     </div>
 
     <div
@@ -52,7 +62,8 @@
     <h1 class="text-4xl md:text-6xl text-white bg-black  playfair-display-sc-regular">Our Brands</h1>
   </div>
 
-  <section id="brand" class="w-full min-h-full h-auto flex justify-center items-center bg-black py-10 md:py-20 gsap-blur-in">
+  <section id="brand"
+    class="w-full min-h-full h-auto flex justify-center items-center bg-black py-10 md:py-20 gsap-blur-in">
 
     <div v-if="brandsError" class="text-center text-red-600">
       <p>Sorry, unable to load brands.</p>
@@ -71,14 +82,15 @@
                   gsap-blur-in relative overflow-hidden 
                   bg-cover bg-center grid place-items-center" :style="{ backgroundImage: `url(${brand.bgBrandUrl})` }">
 
-        <div class="absolute inset-0 bg-black/40 z-10 transition-colors duration-300 hover:bg-black/10">
+        <div class="absolute inset-0 bg-black/50 z-10 transition-colors duration-300 hover:bg-black/10">
         </div>
 
-        <img :src="brand.imageUrl" :alt="`${brand.name} logo`"
-          class="relative z-20 object-contain w-24 h-24 md:w-32 md:h-22 px-4 md:px-8 bg-white rounded-full opacity-65" />
+
 
         <h1 class="text-white z-20 relative text-5xl md:text-7xl font-dancing capitalize">{{ brand.name }}</h1>
-        <router-link :to="`/carsPerBrand/${brand.id}`" class="text-white z-20 relative text-xl md:text-2xl bottom-0 hover:text-amber-300 hover:scale-105 playfair-display-sc-regular  ">See More</router-link>
+        <router-link :to="`/carsPerBrand/${brand.id}`"
+          class="text-white z-20 relative text-xl md:text-2xl bottom-0 hover:text-amber-300 hover:scale-105 playfair-display-sc-regular  ">See
+          More</router-link>
 
       </div>
     </div>
@@ -137,7 +149,7 @@ const changeVideo = async (index) => {
   if (index === currentVideoIndex.value) return;
 
   isFading.value = true;
-  
+
   if (fadeTimeout) clearTimeout(fadeTimeout);
 
   fadeTimeout = setTimeout(async () => {
@@ -167,11 +179,11 @@ const resolveUrl = (path) => {
   if (path.startsWith('http') || path.startsWith('https')) {
     return path;
   }
-  
+
   // Lógica segura para evitar barras duplas ou falta de barra
   const baseUrl = api_base.endsWith('/') ? api_base.slice(0, -1) : api_base;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  
+
   return `${baseUrl}${cleanPath}`;
 };
 // -----------------------------
@@ -179,7 +191,7 @@ const resolveUrl = (path) => {
 const fetchBrands = async () => {
   try {
     const response = await brandService.getAll();
-    
+
     brands.value = response.data.map(brand => {
       const rawImage = brand.imageUrl || brand.imageURL || brand.ImageURL;
 
@@ -192,7 +204,7 @@ const fetchBrands = async () => {
         logoBannerBrandUrl: resolveUrl(brand.logoBrand)
       };
     });
-    
+
   } catch (error) {
     console.error("Failed to fetch brands:", error);
     brandsError.value = 'An error occurred while loading the brands.';
