@@ -1,7 +1,7 @@
 <template>
     <div class="bg-black text-white w-full min-h-screen flex justify-center items-center p-15 mt-15 sm:p-10 lg:p-30">
 
-        <div v-if="loading && !paymentDetails" class="text-xl">
+        <div v-if="loading" class="text-xl">
             Carregando detalhes do pedido...
         </div>
 
@@ -13,8 +13,7 @@
 
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-center">
-                    <img class="h-8 w-8 mr-2 bg-black" src="../assets/imgs/Logo.png"
-                        alt="Logo" />
+                    <img class="h-8 w-8 mr-2 bg-black" src="../assets/imgs/Logo.png" alt="Logo" />
                     <div class="text-gray-700 font-semibold text-lg">DreamCar</div>
                 </div>
                 <div class="text-gray-700 text-right">
@@ -26,9 +25,17 @@
 
             <div class="border-b-2 border-gray-300 pb-8 mb-8">
                 <h2 class="text-2xl font-bold mb-4">Cobrança Para:</h2>
-                <div class="text-gray-700 mb-2">Jhow da Unimar</div>
-                <div class="text-gray-700 mb-2">123 Main St., Anytown, USA 12345</div>
-                <div class="text-gray-700">jow@example.com</div>
+                
+                <div v-if="user">
+                    <div class="text-gray-700 mb-2 font-bold">{{ user.name }}</div>
+                    <div class="text-gray-700 mb-2">{{ user.address }}</div>
+                    <div class="text-gray-700 mb-2">CPF:***.***.***-**</div>
+                    <div class="text-gray-700">{{ user.email }}</div>
+                </div>
+
+                <div v-else class="text-gray-500 italic">
+                    Carregando dados do cliente...
+                </div>
             </div>
 
             <table class="w-full text-left mb-8">
@@ -84,13 +91,9 @@
                     <p class="text-gray-700 mb-1">
                         <strong>Linha Digitável:</strong>
                     </p>
-                    <input 
-                        type="text" 
-                        readonly 
-                        :value="paymentDetails.boletoNumber"
+                    <input type="text" readonly :value="paymentDetails.boletoNumber"
                         class="w-full bg-gray-200 p-2 rounded border border-gray-300 text-sm mb-2"
-                        onclick="this.select();" 
-                    />
+                        onclick="this.select();" />
                     <a :href="paymentDetails.boletoUrl" target="_blank"
                         class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
                         Abrir Boleto
@@ -102,17 +105,13 @@
                     <p class="text-gray-700 mb-1">
                         <strong>PIX Copia e Cola:</strong>
                     </p>
-                    <textarea 
-                        readonly
-                        class="w-full bg-gray-200 p-2 rounded border border-gray-300 text-sm mb-2"
-                        rows="3" 
-                        onclick="this.select();"
-                    >{{ paymentDetails.pixCode }}</textarea>
+                    <textarea readonly class="w-full bg-gray-200 p-2 rounded border border-gray-300 text-sm mb-2"
+                        rows="3" onclick="this.select();">{{ paymentDetails.pixCode }}</textarea>
                     <p class="text-sm text-gray-600">Copie o código acima para pagar no seu app do banco.</p>
                 </div>
 
                 <p class="text-gray-700 mb-2">Obrigado pela sua compra!</p>
-                
+
             </div>
 
         </div>
@@ -122,32 +121,62 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import userService from '../services/userService.js';
 
 const route = useRoute();
 const paymentDetails = ref(null);
-const loading = ref(true); 
+const user = ref(null);
+const loading = ref(true);
 
-onMounted(() => {
-    
+const parseJwt = (token) => {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return null;
+    }
+};
+
+const getUserEmailFromToken = () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null;
+    const decoded = parseJwt(token);
+    if (!decoded) return null;
+    return decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"] ||
+        decoded.email || decoded.unique_name;
+};
+
+const fetchUserData = async () => {
+    try {
+        const email = getUserEmailFromToken();
+        if (!email) return;
+
+        const response = await userService.getByEmail(email);
+        const uData = response.data;
+
+        user.value = {
+            name: uData.name || uData.nome,
+            email: uData.email,
+            cpf: uData.cpf || uData.CPF,
+            address: uData.road ? `${uData.road}, ${uData.number} - ${uData.city}/${uData.state}` : uData.endereco
+        };
+    } catch (error) {
+        console.error("Erro ao buscar dados do usuário:", error);
+    }
+};
+
+onMounted(async () => {
+    await fetchUserData();
+
     if (history.state.paymentData) {
         paymentDetails.value = history.state.paymentData;
     } else {
-         página
         console.warn("Dados de pagamento não encontrados no state. (Recarregou a página?)");
-    
     }
     loading.value = false;
 });
-
-// const fetchPaymentDetails = async (transactionId) => {
-//   try {
-//     // Crie um 'paymentService.getById(transactionId)'
-//     const response = await paymentService.getByTransactionId(transactionId);
-//     paymentDetails.value = response.data;
-//   } catch (error) {
-//     console.error("Erro ao buscar detalhes da transação:", error);
-//   } finally {
-//     loading.value = false;
-//   }
-// };
 </script>

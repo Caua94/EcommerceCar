@@ -5,11 +5,12 @@
       Carregando...
     </div>
 
-    <div v-if="!loading && car" class="w-full max-w-lg">
+    <div v-if="!loading && car" class="w-full max-w-lg mt-20">
       
       <div class="text-center mb-6">
         <h2 class="text-3xl font-bold text-gray-200 mb-5">Pagamento</h2>
         <p class="text-lg text-gray-200">
+          <span v-if="user" class="block text-sm text-gray-400 mb-2">Cliente: {{ user.name }}</span>
           Você está pagando <span class="text-amber-500 font-bold">R$ {{ car.price }}</span> por
           <span class="text-gray-200 font-bold">{{ car.name }}</span>.
         </p>
@@ -89,6 +90,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import carService from '../services/carService.js';
 import paymentService from '../services/paymentService.js';
+import userService from '../services/userService.js'; 
 
 const props = defineProps({
   id: { type: String, required: true }
@@ -97,6 +99,7 @@ const props = defineProps({
 const router = useRouter();
 
 const car = ref(null);
+const user = ref(null); 
 const loading = ref(true);
 const isSubmitting = ref(false);
 const error = ref(null);
@@ -121,19 +124,60 @@ const boletoDetails = ref({
   Address: ''
 });
 
-onMounted(() => {
+
+const parseJwt = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+};
+
+const getUserEmailFromToken = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return null;
+
+  const decoded = parseJwt(token);
+  if (!decoded) return null;
+ 
+  return decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"] ||
+    decoded.email ||
+    decoded.unique_name;
+};
+
+
+const fetchUserData = async () => {
+  try {
+    const email = getUserEmailFromToken();
+    if (!email) {
+       console.warn("Usuário não logado");
+       return; 
+    }
+    const response = await userService.getByEmail(email);
+    user.value = response.data;
+  } catch (err) {
+    console.error("Erro ao buscar usuário:", err);
+  }
+};
+
+onMounted(async () => {
+ 
+  await fetchUserData();
 
   if (history.state.carData) {
     console.log("Dados do carro recebidos via state.");
     car.value = history.state.carData;
     loading.value = false;
   } else {
- 
     console.warn("State não encontrado. Buscando dados do carro na API.");
-    fetchCarDataFallback();
+    await fetchCarDataFallback();
   }
 });
-
 
 const fetchCarDataFallback = async () => {
   loading.value = true;
@@ -141,7 +185,6 @@ const fetchCarDataFallback = async () => {
     const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132"
     const response = await carService.getById(props.id);
     const carData = response.data;
-
     
     car.value = carData;
 
@@ -153,17 +196,21 @@ const fetchCarDataFallback = async () => {
   }
 };
 
-
-
 const handlePayment = async () => {
   if (!car.value) return;
+  
+  
+  if (!user.value) {
+      error.value = "Erro: Usuário não identificado. Faça login novamente.";
+      return;
+  }
 
   isSubmitting.value = true;
   error.value = null;
 
   const paymentRequestData = {
-    
-    userId: 'cfaa0d38-356a-4d6c-8a9d-c9d30560b4ef',
+   
+    userId: user.value.id, 
     amount: car.value.price,
     currency: 'BRL',
     paymentMethod: paymentMethod.value,
@@ -171,19 +218,20 @@ const handlePayment = async () => {
     pix: paymentMethod.value === 'Pix' ? pixDetails.value : null,
     boleto: paymentMethod.value === 'Boleto' ? boletoDetails.value : null
   };
+  
   if (paymentMethod.value === 'Card' && paymentRequestData.card) {
-    paymentRequestData.card.Installments = parseInt(paymentRequestData.card.Installments, 10);
-  }
+    paymentRequestData.card.Installments = parseInt(paymentRequestData.card.Installments, 10);
+  }
 
   try {
     const response = await paymentService.processPayment(paymentRequestData);
     const paymentResponse = response.data;
 
     router.push({
-      name: 'confirmation',
-      params: { transactionId: paymentResponse.transactionId },
-      state: { paymentData: paymentResponse }
-    });
+      name: 'confirmation',
+      params: { transactionId: paymentResponse.transactionId },
+      state: { paymentData: paymentResponse }
+    });
 
   } catch (err) {
     if (err.response && err.response.status === 402) {
