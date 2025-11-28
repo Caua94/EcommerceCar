@@ -71,14 +71,14 @@
             </div>
             <div>
               <label for="car-nome" class="block text-sm font-medium text-white">Motor do modelo</label>
-              <input v-model="newCar.Engine" type="text" id="car-nome"
+              <input v-model="newCar.Engine" type="text" id="car-motor"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
 
             <div>
               <label for="car-nome" class="block text-sm font-medium text-white">Velocidade-km/h</label>
-              <input v-model="newCar.Speed" type="text" id="car-nome"
+              <input v-model="newCar.Speed" type="text" id="car-velocidade"
                 class="mt-1 block w-full p-4 text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-colors"
                 required>
             </div>
@@ -115,19 +115,19 @@
             </div>
             <div class="md:col-span-2">
               <label for="car-imagem" class="block text-sm font-medium text-white mb-2">Imagem do interior Carro</label>
-              <input @change="handleCarImageInteriorUpload" type="file" id="car-imagem"
+              <input @change="handleCarImageInteriorUpload" type="file" id="car-imagem-interior"
                 class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
                 ref="carImageInputRef">
             </div>
             <div class="md:col-span-2">
               <label for="car-imagem" class="block text-sm font-medium text-white mb-2">Imagem do motor Carro</label>
-              <input @change="handleCarImageMotorUpload" type="file" id="car-imagem"
+              <input @change="handleCarImageMotorUpload" type="file" id="car-imagem-motor"
                 class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
                 ref="carImageInputRef">
             </div>
             <div class="md:col-span-2">
               <label for="car-video" class="block text-sm font-medium text-white mb-2">Video do Carro</label>
-              <input @change="handleCarVideoUpload" type="file" id="car-imagem"
+              <input @change="handleCarVideoUpload" type="file" id="car-video"
                 class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-500 focus:border-amber-500 focus:ring-amber-500"
                 ref="carImageInputRef">
             </div>
