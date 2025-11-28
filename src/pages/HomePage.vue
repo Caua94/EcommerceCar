@@ -180,13 +180,13 @@ const resolveUrl = (path) => {
     return path;
   }
 
-  // Lógica segura para evitar barras duplas ou falta de barra
+
   const baseUrl = api_base.endsWith('/') ? api_base.slice(0, -1) : api_base;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
 
   return `${baseUrl}${cleanPath}`;
 };
-// -----------------------------
+
 
 const fetchBrands = async () => {
   try {

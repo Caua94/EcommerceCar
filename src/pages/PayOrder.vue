@@ -138,7 +138,7 @@ onMounted(() => {
 const fetchCarDataFallback = async () => {
   loading.value = true;
   try {
-    const api_base = "http://localhost:5132";
+    const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132"
     const response = await carService.getById(props.id);
     const carData = response.data;
 
@@ -164,7 +164,7 @@ const handlePayment = async () => {
   const paymentRequestData = {
     
     userId: 'cfaa0d38-356a-4d6c-8a9d-c9d30560b4ef',
-    amount: car.value.preco,
+    amount: car.value.price,
     currency: 'BRL',
     paymentMethod: paymentMethod.value,
     card: paymentMethod.value === 'Card' ? cardDetails.value : null,
