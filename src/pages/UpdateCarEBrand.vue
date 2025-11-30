@@ -175,7 +175,7 @@
               class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500">
           </div>
           <div>
-            <label for="brand-logo" class="block text-sm font-medium text-white mb-2">Brand Logo (Leave empty to keep current)</label>
+            <label for="brand-logo" class="block text-sm font-medium text-white mb-2">Brand LogoBanner (Leave empty to keep current)</label>
             <input @change="handleLogoBrandUpload" type="file" id="brand-logo"
               class="block w-full text-sm text-gray-300 border border-white/20 rounded-xl file:mr-4 file:py-3 file:px-4 file:rounded-l-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-black hover:file:bg-amber-600 focus:border-amber-500 focus:ring-amber-500">
           </div>
