@@ -5,15 +5,15 @@ const resource = '/Car';
 export default {
 
     filterCars(filterData) {
-        // Rota correta: /api/Car/Filter
+        
         return apiClient.get(`${resource}/Filter`, {
             params: filterData
         });
     },
 
-    // 🚀 CORREÇÃO APLICADA AQUI
+    
     getAll() {
-        // Rota final será: /api/Car
+       
         return apiClient.get(`${resource}`);
     },
 

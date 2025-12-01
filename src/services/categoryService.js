@@ -3,9 +3,9 @@ import apiClient from './api.js';
 const resource = '/Category';
 
 export default {
-    // 🚀 CORREÇÃO APLICADA AQUI
+   
     getAll() {
-        // Rota final será: /api/Category
+    
         return apiClient.get(`${resource}`);
     },
 
@@ -14,7 +14,7 @@ export default {
     },
 
     create(categoryData) {
-        // Rota correta: /api/Category/AddCategory
+      
         return apiClient.post(`${resource}/AddCategory`, categoryData);
     },
 
