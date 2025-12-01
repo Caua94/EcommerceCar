@@ -27,29 +27,29 @@
         </p>
       </div>
     </div>
-    
 
 
-   <div
+
+    <div
       class="storytelling-block relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 z-10 overflow-hidden bg-gradient-to-b from-gray-600 to-black playfair-display-sc-regular">
 
       <h2 class="text-5xl sm:text-7xl text-white mb-8 sm:mb-10 max-w-4xl mx-auto text-center font-dancing ">
         Engineering Masterpiece
       </h2>
-      
+
       <img class="h-64 sm:h-96 mb-8 drop-shadow-2xl" :src="car.imagemMotorUrl" alt="Engine Details">
-      
+
       <div class="w-full text-center relative z-10">
         <div
           class="flex flex-col md:flex-row w-full justify-evenly text-xl md:text-3xl border-t border-b border-white/30 p-4 px-5 bg-black/20 backdrop-blur-sm">
-          
+
           <p class="text-gray-100 leading-relaxed py-2 md:py-0">
             <span class="text-gray-400 text-sm block uppercase tracking-widest mb-1">Top Speed</span>
             {{ car.velocidade }} km/h
           </p>
-          
+
           <p class="text-gray-100 hidden md:block opacity-30">|</p>
-          
+
           <p v-if="car.categoria" class="text-gray-100 leading-relaxed py-2 md:py-0">
             <span class="text-gray-400 text-sm block uppercase tracking-widest mb-1">Category</span>
             {{ car.categoria.nome }}
@@ -58,16 +58,16 @@
             <span class="text-gray-400 text-sm block uppercase tracking-widest mb-1">Category</span>
             N/A
           </p>
-          
+
           <p class="text-gray-100 hidden md:block opacity-30">|</p>
-          
+
           <p class="text-gray-100 leading-relaxed py-2 md:py-0">
             <span class="text-gray-400 text-sm block uppercase tracking-widest mb-1">Engine</span>
             {{ car.motor }}
           </p>
-          
+
           <p class="text-gray-100 hidden md:block opacity-30">|</p>
-          
+
           <p class="text-gray-100 leading-relaxed py-2 md:py-0">
             <span class="text-gray-400 text-sm block uppercase tracking-widest mb-1">Year</span>
             {{ car.ano }}
@@ -76,9 +76,10 @@
       </div>
     </div>
 
-      <div
+    <div
       class="storytelling-block relative w-full flex flex-col items-center justify-center px-4 sm:px-8 z-10 overflow-hidden space-y-10 ">
-      <h1 class="capitalize font-dancing text-4xl sm:text-7xl text-white mb-8 sm:mb-10 leading-relaxed">Visualise the Legend</h1>
+      <h1 class="capitalize font-dancing text-4xl sm:text-7xl text-white mb-8 sm:mb-10 leading-relaxed">Visualise the
+        Legend</h1>
       <div class="relative flex items-center justify-center z-10 w-[90%] sm:w-[90%] h-94 sm:h-full 
             
             bg-gradient-to-b from-white to-gray-400
@@ -90,10 +91,26 @@
             
             [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent),linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] 
             [mask-composite:intersect]">
-        
 
-        <model-viewer class="" v-if="car && car.model3d" id="motor-3d" :src="car.model3d" :alt="car.nome || '3D Model'"
-          auto-rotate camera-controls ar shadow-intensity="1" style="width: 100%; height: 900px; background:none">
+        <div v-if="car && car.model3d && !isModelLoaded"
+          class="absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
+          <div class="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+        </div>
+
+
+        <model-viewer 
+          class="transition-opacity duration-700 ease-in-out"
+          :class="isModelLoaded ? 'opacity-100' : 'opacity-0'" 
+          v-if="car && car.model3d" 
+          id="motor-3d" 
+          :src="car.model3d" 
+          :alt="car.nome || '3D Model'"
+          @load="onModelLoad"
+          auto-rotate 
+          camera-controls 
+          ar 
+          shadow-intensity="1" 
+          style="width: 100%; height: 900px; background:none">
         </model-viewer>
 
         <div v-else class="text-white flex flex-col items-center">
@@ -105,7 +122,6 @@
     </div>
 
     <div
-    
       class="storytelling-block relative h-screen w-full flex flex-col items-center justify-center bg-black z-10 overflow-hidden pt-30 space-y-30">
       <h1 class="capitalize font-dancing text-4xl sm:text-7xl text-white ">Interior Artistry</h1>
       <img :src="car.imagemInteriorUrl" class="h-full w-full object-cover" :alt="car.nome" />
@@ -139,26 +155,31 @@ const props = defineProps({
 const car = ref(null);
 const router = useRouter();
 const heroRef = ref(null);
+const isModelLoaded = ref(false);
 
 // --- AJUSTE PARA O RENDER ---
 // Pega a URL do ambiente e remove o "/api" para acessar as imagens/vídeos/3D na raiz
 const api_base = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5132";
 // ----------------------------
 
-// --- AJUSTE NO RESOLVE URL ---
+
+const onModelLoad = () => {
+  isModelLoaded.value = true;
+};
+
 const resolveUrl = (path) => {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('https')) {
     return path;
   }
-  
-  // Garante a formatação correta (evita // ou falta de /)
+
+
   const baseUrl = api_base.endsWith('/') ? api_base.slice(0, -1) : api_base;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  
+
   return `${baseUrl}${cleanPath}`;
 };
-// -----------------------------
+
 
 const fetchCarDetails = async () => {
   try {
@@ -229,6 +250,11 @@ const goToCheckout = () => {
 };
 
 onMounted(() => {
+  fetchCarDetails();
+});
+watch(() => props.id, () => {
+  car.value = null;
+  isModelLoaded.value = false; 
   fetchCarDetails();
 });
 </script>
